@@ -10,40 +10,54 @@ import java.util.stream.Stream;
 
 public class StreamExceptionTest {
     public static void main(String[] args) {
-        testConsume();
-        testVavr();
+        testIgnoreWithDefault();
+        System.out.println();
+
+        testIgnore();
+        System.out.println();
+
+        testIgnoreWithDefaultVavr();
+        System.out.println();
+
         testRethrow();
     }
 
     private static void testRethrow() {
-        List<String> strings = Stream.of(new Person("1"))
-                .filter(p -> p.getName().equals("1"))
+        List<String> strings = Stream.of(new Person("1"), new Person("2"))
                 .map(person -> tryOrElseRethrow(StreamExceptionTest::canFail, person))
                 .collect(Collectors.toList());
-        System.out.println(strings);
+        System.out.println("testRethrow: " + strings);
     }
 
-    private static void testConsume() {
-        List<String> strings = Stream.of(new Person("1"))
-                .filter(p -> p.getName().equals("1"))
+    private static void testIgnoreWithDefault() {
+        List<String> strings = Stream.of(new Person("1"), new Person("2"))
                 .map(person -> tryGet(() -> canFail(person)).orElse("default"))
                 .collect(Collectors.toList());
-        System.out.println(strings);
+        System.out.println("testIgnoreWithDefault: " + strings);
     }
 
-    private static void testVavr() {
-        List<String> strings = Stream.of(new Person("1"))
-                .filter(p -> p.getName().equals("1"))
+    private static void testIgnore() {
+        List<String> strings = Stream.of(new Person("1"), new Person("2"))
+                .flatMap(person -> tryGet(() -> canFail(person)).map(Stream::of).orElse(Stream.empty()))
+                .collect(Collectors.toList());
+        System.out.println("testIgnore: " + strings);
+    }
+
+    private static void testIgnoreWithDefaultVavr() {
+        List<String> strings = Stream.of(new Person("1"), new Person("2"))
                 .map(person -> Try
                         .of(() -> canFail(person))
                         .onFailure(e -> System.out.println("Vavr.Try, " + e.getMessage()))//log error
                         .getOrElse("default"))
                 .collect(Collectors.toList());
-        System.out.println(strings);
+        System.out.println("testIgnoreWithDefaultVavr: " + strings);
     }
 
     private static String canFail(Person p) throws Exception {
-        throw new IOException("oops");
+        if (p.getName().equals("1"))
+            throw new IOException("oops");
+        else
+            return p.getName() + "-success";
     }
 
     public static <T, R> R tryOrElseRethrow(CheckedFunction<T, R> checkedFunction, T arg) {
