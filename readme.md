@@ -22,4 +22,6 @@
 + XSL
     + [src/main/resources/xsl](src/main/resources/xsl)
 + Различные заметки
-    + [notes](notes)
+  + [notes](notes)
+  + Ответы на популярные вопросы на интервью Java разработчика
+    + [notes/interview_answers.md](notes/interview_answers.md)
