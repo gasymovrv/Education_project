@@ -12,6 +12,16 @@ fun isValidIdentifier(s: String): Boolean {
   }
 }
 
+fun isValidIdentifier2(s: String): Boolean {
+  fun isValidChar(ch: Char) = ch == '_' || ch.isLetterOrDigit()
+  if (s.isEmpty() || s[0].isDigit()) return false
+
+  for (ch in s) {
+    if (!isValidChar(ch)) return false
+  }
+  return true
+}
+
 fun main() {
   println(isValidIdentifier("name"))   // true
   println(isValidIdentifier("_name"))  // true
