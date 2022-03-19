@@ -1,6 +1,7 @@
 package ru.gasymovrv.kotlintest.coursera
 
 import ru.gasymovrv.kotlintest.coursera.extensions.lastChar
+import java.io.File
 
 fun main() {
   println("hello")
@@ -52,3 +53,8 @@ fun varargExample(j: Int, vararg elements: String, s: String) {
     print(if (i == elements.size - 1) el else "$el, ")
   }
 }
+
+//typealias examples (just to change name of something):
+typealias FileTable<K> = MutableMap<K, MutableList<File>>
+typealias MyHandler = (Int, String, Any) -> Unit
+typealias Predicate<T> = (T) -> Boolean

@@ -26,7 +26,7 @@
 + [WeakReference, SoftReference и др.](java/java.md#weakreference-softreference-и-др)
 + [Утечки памяти (Memory leaks)](java/java.md#утечки-памяти-memory-leaks)
 + [Отличия Java IO от Java NIO](java/java.md#Отличия-Java-IO-от-Java-NIO)
-+ [Многопоточность](java/java.md#Многопоточность)
++ [Многопоточность в Java](java/java.md#Многопоточность)
 
 ### Spring
 + [Spring Core](java/spring.md#Spring-Core)
@@ -124,6 +124,7 @@
 + [Протокол OAuth 2.0](security.md#Протокол-OAuth-20)
 
 ### Разное
++ [Concurrency / parallel / multithreading / asynchrony](concurrency.md)
 + Зачем использовать Immutable объекты?
     + Для потокобезопасности
     + Для возможности кэширования (например [пул строк](java/java.md#Пул-строк))

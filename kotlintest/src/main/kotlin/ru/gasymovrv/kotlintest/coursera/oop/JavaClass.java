@@ -1,6 +1,7 @@
 package ru.gasymovrv.kotlintest.coursera.oop;
 
-import static ru.gasymovrv.kotlintest.coursera.oop.ClassModifiersKt.extFun;
+
+import static ru.gasymovrv.kotlintest.coursera.oop.ObjectsKt.extFun;
 
 import java.util.List;
 import ru.gasymovrv.kotlintest.coursera.oop.generics.GenericsKt;

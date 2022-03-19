@@ -32,7 +32,7 @@ interface User {
 }
 
 interface Session {
-  val user: User
+  open val user: User //is open by default because it's in an interface
 }
 
 class FacebookUser(val accountId: Int) : User {
@@ -54,7 +54,7 @@ class SubscribingUser(val email: String) : User {
     }
 }
 
-//cast property with custom getter
+//cast property with custom/open getter
 fun analyzeSession(session: Session) {
 //  if (session.user is FacebookUser) {
 //    println(session.user.accountId) //Smart cast to 'FacebookUser' is impossible, because 'session.user' is a property that has open or custom getter
@@ -63,6 +63,11 @@ fun analyzeSession(session: Session) {
   if (user is FacebookUser) {
     println(user.accountId)
   }
+}
+
+//cast property with open getter and let
+fun analyzeSessionLet(session: Session) {
+  (session.user as? FacebookUser)?.let { println(it.accountId) }
 }
 
 //property as an extension

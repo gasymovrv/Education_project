@@ -66,6 +66,8 @@ fun main(args: Array<String>) {
   println(CompanionImplInterface.create())
   println(CompanionImplInterface.create())
   println(CompanionImplInterface.create())
+  CustomSingleton.INSTANCE
+  CustomSingleton.INSTANCE
 
   println(a)
   println(empty)
@@ -114,7 +116,7 @@ fun main(args: Array<String>) {
   println("${getSetExample[0]}, ${getSetExample[1]}")
 }
 
-fun printMethodInfo(f: KCallable<Any>) {
+fun printMethodInfo(f: Lambda) {
   println(
     """
     ${f.visibility} 
@@ -125,3 +127,5 @@ fun printMethodInfo(f: KCallable<Any>) {
       .trimIndent().replace("\n", "")
   )
 }
+
+typealias Lambda = KCallable<Any>

@@ -1,5 +1,8 @@
 package ru.gasymovrv.kotlintest.coursera.functional
 
+import ru.gasymovrv.kotlintest.coursera.oop.Contact
+import java.io.BufferedReader
+import java.io.FileReader
 import kotlin.reflect.KFunction0
 import kotlin.reflect.KFunction1
 
@@ -151,7 +154,28 @@ fun main() {
   }
   println(duplicateYoungestAnonymousFun(list4))
 
+  getContact()?.let { sendPostTo(it) }
+  val number = 42
+  number.takeIf {it < 40}?.let{ println("took a number < 40: $it") }
+  number.takeIf {it > 40}?.let{ println("took a number > 40: $it") }
+
+  repeat(2) {
+    println("from repeat, iteration: $it")
+  }
+
+  println(readFirstLine("readme.md"))
+
+  //.run - runs lambda
+  //.withLock - instead of synchronized
 }
 
 fun doSomething() = println("do something")
+
+fun sendPostTo(contact: Contact) { println("contact through let: $contact") }
+fun getContact(): Contact? = Contact("name", "addr")
+
+fun readFirstLine(path: String): String {
+  //instead of try-with-resources
+  return BufferedReader(FileReader(path)).use { br -> br.readLine() }
+}
 
