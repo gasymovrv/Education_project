@@ -1,5 +1,12 @@
 package ru.gasymovrv.kotlintest.coursera.oop
 
+import ru.gasymovrv.kotlintest.coursera.oop.generics.average
+import ru.gasymovrv.kotlintest.coursera.oop.generics.demoIn
+import ru.gasymovrv.kotlintest.coursera.oop.generics.demoOut
+import ru.gasymovrv.kotlintest.coursera.oop.generics.ensureTrailingPeriod
+import ru.gasymovrv.kotlintest.coursera.oop.generics.filterNotNull
+import ru.gasymovrv.kotlintest.coursera.oop.generics.useFoo
+import ru.gasymovrv.kotlintest.coursera.oop.generics.usePrint
 import kotlin.reflect.KCallable
 
 fun main(args: Array<String>) {
@@ -66,6 +73,45 @@ fun main(args: Array<String>) {
   Obj1.prop
   Obj1.prop2
   Class1().prop
+
+  usePrint(listOf(null, "s"))
+  useFoo(listOf("s1", "s2"))
+  println(filterNotNull(listOf("s1", null, "s2")))
+
+  val sb = StringBuilder("sdgsdgh")
+  ensureTrailingPeriod(sb)
+  println(sb)
+
+  println(listOf(0, 2, 4, 6).average())
+  println(listOf(0.0, 1.4, 3.5).average())
+
+  println(Point(1, 1) + Point(2, 2))
+
+  val point = AssignablePoint(10, 10)
+  point += AssignablePoint(1, 1)
+  println(point)
+
+  val myList = MyList<String>()
+  myList.add("a")
+  myList.add("b")
+  myList.add("c")
+  for (el in myList) {
+    println(el)
+  }
+
+  demoOut()
+  demoIn()
+
+  val (first, second, third, fourth, fifth)
+  = ManyFields(1, 2.0, 3000000000L, 13, "example of regular class destructuring")
+  val (first1, second1, third1, fourth1, fifth1)
+  = DataManyFields(1, 2.0, 3000000000L, 13, "example of data class destructuring")
+  println(fifth)
+  println(fifth1)
+
+  val getSetExample = GetSetExample(arrayOf("abc", "efg"))
+  getSetExample[0] = "xyz"
+  println("${getSetExample[0]}, ${getSetExample[1]}")
 }
 
 fun printMethodInfo(f: KCallable<Any>) {

@@ -3,18 +3,6 @@ package ru.gasymovrv.kotlintest.coursera
 import ru.gasymovrv.kotlintest.coursera.extensions.lastChar
 
 fun main() {
-  val set = hashSetOf(1, 7, 53)
-  val list = arrayListOf(1, 7, 53) //the same as mutableListOf()
-  val map = hashMapOf(
-    1 to "one",
-    7 to "seven",
-    53 to "fifty-three"
-  )
-
-  println(set.javaClass)
-  println(list.javaClass)
-  println(map.javaClass)
-
   println("hello")
   val mutableList = mutableListOf(1, 3, 43, 4242, 11)
   val a: Int = 1
@@ -53,4 +41,14 @@ fun main() {
   }
 
   println("sd".lastChar())
+
+  varargExample(1, "a", "b12", "c3", s = "2")
+}
+
+fun varargExample(j: Int, vararg elements: String, s: String) {
+  println(elements.javaClass) //Array
+  println(elements.contentToString())
+  for ((i, el) in elements.withIndex()) {
+    print(if (i == elements.size - 1) el else "$el, ")
+  }
 }

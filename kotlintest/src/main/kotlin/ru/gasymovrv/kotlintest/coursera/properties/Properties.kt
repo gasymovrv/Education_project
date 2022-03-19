@@ -13,7 +13,7 @@ val foo2: Int
 
 //lazy property
 val lazyValue: String by lazy {
-  println("computed!")
+  println("computed!")//we do not show it before we call 'lazyValue'
   "Hello!"
 }
 

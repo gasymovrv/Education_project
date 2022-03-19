@@ -2,6 +2,9 @@ package ru.gasymovrv.kotlintest.coursera.oop;
 
 import static ru.gasymovrv.kotlintest.coursera.oop.ClassModifiersKt.extFun;
 
+import java.util.List;
+import ru.gasymovrv.kotlintest.coursera.oop.generics.GenericsKt;
+
 public class JavaClass {
 
   public static void main(String[] args) {
@@ -15,6 +18,7 @@ public class JavaClass {
     SimpleCompanion.foo();
     SimpleCompanion.Companion.bar();
     SimpleCompanion.Companion.foo();
+    System.out.println(SimpleCompanion.Companion.getClass());
 
     //Contact prop = Obj1.INSTANCE.getProp(); //does not work because of @JvmField
     Contact prop = Obj1.prop;
@@ -29,5 +33,7 @@ public class JavaClass {
     String empty = ConstantsKt.empty;
     Contact contact = ConstantsKt.prop;
     int c = ConstantsKt.getC();
+
+    System.out.println(GenericsKt.averageOfDouble(List.of(0.0, 1.4, 3.5)));
   }
 }
