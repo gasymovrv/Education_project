@@ -60,8 +60,6 @@ fun main() {
   val list2 = mutableListOf("a", "b")
   list2 += "c"//= list2.add("c")
 
-
-
   val tm = TreeMap<SortedType, Int>()
   tm[SortedType("z")] = 1
   tm[SortedType("b")] = 2
@@ -70,15 +68,45 @@ fun main() {
   tm[SortedType("a")] = 5
   println(tm)
   println(SortedType("zbc") > SortedType("abc"))
+
+  //------------ Sequences -------------------
+  //Lazy like Java Streams, without creating collections at each step
+  val s = listOf("a", "b", "b", "c", "sdf", "dga")
+    .asSequence()
+    .filter { it.length == 1 }
+    .sorted()
+    .mapIndexed { i, s -> "${s}_$i" }
+    .toList()
+  println(s)
+
+  val list3 = listOf(1, 2, 3, 4)
+  list3.map(::m).filter(::f)  //m1 m2 m3 m4 f1 f2 f3 f4
+  println()
+  list3.asSequence().map(::m).filter(::f).toList() //m1 f1 m2 f2 m3 f3 m4 f4
+  println()
+  list3.asSequence().filter(::f).map(::m).toList() //f1 f2 m2 f3 f4 m4
+  println()
+  list3.filter(::f) .map(::m) //f1 f2 f3 f4 m2 m4
+  list3.asSequence().map(::m).filter(::f)//nothing is printed
 }
 
-data class SortedType(val string: String): Comparable<SortedType> {
+data class SortedType(val string: String) : Comparable<SortedType> {
   override operator fun compareTo(other: SortedType): Int {
     return string.compareTo(other.string)
   }
 }
 
-//It works only for operator overloading
+//It works only for operator overloading, but not for comparison in TreeMap for example
 //operator fun SortedType.compareTo(other: SortedType): Int {
 //  return string.compareTo(other.string)
 //}
+
+fun m(i: Int): Int {
+  print("m$i ")
+  return i
+}
+
+fun f(i: Int): Boolean {
+  print("f$i ")
+  return i % 2 == 0
+}

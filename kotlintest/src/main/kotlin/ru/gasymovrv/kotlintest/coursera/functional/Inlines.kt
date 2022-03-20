@@ -11,8 +11,27 @@ fun main() {
   run { println("Hi") }
   //in comparison to:
   println("Hi")
+
+  //Применение inline оправдано:
+  for (i in 0..100) {
+    myInlinedRun { println("myInlinedRun $i!") }
+  }
 }
 
 fun myRun(lambda: ()-> Unit) {
   lambda()
+}
+
+//Лучше всего делать inline когда аргумент - лямбда и когда например вызываем эту функцию в цикле,
+//т.к. будет создано множество объектов для лямбд
+inline fun myInlinedRun(lambda: ()-> Unit) {
+  lambda()
+}
+
+//StringBuilder.() -> Unit - lambda with receiver. It's like extension function
+inline fun buildString(builderAction: StringBuilder.() -> Unit): String {
+  println("my custom buildString!")
+  val stringBuilder = StringBuilder()
+  stringBuilder.builderAction()
+  return stringBuilder.toString()
 }

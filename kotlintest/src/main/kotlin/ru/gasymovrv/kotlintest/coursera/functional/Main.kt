@@ -98,8 +98,10 @@ fun main() {
   //Lambda types
   val sum: (Int, Int) -> Int = { x, y -> x + y }
   val isEven: (Int) -> Boolean = { i: Int -> i % 2 == 0 }
+  val isEvenWithReceiver: Int.() -> Boolean = { this % 2 == 0 }
   println(sum(1, 2))
   println(isEven(2))
+  println(2.isEvenWithReceiver())
   println({ isEven(sum(3, 6)) }()) //creates lambda and invokes it
   println(run { isEven(sum(3, 6)) }) //creates lambda and invokes it
 
@@ -164,6 +166,23 @@ fun main() {
   }
 
   println(readFirstLine("readme.md"))
+
+  val sb = StringBuilder()
+  val s1 = with(sb) {//with receiver lambda for common cases
+    appendLine("Alphabet")
+    for (c in 'a'..'z') {
+      append(c)
+    }
+  }
+  println(s1)
+
+  val s2 = buildString {
+    appendLine("Alphabet")
+    for (c in 'a'..'z') {
+      append(c)
+    }
+  }
+  println(s2)
 
   //.run - runs lambda
   //.withLock - instead of synchronized

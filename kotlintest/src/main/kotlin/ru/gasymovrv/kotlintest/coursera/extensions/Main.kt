@@ -16,6 +16,11 @@ fun String.repeat(n: Int): String {
 }
 
 fun String.get(index: Int) = '*' //Does not work because the get method already defined in String
+fun CharSequence.split( //But other extension from library we can override
+  vararg delimiters: String,
+  ignoreCase: Boolean = false,
+  limit: Int = 0
+): List<String> = listOf("firstPart")
 
 fun Int.incBy4() = this + 4
 
@@ -62,4 +67,6 @@ fun main() {
   c.eq(c2)
   c eq c2
   c2 eq c3
+
+  println("sdg".split("/"))
 }

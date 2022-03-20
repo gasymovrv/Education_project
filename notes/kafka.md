@@ -1,3 +1,27 @@
+# API
++ [Kafka Consumer API](https://www.baeldung.com/java-kafka-streams-vs-kafka-consumer)
+```
+ <dependency>
+	<groupId>org.apache.kafka</groupId>
+	<artifactId>kafka-clients</artifactId>
+</dependency>
+```
++ [Kafka Streams API](https://www.baeldung.com/java-kafka-streams-vs-kafka-consumer)
+```
+ <dependency>
+	<groupId>org.apache.kafka</groupId>
+	<artifactId>kafka-streams</artifactId>
+</dependency>
+```
+
+### Message semantics
++ **At-most-once**. Messaging system will never duplicate a message but might miss the occasional message
++ **At-least-once**. It will never miss a message but might duplicate the occasional message
++ **Exactly-once**. It always delivers all messages without duplication. 
+Это доступно при [транзкационном обмене](https://www.baeldung.com/kafka-exactly-once) или в [Streams API](https://www.baeldung.com/java-kafka-streams-vs-kafka-consumer). 
+[Статья на эту тему](https://habr.com/ru/company/badoo/blog/333046/)
+
+
 # Установка кафки
 + Полезные ссылки:
     + https://habr.com/ru/post/440400/

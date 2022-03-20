@@ -125,6 +125,8 @@
 
 ### Разное
 + [Concurrency / parallel / multithreading / asynchrony](concurrency.md)
++ [CI/CD](CI_CD.md)
++ [Kafka](kafka.md)
 + Зачем использовать Immutable объекты?
     + Для потокобезопасности
     + Для возможности кэширования (например [пул строк](java/java.md#Пул-строк))
