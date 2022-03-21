@@ -1,5 +1,6 @@
 package ru.gasymovrv.kotlintest.coursera.extensions
 
+import ru.gasymovrv.kotlintest.coursera.FileTable
 import ru.gasymovrv.kotlintest.coursera.ranges.Computer
 import java.math.BigDecimal
 
@@ -29,6 +30,9 @@ fun Computer.upgradeHdd(value: Int) {
 }
 
 fun BigDecimal.myFunc() = BigDecimal.ZERO
+
+//extension for typealias
+fun <K> FileTable<K>.f1() {}
 
 infix fun <T> T.eq(other: T) {
   if (this == other) println("ok")

@@ -58,3 +58,17 @@ fun varargExample(j: Int, vararg elements: String, s: String) {
 typealias FileTable<K> = MutableMap<K, MutableList<File>>
 typealias MyHandler = (Int, String, Any) -> Unit
 typealias Predicate<T> = (T) -> Boolean
+
+fun nothingExample(): Nothing {
+  println("nothingExample")
+  throw IllegalArgumentException()
+}
+fun nothingExample2(): Nothing {
+  while (true) {
+    println("nothingExample2")
+  }
+}
+fun unitExample(): Unit {
+  println("unitExample")
+  return Unit //you can omit it
+}

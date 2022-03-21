@@ -1,6 +1,7 @@
 package ru.gasymovrv.kotlintest.coursera.collections
 
 import java.util.TreeMap
+import kotlin.random.Random
 
 fun main() {
   println("immutable:")
@@ -10,9 +11,11 @@ fun main() {
 
   println("mutable:")
   val strArray = arrayOf("a1", "c2") //only exists elements are mutable, can't change size
-  val intArray = intArrayOf(1, 2) //only exists elements are mutable, can't change size
+  val intArray = intArrayOf(1, 2) //array of int primitives
+  val integerArray = arrayOf(1, 2) //array of Integers
   println(strArray.javaClass)//Array of strings
   println(intArray.javaClass)//Array of integers
+  println(integerArray.javaClass)//Array of integers
   println(mutableListOf<String>("a", "b").javaClass)//Arrays$ArrayList
   println(mutableSetOf<String>("s", "d").javaClass)//LinkedHashSet
   println(mutableMapOf<String, Int>("a" to 1, "b" to 2).javaClass)//LinkedHashMap
@@ -86,11 +89,25 @@ fun main() {
   println()
   list3.asSequence().filter(::f).map(::m).toList() //f1 f2 m2 f3 f4 m4
   println()
-  list3.filter(::f) .map(::m) //f1 f2 f3 f4 m2 m4
+  list3.filter(::f).map(::m) //f1 f2 f3 f4 m2 m4
   list3.asSequence().map(::m).filter(::f)//nothing is printed
+
+  println(generateSequence { Random.nextInt(5).takeIf { it > 0 } })
+  val infiniteSeq = generateSequence(0) { it + 1 }
+  println(infiniteSeq.take(2).toList())
+  println(infiniteSeq.take(5).toList())
+
+  val numbers = generateSequence(3) { n ->
+    println("Generating element...")
+    (n + 1).takeIf { it < 7 }
+  }
+  println(numbers.first())//3
+
+  println(mySequence().map {it*it}.filter { it > 10 }.first())
 }
 
 data class SortedType(val string: String) : Comparable<SortedType> {
+
   override operator fun compareTo(other: SortedType): Int {
     return string.compareTo(other.string)
   }
@@ -109,4 +126,14 @@ fun m(i: Int): Int {
 fun f(i: Int): Boolean {
   print("f$i ")
   return i % 2 == 0
+}
+
+//Lazy building of sequence
+fun mySequence() = sequence {
+  println("yield one element")
+  yield(1)
+  println("yield a range")
+  yieldAll(3..5)
+  println("yield a list")
+  yieldAll(listOf(7, 9))
 }

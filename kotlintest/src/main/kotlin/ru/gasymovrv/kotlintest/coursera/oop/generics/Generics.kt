@@ -39,7 +39,7 @@ fun useFoo(ints: List<String>) {
   foo(ints)
 }
 
-//------------------------ in, out -------------------------------
+//------------------------ out -------------------------------
 interface Producer<out T> {
 
   fun produce(): T
@@ -54,6 +54,7 @@ fun demoOut() {
   println("produced: ${p.produce()}")
 }
 
+//------------------------ in -------------------------------
 interface Consumer<in T> {
 
   fun consume(other: T)

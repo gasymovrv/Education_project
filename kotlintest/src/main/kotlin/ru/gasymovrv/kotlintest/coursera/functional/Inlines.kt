@@ -35,3 +35,13 @@ inline fun buildString(builderAction: StringBuilder.() -> Unit): String {
   stringBuilder.builderAction()
   return stringBuilder.toString()
 }
+
+//Пример ограничений inline
+inline fun myInlinedRun2(noinline lambda: ()-> Unit, lambda2: () -> Unit) {
+  regularFun(lambda)
+  //Нельзя передавать inline лямбду в noinline метод, т.к. она встраивается в месте вызова
+  //regularFun(lambda2)
+}
+fun regularFun(lambda: ()-> Unit) {
+  lambda()
+}

@@ -39,6 +39,9 @@ class SimpleCompanion {
     fun bar() {}
   }
 }
+class SimpleCompanion2 {
+  companion object CompanionObj
+}
 
 interface Factory<T> {
   fun create(): T
