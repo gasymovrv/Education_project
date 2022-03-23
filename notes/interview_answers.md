@@ -36,8 +36,8 @@
 + [Spring Webflux](spring_hibernate.md#Spring-Webflux)
 
 ### Hibernate
-+ [Стратегии наследования](spring_hibernate.md#Hibernate#Стратегии-наследования)
-+ [Проблема N+1](spring_hibernate.md#Важные-нюансы#Проблема-N1)
++ [Стратегии наследования](spring_hibernate.md#Стратегии-наследования)
++ [Проблема N+1](spring_hibernate.md#Проблема-N1)
 
 ### Базы данных
 + [Работа с БД через Spring Data](spring_hibernate.md#Spring-Data)
