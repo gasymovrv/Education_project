@@ -16,30 +16,31 @@
 + [SOLID](OOP.md#SOLID)
 
 ### Вопросы Java и JVM
-+ [Java EE](java/java.md#Java-EE)
-+ [Методы Object](java/java.md#Методы-Object)
-+ [Нюансы синтаксиса Java](java/java.md#Нюансы-синтаксиса-Java)
-+ [JVM компоненты](java/java.md#JVM-компоненты)
-+ [Правила реализации equals/hashCode](java/java.md#Правила-реализации-equalshashCode)
-+ [Java Collections API](java/java.md#Java-Collections-API)
-+ [Пул строк](java/java.md#Пул-строк)
-+ [WeakReference, SoftReference и др.](java/java.md#weakreference-softreference-и-др)
-+ [Утечки памяти (Memory leaks)](java/java.md#утечки-памяти-memory-leaks)
-+ [Отличия Java IO от Java NIO](java/java.md#Отличия-Java-IO-от-Java-NIO)
-+ [Многопоточность в Java](java/java.md#Многопоточность)
++ [Java EE](java.md#Java-EE)
++ [Методы Object](java.md#Методы-Object)
++ [Нюансы синтаксиса Java](java.md#Нюансы-синтаксиса-Java)
++ [JVM компоненты](java.md#JVM-компоненты)
++ [Правила реализации equals/hashCode](java.md#Правила-реализации-equalshashCode)
++ [Java Collections API](java.md#Java-Collections-API)
++ [Пул строк](java.md#Пул-строк)
++ [WeakReference, SoftReference и др.](java.md#weakreference-softreference-и-др)
++ [Утечки памяти (Memory leaks)](java.md#утечки-памяти-memory-leaks)
++ [Отличия Java IO от Java NIO](java.md#Отличия-Java-IO-от-Java-NIO)
++ [Многопоточность в Java](java.md#Многопоточность)
 
 ### Spring
-+ [Spring Core](java/spring.md#Spring-Core)
-+ [Spring Boot](java/spring.md#Spring-Boot)
-+ [Spring Security](java/spring.md#Spring-Security)
-+ [Spring Webflux](java/spring.md#Spring-Webflux)
++ [Spring Core](spring_hibernate.md#Spring-Core)
++ [Spring Boot](spring_hibernate.md#Spring-Boot)
++ [Spring Data](spring_hibernate.md#Spring-Data)
++ [Spring Security](spring_hibernate.md#Spring-Security)
++ [Spring Webflux](spring_hibernate.md#Spring-Webflux)
 
 ### Hibernate
-+ [Важные нюансы](java/hibernate.md#Важные-нюансы)
-+ [Стратегии наследования](java/hibernate.md#Стратегии-наследования)
-+ [Проблема N+1](java/hibernate.md#Проблема-N1)
++ [Стратегии наследования](spring_hibernate.md#Hibernate#Стратегии-наследования)
++ [Проблема N+1](spring_hibernate.md#Важные-нюансы#Проблема-N1)
 
 ### Базы данных
++ [Работа с БД через Spring Data](spring_hibernate.md#Spring-Data)
 + [Транзакции и ACID](databases.md#Транзакции-и-ACID)
 + [Теорема CAP](databases.md#Теорема-CAP)
 + [SQL СУБД](databases.md#SQL-СУБД)
@@ -65,7 +66,7 @@
 + AOP - аспекты используемые в Spring. 
     + Они могут юзать для создания прокси как jdk-dymanic (если у нашего класса есть интерфейс) так и cglib (если нтерфейса нет то прокси создастся с помощью наследования)
 	+ В каком потоке вызывается аспект? - по умолчанию в том же, но можно настроить
-+ AspectJ - аспекты которые создаются на этапе компиляции и не требуют паттернов в коде. Сложнее но быстрее
++ AspectJ - аспекты, которые создаются на этапе компиляции и не требуют паттернов в коде. Сложнее, но быстрее
 
 ### Кэш
 + Использовать когда много операций чтения, но мало изменений
@@ -129,7 +130,7 @@
 + [Kafka](kafka.md)
 + Зачем использовать Immutable объекты?
     + Для потокобезопасности
-    + Для возможности кэширования (например [пул строк](java/java.md#Пул-строк))
+    + Для возможности кэширования (например [пул строк](java.md#Пул-строк))
 + Идемпотентность — действие, многократное повторение которого эквивалентно однократному.
     + Примером такой операции могут служить GET-запросы в протоколе HTTP. По спецификации, сервер должен возвращать идентичные ответы на идентичные GET-запросы (при условии, что ресурс не изменился)
 + Agile
