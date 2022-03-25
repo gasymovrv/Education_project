@@ -2,6 +2,8 @@ package ru.gasymovrv.kotlintest.coursera
 
 import ru.gasymovrv.kotlintest.coursera.extensions.eq
 
+// Implement the function that builds a sequence of Fibonacci numbers using 'sequence' function.
+// Use 'yield'.
 fun fibonacci(): Sequence<Int> = sequence {
     var elements = 0 to 1
     while (true) {

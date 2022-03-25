@@ -31,11 +31,19 @@
 ## Spring Boot
 + Отличия от простого Spring:
     + Использование так называемых Starter, которые позволяют получить набор сконфигурированных бинов, готовых к использованию и доступных для конфигурации через application.yml-файлы
-        + Бины автоконфигураций уже написаны в spring-boot-autoconfigure, но создаются только по @Conditional/@ConditionalOnClass/ConditionalOnProperty
-            + Например конфиг-бин `FlywayAutoConfiguration` имеет аннотацию `@ConditionalOnClass(Flyway.class)`
-            + Т.е. он создается когда мы подклчюаем зависимость которая содержит класс `Flyway.class`, например эту - `implementation "org.flywaydb:flyway-core"`
-        + ?? Часть из них подключается через spring.factories. Они соблюдают инверсию контроля и open closed principle — несут свои spring.factories, в которых прописаны их кишки
-        + ?? Часть конфигураций просто захардкожена в Spring Boot
+        + `spring.factories` - при старте спринг сканирует этот файл и пытается создать прописанные в нем бины автоконфигураций, пример:
+          ```properties
+          # Auto Configure
+          org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+          .springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration,\
+          .springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration,\
+          .springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,\
+          .springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+          ```
+        + Бины автоконфигураций уже объявлены в spring-boot-autoconfigure, но создаются только по `@ConditionalOnClass`/`ConditionalOnProperty`
+          + Например конфиг-бин `FlywayAutoConfiguration` имеет аннотацию `@ConditionalOnClass(Flyway.class)`
+          + Т.е. он создается когда мы подклчюаем зависимость которая содержит класс `Flyway.class` и он попадает в classpath, например эту - `implementation "org.flywaydb:flyway-core"`
+        
     + Стартеры позволяют решить проблемы конфликта зависимостей. Они содержат все необходимые для их сферы зависимости, а т.к. spring-boot подключается как родитель или dependency-менеджер, то мы имеем все их версии. Блок dependency-менеджмента не прописывает зависимости. Это блок, при помощи которого можно указать версии на случай, если эти зависимости будут нужны
     + Встроенный контейнер сервлетов - для Spring-MVC - Tomcat, для Spring-Webflux - Netty
 + Подробнее о Spring Boot [habr](https://habr.com/ru/company/jugru/blog/424503/)

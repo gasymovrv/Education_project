@@ -51,6 +51,12 @@ fun main() {
   strArray[0] = "b134"
   println(intArray[0])
   println(strArray[0])
+  val intArray2 = intArrayOf(1, 2, 3)
+  val intArray3 = intArrayOf(1, 2, 3)
+  println("Compare arrays intArray2 == intArray3: " +
+      "${intArray2 == intArray3}")
+  println("Compare arrays intArray2.contentEquals(intArray3): " +
+      "${intArray2.contentEquals(intArray3)}")
 
   val collection1: List<Int?> = list + set //= list.addAll(set)
   val collection2: Set<Int?> = set + list//= set.addAll(list)

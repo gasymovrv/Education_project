@@ -4,18 +4,33 @@ package ru.gasymovrv.kotlintest.coursera.oop;
 import static ru.gasymovrv.kotlintest.coursera.oop.ObjectsKt.extFun;
 
 import java.util.List;
+import org.jetbrains.annotations.Nullable;
 import ru.gasymovrv.kotlintest.coursera.oop.generics.GenericsKt;
 
 public class JavaClass {
+
+  public static String getJavaString() {
+    return null;
+  }
+
+  @Nullable
+  public static String getNullableJavaString() {
+    return null;
+  }
 
   public static void main(String[] args) {
     new C3().f3$kotlintest();
     KSingleton.INSTANCE.print();
     KSingleton.INSTANCE.print();
     KSingleton.INSTANCE.print();
+
+    // Does not compile, because print() doesn't have @JvmStatic.
+    // It's generated as method of KSingleton.INSTANCE object
+    //KSingleton.print();
     KSingleton.bar();
 
     extFun(SimpleCompanion.Companion);
+    //SimpleCompanion.bar(); //does not compile, because bar() doesn't have @JvmStatic
     SimpleCompanion.foo();
     SimpleCompanion.Companion.bar();
     SimpleCompanion.Companion.foo();

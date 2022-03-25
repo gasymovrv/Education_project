@@ -1,5 +1,7 @@
 package ru.gasymovrv.kotlintest.coursera.functional
 
+import ru.gasymovrv.kotlintest.coursera.Words
+import ru.gasymovrv.kotlintest.coursera.extensions.eq
 import ru.gasymovrv.kotlintest.coursera.oop.Contact
 import java.io.BufferedReader
 import java.io.FileReader
@@ -7,7 +9,6 @@ import kotlin.reflect.KFunction0
 import kotlin.reflect.KFunction1
 
 data class Person(val name: String, val age: Int) {
-
   var children: MutableList<Person> = mutableListOf()
 
   fun doSomething() = println("do something from Person: $this")
@@ -22,6 +23,7 @@ fun main() {
 
   val list = listOf(sasha, petr, oleg)
 
+  // ------------------------- collection functions ------------------------------------
   print("count: ")
   println(list.count { it.age == 35 })
 
@@ -57,6 +59,15 @@ fun main() {
 
   print("last: ")
   println(list.last())
+
+  print("sortedBy: ")
+  println(listOf(sasha, petr, oleg, nika, anna).sortedBy { it.age })
+
+  print("sortedByDescending: ")
+  println(listOf(sasha, petr, oleg, nika, anna).sortedByDescending { it.age })
+
+  print("mapNotNull: ")
+  println(listOf(sasha, petr, null, nika, null).mapNotNull { it?.age })
 
   print("groupBy: ")
   println(list.groupBy { it.age })
@@ -95,7 +106,11 @@ fun main() {
   print("getOrElse: ")
   println(list.groupBy { it.age }.getOrElse(0) { listOf(Person("unknown", 0)) })
 
-  //Lambda types
+  examplesOfWorkWithMap(list)
+
+  list.groupingBy { it.age }.eachCount()
+
+  //-------------------------------- Lambda types ----------------------------------------------
   val sum: (Int, Int) -> Int = { x, y -> x + y }
   val isEven: (Int) -> Boolean = { i: Int -> i % 2 == 0 }
   val isEvenWithReceiver: Int.() -> Boolean = { this % 2 == 0 }
@@ -122,7 +137,8 @@ fun main() {
   f3(oleg)
   f4()
 
-  //return from lambda
+  //----------------------- return from lambda----------------------------------------
+
   val list4 = listOf(list, list2).flatten()
   fun wrongReturn(list: List<Person>): List<Person> {
     return list.flatMap {
@@ -156,25 +172,60 @@ fun main() {
   }
   println(duplicateYoungestAnonymousFun(list4))
 
-  getContact()?.let { sendPostTo(it) }
+  //-------------------- scope functions - let, takeIf, with and etc. ------------------------------
   val number = 42
-  number.takeIf {it < 40}?.let{ println("took a number < 40: $it") }
-  number.takeIf {it > 40}?.let{ println("took a number > 40: $it") }
+
+  val evenOrNull = number.takeIf { it % 2 == 0 }
+  val oddOrNull = number.takeUnless { it % 2 == 0 }
+  println("takeIf $number is even: $evenOrNull, takeUnless $number is even: $oddOrNull")
 
   repeat(2) {
     println("from repeat, iteration: $it")
   }
 
-  println(readFirstLine("readme.md"))
+  //.use - instead of try-with-resources
+  val firstLine = BufferedReader(FileReader("readme.md")).use { br -> br.readLine() }
+  println(firstLine)
 
+  //.with is a high order fun with arguments: receiver, lambda with receiver.
+  // Returns result of lambda
   val sb = StringBuilder()
-  val s1 = with(sb) {//with receiver lambda for common cases
+  val s1 = with(sb) {
     appendLine("Alphabet")
     for (c in 'a'..'z') {
       append(c)
     }
   }
   println(s1)
+
+  val resultFromWith = with(oleg) {
+    println("with(oleg): name=$name, age=$age")
+    return@with "result from with"
+  }
+  println(resultFromWith)
+
+  val words = Words()
+  exampleOfWithAndPrivateExtensions(words)
+
+  //.run is an extension fun with argument: lambda with receiver. Returns result of lambda
+  val nullablePerson: Person? = Person("Nullable-person", 0)
+  nullablePerson?.run {
+    println("nullablePerson?.run: name=$name, age=$age")
+  }
+
+  //.let is an extension fun with simple lambda argument. Returns result of lambda
+  getContact()?.let { sendPostTo(it) }
+  number.takeIf { it < 40 }?.let { println("took a number < 40: $it") }
+  val resultFromLet =  number.takeIf { it > 40 }?.let {
+    println("took a number > 40: $it"); return@let true
+  }
+  println("result from let: $resultFromLet")
+
+  //.apply is an extension fun with argument: lambda with receiver. Returns this
+  applyExample(nullablePerson)
+
+  //.also is like .let but .also returns it
+  val personFromAlso = nullablePerson?.also { applyExample(it) }
 
   val s2 = buildString {
     appendLine("Alphabet")
@@ -184,17 +235,61 @@ fun main() {
   }
   println(s2)
 
-  //.run - runs lambda
   //.withLock - instead of synchronized
 }
 
 fun doSomething() = println("do something")
 
-fun sendPostTo(contact: Contact) { println("contact through let: $contact") }
+fun sendPostTo(contact: Contact) {
+  println("contact through let: $contact")
+}
+
 fun getContact(): Contact? = Contact("name", "addr")
 
-fun readFirstLine(path: String): String {
-  //instead of try-with-resources
-  return BufferedReader(FileReader(path)).use { br -> br.readLine() }
+fun examplesOfWorkWithMap(list: List<Person>) {
+  val map1 = mutableMapOf<Int, MutableList<Person>>()
+  //Instead of it we can use simple .groupBy (but result is immutable) or .merge or .getOrPut
+  for (person in list) {
+    if (person.age !in map1) {
+      map1[person.age] = mutableListOf()
+    }
+    map1.getValue(person.age) += person
+  }
+  println("update values of map in old style, result: $map1")
+
+  val map2 = list.groupBy { it.age }
+  println("get map from list.groupBy, result: $map2")
+
+  val map3 = mutableMapOf<Int, MutableList<Person>>()
+  for (person in list) {
+    val personList = map3.getOrPut(person.age) { mutableListOf() }
+    personList += person
+  }
+  println("map.getOrPut, result: $map3")
+
+  val map4 = mutableMapOf<Int, MutableList<Person>>()
+  list.forEach { person ->
+    map4.merge(person.age, mutableListOf(person)) { oldValue, _ ->
+      oldValue += person
+      return@merge oldValue
+    }
+  }
+  println("map.merge, result: $map4")
+}
+
+fun applyExample(nullablePerson: Person?) {
+  val p = nullablePerson?.apply {
+    println("nullablePerson?.run: name=$name, age=$age")
+  } ?: return
+  println("apply gave non-null person: $p")
+}
+
+fun exampleOfWithAndPrivateExtensions(words: Words) {
+    with(words) {
+        // The following two lines should compile:
+        "one".record()
+        +"two"
+    }
+    words.toString() eq "[one, two]"
 }
 

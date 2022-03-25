@@ -2,6 +2,9 @@ package ru.gasymovrv.kotlintest.coursera
 
 import ru.gasymovrv.kotlintest.coursera.extensions.eq
 
+// Write the code that the Kotlin compiler will generate while inlining the filter function (instead of calling it).
+// Note that the compiler generates Java bytecode, but for simplicity, write the similar code in Kotlin.
+// The simplified declaration of 'filter' is given below.
 fun filterNonZero(list: List<Int>) = list.filter { it != 0 }
 
 fun filterNonZeroGenerated(list: List<Int>): List<Int> {

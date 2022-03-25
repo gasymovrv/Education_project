@@ -1,7 +1,6 @@
 package ru.gasymovrv.kotlintest.coursera
 
 import ru.gasymovrv.kotlintest.coursera.extensions.lastChar
-import java.io.File
 
 fun main() {
   println("hello")
@@ -52,23 +51,4 @@ fun varargExample(j: Int, vararg elements: String, s: String) {
   for ((i, el) in elements.withIndex()) {
     print(if (i == elements.size - 1) el else "$el, ")
   }
-}
-
-//typealias examples (just to change name of something):
-typealias FileTable<K> = MutableMap<K, MutableList<File>>
-typealias MyHandler = (Int, String, Any) -> Unit
-typealias Predicate<T> = (T) -> Boolean
-
-fun nothingExample(): Nothing {
-  println("nothingExample")
-  throw IllegalArgumentException()
-}
-fun nothingExample2(): Nothing {
-  while (true) {
-    println("nothingExample2")
-  }
-}
-fun unitExample(): Unit {
-  println("unitExample")
-  return Unit //you can omit it
 }

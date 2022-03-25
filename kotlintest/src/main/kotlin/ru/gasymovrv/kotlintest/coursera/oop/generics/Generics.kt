@@ -40,6 +40,7 @@ fun useFoo(ints: List<String>) {
 }
 
 //------------------------ out -------------------------------
+//'out' means output, so we can use 'out T' only as return type
 interface Producer<out T> {
 
   fun produce(): T
@@ -55,6 +56,7 @@ fun demoOut() {
 }
 
 //------------------------ in -------------------------------
+//'in' means input, so we can use 'in T' only as argument type
 interface Consumer<in T> {
 
   fun consume(other: T)

@@ -1,6 +1,6 @@
 package ru.gasymovrv.kotlintest.coursera.extensions
 
-import ru.gasymovrv.kotlintest.coursera.FileTable
+import ru.gasymovrv.kotlintest.coursera.oop.FileTable
 import ru.gasymovrv.kotlintest.coursera.ranges.Computer
 import java.math.BigDecimal
 
@@ -44,6 +44,8 @@ fun main() {
   println("sdfsdg".lastChar())
   println("21".secondChar())
   println("21".repeat(2))
+  println("s.dgf.sdf.h.17".replace(".", "*"))
+  println("s.dgf.sdf.h.17".replace(".".toRegex(), "*"))
   println(3.incBy4())
 
   val c = Computer(rom = 500, cpuCores = 6, cpuFrequency = 2400, ram = 10)
