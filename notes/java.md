@@ -268,3 +268,37 @@
 
 #### Atomics
 + Классы с поддержкой атомарных операций над примитивами и ссылками.
+
+### Асинхронность
++ Асинхронным называют такой подход в программировании когда из главного потока стартуют задачи, выполняемые на других потоках, а главный при этом продолжает выполнять другие задачи.
+Результат выполнения асинхронных задач мы получаем в главном потоке позже. 
++ Подробнее - [concurrency.md](concurrency.md#Асинхронное-исполнение)
++ Подробная статья - [habr](https://habr.com/ru/company/oleg-bunin/blog/543386/)
+
+#### CompletableFuture
+![CompletableFuture.png](resources/CompletableFuture.png)
+
++ Мы прочитали данные:
+```java
+CompletableFuture data = readData(source);
+```
+
++ Дальше говорим: когда прочитаем данные, нужно отправить их на обработку:
+```java
+CompletableFuture processData1 = data.thenApplyAsync(this::processData1);
+CompletableFuture processData2 = data.thenApplyAsync(this::processData2);
+```
+
++ Так как у нас здесь используется Async постфикс, то функции this::processData1 и this::processData2 будут запущены в двух разных потоках и будут выполняться параллельно. Но после параллельного выполнения их результаты должны соединиться. Это делает thenCombine.
++ Он дожидается, когда и processData1, и processData2 завершатся, и после этого вызывает функцию объединения данных:
+```java
+.thenCombine(processData2, (a, b) -> mergeData(a,b))
+```
+
++ То есть мы объединяем результаты первой и второй обработки, и после этого записываем данные:
+```java
+.thenAccept(data -> writeData(data, dest));
+```
++ В итоге процесс выглядит так:
+
+![async_flow.png](resources/async_flow.png)
