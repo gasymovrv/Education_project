@@ -40,10 +40,11 @@
           .springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,\
           .springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
           ```
-        + Бины автоконфигураций уже объявлены в spring-boot-autoconfigure, но создаются только по `@ConditionalOnClass`/`ConditionalOnProperty`
-          + Например конфиг-бин `FlywayAutoConfiguration` имеет аннотацию `@ConditionalOnClass(Flyway.class)`
-          + Т.е. он создается когда мы подклчюаем зависимость которая содержит класс `Flyway.class` и он попадает в classpath, например эту - `implementation "org.flywaydb:flyway-core"`
-        
+        + Бины автоконфигураций уже объявлены в `spring-boot-autoconfigure`, но создаются только по `@ConditionalOnClass`/`ConditionalOnProperty`
+          + Например, конфиг-бин `FlywayAutoConfiguration` имеет аннотацию `@ConditionalOnClass(Flyway.class)`
+          + Т.е. он создается когда мы подключаем зависимость, которая содержит класс `Flyway.class` и он попадает в classpath, например эту - `implementation "org.flywaydb:flyway-core"`
+          + В модуле `spring-boot-autoconfigure` условные зависимости типа `flyway-core` добавлены как optional для корректной компиляции
+        + Условные зависимости могут быть вшиты сразу в стартер, тогда подключать их дополнительно в приложении не требуется - только сам стартер
     + Стартеры позволяют решить проблемы конфликта зависимостей. Они содержат все необходимые для их сферы зависимости, а т.к. spring-boot подключается как родитель или dependency-менеджер, то мы имеем все их версии. Блок dependency-менеджмента не прописывает зависимости. Это блок, при помощи которого можно указать версии на случай, если эти зависимости будут нужны
     + Встроенный контейнер сервлетов - для Spring-MVC - Tomcat, для Spring-Webflux - Netty
 + Подробнее о Spring Boot [habr](https://habr.com/ru/company/jugru/blog/424503/)
