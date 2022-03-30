@@ -33,3 +33,5 @@
 ![reactive.png](resources/reactive.png)
 
 Пример фрэймворка для реактивного программирования - [Spring-Webflux](spring_hibernate.md#Spring-Webflux)
+
+[habr](https://habr.com/ru/company/oleg-bunin/blog/545702/)
