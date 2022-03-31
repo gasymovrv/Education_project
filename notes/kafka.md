@@ -1,3 +1,14 @@
+# Основные понятия
+
+**Apache Kafka** – диспетчер сообщений на Java платформе. 
+
++ Topic (Тема)
++ Consumer (Подписчики)
++ Producer (Издатель)
++ Group (Группа)
++ Partition (Раздел)
++ Streams (Потоки)
+
 # API
 + [Kafka Consumer API](https://www.baeldung.com/java-kafka-streams-vs-kafka-consumer)
 ```
