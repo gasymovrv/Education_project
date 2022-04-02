@@ -163,3 +163,20 @@ public class OrderStockAndPackValidator extends OrderStockValidator {
 
 ### *D* - Принцип инверсии зависимостей (Dependency Inversion Principle)
 + Абстракции не должны зависеть от деталей. Детали должны зависеть от абстракций. Нарушаем, например, если инжектим не интерфейс, а реализацию
+
+
+### Паттерны GoF и их применения в JDK
++ [Все паттерны со схемами, разбитые по категориям (C - creational, S - structural, B - behavioral)](resources/patterns_rus.pdf)
++ Прототип – `Cloneable`
++ Адаптер – `InputStreamReader`, `OutputStreamWriter` и др.
++ Декоратор – все подклассы `java.io.InputStream`, `OutputStream`, `Reader` и `Writer` имеют конструктор, принимающий объекты этих же классов
++ Прокси - все бины Spring или EJB, моки
++ Итератор – `java.util.Iterator` + внутренняя реализация его в коллекциях
++ Шаблонный метод - сервлеты (метод `service()`)
++ Легковес - `java.lang.Integer#valueOf(int)` – если значение есть в кэше (IntegerCache – от -128 до 127) то возвращет его, иначе новый объект (а также `Boolean`, `Byte`, `Character`, `Short`, `Long` и `BigDecimal`)
++ Посетитель - `java.nio.file.FileVisitor` 
++ Стратегия - `java.util.Comparator#compare()`, вызываемые из `Collections#sort(List, Comparator)`
++ Строитель – `StringBuilder`, `Appendable`  и др.
++ Цепочка обязанностей - `javax.servlet.Filter#doFilter()`
++ Фабричный метод - `java.util.EnumSet#of()`, `java.util.List#of()`
++ Примеры реализации всех паттернов ООП (GoF): [src/main/java/patterns](../src/main/java/patterns)
