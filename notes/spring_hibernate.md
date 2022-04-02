@@ -3,31 +3,37 @@
 ## Spring Core
 + Преимущества
     + Паттерн IoC - Inversion of Control - мы выносим контроль за подключением зависимостей (созданием и инжектом бинов) наружу из нашей бизнес логики. В спринге созданием бинов занимается ApplicationContext
+    + Паттерн DI - Dependency Injection - с помощью этого паттерна мы реализуем IoC, т.е. инжектим зависимости из контейнера, а код, в который инжектим, не занимается созданием зависимости
     + Благодаря этому получаем гибкость реализаций. Т.к. мы инжектим бины через интерфейсы, то есть можем легко менять реализации
 + Основные этапы поднятия ApplicationContext:
-	+ ...BeanDefinitionReader - чтение конфигов и создание BeanDefinition
-		+ Виды конфигов:
-			+ xml - ClassPathXmlApplicationContext(“context.xml”)
-			+ javaConfig - класс с @Configuration: AnnotationConfigApplicationContext(JavaConfig.class)
-			+ annotations - пакета для сканирования: AnnotationConfigApplicationContext(“package.name”)
-			+ groovy - GenericGroovyApplicationContext(“context.groovy”)
-		+ На выходе мапа Map<BeanId, BeanDefinition>
+    + ...BeanDefinitionReader - чтение конфигов и создание BeanDefinition
+        + Виды конфигов:
+            + xml - ClassPathXmlApplicationContext(“context.xml”)
+            + javaConfig - класс с @Configuration: AnnotationConfigApplicationContext(JavaConfig.class)
+            + annotations - пакета для сканирования: AnnotationConfigApplicationContext(“package.name”)
+            + groovy - GenericGroovyApplicationContext(“context.groovy”)
+        + На выходе мапа Map<BeanId, BeanDefinition>
 	
-	+ Создание BeanFactory и настройка BeanDefinition (мета данные о бинах)
-		можно перехватить и донастроить BeanDefinition через BeanFactoryPostProcessor
-		на этом этапе парсятся проперти для @Value
+    + Создание BeanFactory и настройка BeanDefinition (мета данные о бинах)
+        можно перехватить и донастроить BeanDefinition через BeanFactoryPostProcessor
+        на этом этапе парсятся проперти для @Value
 
-	+ Создание кастомных FactoryBean - фабрика создания бинов (актуально только для xml конфига)
+    + Создание кастомных FactoryBean - фабрика создания бинов (актуально только для xml конфига)
 
-	+ Создание экземпляров бинов (только не lazy - например синглтон, он по умолчанию не lazy)
-		+ Созданием экземпляров бинов занимается BeanFactory при этом, если нужно, делегирует это кастомным FactoryBean
-		+ На выходе мапа Map<BeanId, Bean>
-		+ Тут происходит инжекция бинов 
-		+ Лучше инжектить через конструктор - так поля можно сделать final и создавать бин сразу со всеми необходимыми зависимостями (к тому же это не позволит создать циклическую зависимость, а например через поля или сеттеры это возможно)
+    + Создание экземпляров бинов (только не lazy - например синглтон, он по умолчанию не lazy)
+        + Созданием экземпляров бинов занимается BeanFactory при этом, если нужно, делегирует это кастомным FactoryBean
+        + На выходе мапа Map<BeanId, Bean>
+        + Тут происходит инжекция бинов 
+        + Лучше инжектить через конструктор - так поля можно сделать final и создавать бин сразу со всеми необходимыми зависимостями (к тому же это не позволит создать циклическую зависимость, а например через поля или сеттеры это возможно)
 
-	+ Донастройка созданных бинов
-		+ Можем вклиниться с помощью BeanPostProcessor 
-		
+    + Донастройка созданных бинов
+        + Можем вклиниться с помощью BeanPostProcessor 
+
++ Циклические зависимости - `Bean A → Bean B → Bean A`
+  + Лучше так не делать, и если такое появляется - значит есть проблемы в дизайне
+  + Если все такие нужно, то можно сделать через @Autowired поля или сеттера, а также конструктора, но с @Lazy
+  + Чтобы предотвратить случайное создание таких зависимостей - лучше инжектить через конструктор, тогда спринг выбросит BeanCurrentlyInCreationException при попытке создать зацикленные бины 
+
 ## Spring Boot
 + Отличия от простого Spring:
     + Использование так называемых Starter, которые позволяют получить набор сконфигурированных бинов, готовых к использованию и доступных для конфигурации через application.yml-файлы
