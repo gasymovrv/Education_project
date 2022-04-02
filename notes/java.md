@@ -131,6 +131,7 @@
   + Терминальные методы: reduce, min, max, anyMatch, count, findFirst, forEach, collect и др.
   + Конвейерные методы: filter, skip, distinct, map, peek, limit, sorted, flatMap, mapToInt и др.
   + Подробнее [habr](https://habr.com/ru/company/luxoft/blog/270383/)
+
 + `Stream#parallel()` и `Collection#parallelStream()`
   + Мы должны сначала провести измерение производительности и рассмотреть параллелизм как возможную стратегию оптимизации.
   + Большой объем данных, множество вычислений, выполняемых для каждого элемента и возможность выполнения операций в любом порядке указывают на то, что параллелизм может быть хорошим вариантом.

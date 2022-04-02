@@ -22,6 +22,7 @@
 + [JVM компоненты](java.md#JVM-компоненты)
 + [Правила реализации equals/hashCode](java.md#Правила-реализации-equalshashCode)
 + [Java Collections API](java.md#Java-Collections-API)
++ [Java Stream API](java.md#Java-Stream-API)
 + [Пул строк](java.md#Пул-строк)
 + [WeakReference, SoftReference и др.](java.md#weakreference-softreference-и-др)
 + [Утечки памяти (Memory leaks)](java.md#утечки-памяти-memory-leaks)
@@ -106,14 +107,16 @@
 	+ помоему есть еще что-то связанное с шифрованием (signature, security ...)
 
 ### HTTP
-+ [GET](http.md#GET)
-+ [POST](http.md#POST)
-+ [PUT](http.md#PUT)
-+ [PATCH](http.md#PATCH)
-+ [HEAD](http.md#HEAD)
-+ [OPTIONS](http.md#OPTIONS)
-+ [CONNECT](http.md#CONNECT)
-+ [Коды ответов](http.md#Коды-ответов)
++ [Структура](HTTP.md#Структура-HTTP)
++ [GET vs POST](HTTP.md#GET-для-безопасных-действий-POST-для-опасных)
++ [GET](HTTP.md#GET)
++ [POST](HTTP.md#POST)
++ [PUT](HTTP.md#PUT)
++ [PATCH](HTTP.md#PATCH)
++ [HEAD](HTTP.md#HEAD)
++ [OPTIONS](HTTP.md#OPTIONS)
++ [CONNECT](HTTP.md#CONNECT)
++ [Коды ответов](HTTP.md#Коды-ответов)
 
 ### Security
 + [Injections](security.md#Injections)
