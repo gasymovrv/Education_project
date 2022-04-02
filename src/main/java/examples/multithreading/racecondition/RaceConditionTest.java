@@ -24,10 +24,10 @@ public class RaceConditionTest {
 
         ExecutorService executorService = Executors.newFixedThreadPool(5);
         executorService.invokeAll(tasks);
-        executorService.awaitTermination(2, TimeUnit.SECONDS);
         executorService.shutdown();
+        executorService.awaitTermination(2, TimeUnit.SECONDS);
 
-        System.out.println(LazyInitRace.instanceCount);
-        System.out.println(instances);
+        System.out.println("Instances count: " + LazyInitRace.instanceCount);
+        System.out.println("Instances: " + instances);
     }
 }

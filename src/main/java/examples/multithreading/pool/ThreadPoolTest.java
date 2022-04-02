@@ -11,18 +11,27 @@ public class ThreadPoolTest {
         for (int i = 0; i < 5; i++) {
             executorService.submit(new Task(i));
         }
-
-        Thread.sleep(5000);
-        //Инициирует упорядоченное завершение работы,
-        // при котором ранее отправленные задачи выполняются, но новые задачи не принимаются.
-        executorService.shutdown();
         System.out.println("All tasks submitted");
 
-        //Что-то типо join, ждем наступления первого из:
-        // все задачи выполнились
-        // истек таймаут
-        // interruption текущего потока
-        executorService.awaitTermination(15, TimeUnit.SECONDS);
+        Thread.sleep(5000);
+        System.out.println("isShutdown() = " + executorService.isShutdown());
+
+        // Инициирует упорядоченное завершение работы,
+        // при котором ранее отправленные задачи выполняются, но новые задачи не принимаются.
+        // Позволяет после вызова awaitTermination() вернуться в текущей поток
+        // сразу после выполнения последней засабмиченной таски даже если таймаут не наступил.
+        executorService.shutdown();
+
+        System.out.println("shutdown() was invoked, isShutdown() = " + executorService.isShutdown());
+        System.out.println("isTerminated() = " + executorService.isTerminated());
+
+        // Что-то типа join, ждем наступления первого из:
+        // 1. Все задачи выполнились
+        // 2. Истек таймаут
+        // 3. Interruption текущего потока
+        var isTerminated = executorService.awaitTermination(15, TimeUnit.SECONDS);
+
+        System.out.println("awaitTermination() was invoked, isTerminated = " + isTerminated);
         System.out.println("All tasks completed");
     }
 }
@@ -40,6 +49,6 @@ class Task implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Task " + id + " was completed");
+        System.out.println("-------- Task " + id + " was completed -------");
     }
 }
