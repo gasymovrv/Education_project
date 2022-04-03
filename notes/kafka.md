@@ -2,6 +2,9 @@
 
 **Apache Kafka** – диспетчер сообщений на Java платформе. 
 
++ Статья с практическим применением - [habr](https://habr.com/ru/post/354486/)
++ Видео про основы - [youtube](https://www.youtube.com/watch?v=-AZOi3kP9Js)
+
 ### Broker (Сервер)
 Отвечает за:
 + прием сообщение от продюсеров
@@ -64,10 +67,10 @@
     + Но т. к. порядок гарантируется только в рамках партиции, то можем получить: `topic-name-0`\[`0=k2:v1`, `1=k2:v2`] и `topic-name-1`\[`0=k1:v1`, `1=k1:v2`]
 + `explicit-partition` - можно явно указать партицию
 
-#### acks
+#### Подтверждение отправки - acks
 + `acks = 0`. Продюсер не ждет подтверждения об отправке. Сообщения могут теряться
-+ `acks = 1`. Продюсер ждет подтверждения об отправке от leader-реплики. Сообщения могут теряться только если брокер с leader-репликой упал до копирования сообщений
-+ `acks = -1(all)`. Продюсер ждет подтверждения об отправке от всех insync-реплик. Сообщения не могут потеряться
++ `acks = 1`. Продюсер ждет подтверждения об отправке от leader-реплики. Сообщения могут теряться только если брокер с leader-репликой упал до копирования сообщений в insync реплики
++ `acks = -1(all)`. Продюсер ждет подтверждения об отправке от всех insync-реплик. Сообщения не могут потеряться, но будет медленнее, т.к. ждем окончания копирования
 
 ### Consumer (Подписчики)
 Те кто читают сообщения из топика. Они еще называются клиентами, каждый имеет свой `client.id`, генерируемый автоматически
@@ -84,12 +87,23 @@
 
 <img width="700" alt="kafka-consumer-offset.png" src="resources/kafka-consumer-offset.png">
 
+#### Message Delivery
++ `at-most-once`. Сообщения не будут дублироваться, но можно пропустить случайное сообщение. 
+  + Обеспечивается при `enable.auto.commit=true`, т.е. как только консьюмер получил сообщение он сразу отправляет коммит. Может упасть после этого и не успеть обработать сообщение
++ `at-least-once`. Сообщение никогда не потеряется, но можно дублировать случайное сообщение.
+  + Обеспечивается при `enable.auto.commit=false`, отправляем коммит вручную. Но если консьюмер упал при обработке сообщения, то в следующий раз он вычитает это сообщение еще раз
++ `exactly-once`. Доставляются все сообщения без дублирования.
+  + Включить можно в Streams API ([подробно о Streams API на baeldung.com](https://www.baeldung.com/java-kafka-streams-vs-kafka-consumer)) с помощью `processing.guarantee=exactly_once`
+  + Также это доступно с помощью [транзакционного цикла](https://www.baeldung.com/kafka-exactly-once). 
+  + [Статья на эту тему](https://habr.com/ru/company/badoo/blog/333046/)
+
+
 #### concurrency
 + Настройка `concurrency` в `ConcurrentKafkaListenerContainerFactory` позволяет создать несколько консьюмеров внутри одного приложения.
 + `concurrency=5` означает что будет поднято 5 консьюмеров внутри группы, каждый в отдельном потоке, им будут назначены соответствующие партиции по принципу описанному в [group](kafka.md#Group)
 + Такие консьюмеры также имеют свои `client.id`  и при появлении новых консьюмеров (других приложений с той же `group.id` или при перезапуске текущего приложения с новым `concurrency`) ребаланс произойдет автоматически с учетом общего числа консьюмеров
 
-### Streams (Потоки)
+### [Streams (Потоки)](https://www.baeldung.com/java-kafka-streams-vs-kafka-consumer)
 
 # API
 + [Kafka Consumer API](https://www.baeldung.com/java-kafka-streams-vs-kafka-consumer)
@@ -106,13 +120,6 @@
 	<artifactId>kafka-streams</artifactId>
 </dependency>
 ```
-
-### Message semantics
-+ **At-most-once**. Messaging system will never duplicate a message but might miss the occasional message
-+ **At-least-once**. It will never miss a message but might duplicate the occasional message
-+ **Exactly-once**. It always delivers all messages without duplication. 
-Это доступно при [транзкационном обмене](https://www.baeldung.com/kafka-exactly-once) или в [Streams API](https://www.baeldung.com/java-kafka-streams-vs-kafka-consumer). 
-[Статья на эту тему](https://habr.com/ru/company/badoo/blog/333046/)
 
 
 # Установка кафки
