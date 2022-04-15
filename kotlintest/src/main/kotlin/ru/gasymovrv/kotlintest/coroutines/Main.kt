@@ -22,6 +22,7 @@ fun main() {
   //example7()
   //example8()
   example9()
+  println("Main done")
 }
 
 //----------------------------- example 1 -------------------------------------------------
@@ -117,62 +118,69 @@ fun example6Thread() {
 
 //----------------------------- example 7 -------------------------------------------------
 fun example7() = runBlocking {
-    val deferred: Deferred<Int> = async {
-        loadData()
-    }
-    println("waiting...")
-    println(deferred.await())
+  val deferred: Deferred<Int> = async {
+    loadData()
+  }
+  println("waiting...")
+  println(deferred.await())
 }
 
 suspend fun loadData(): Int {
-    println("loading...")
-    delay(1000L)
-    println("loaded!")
-    return 42
+  println("loading...")
+  delay(1000L)
+  println("loaded!")
+  return 42
 }
 
 //----------------------------- example 8 -------------------------------------------------
 fun example8() = runBlocking {
-    // Launch a concurrent coroutine to check if the main thread is blocked
-    launch {
-        for (k in 1..3) {
-            println("I'm not blocked $k")
-            delay(100)
-        }
+  // Launch a concurrent coroutine to check if the main thread is blocked
+  launch {
+    for (k in 1..3) {
+      println("I'm not blocked $k")
+      delay(100)
     }
-    // Collect the flow
-    simple().collect { value -> println(value) }
+  }
+  // Collect the flow
+  simple().collect { value -> println(value) }
 }
 
 fun simple(): Flow<Int> = flow { // flow builder
-    for (i in 1..3) {
-        delay(100) // pretend we are doing something useful here
-        emit(i) // emit next value
-    }
+  for (i in 1..3) {
+    delay(100) // pretend we are doing something useful here
+    emit(i) // emit next value
+  }
 }
 
 //----------------------------- example 9 -------------------------------------------------
 fun example9() = runBlocking<Unit> {
-    val channel = Channel<String>()
-    launch {
-        channel.send("A1")
-        channel.send("A2")
-        log("A done")
+  val channel = Channel<String>()
+  launch {
+    channel.send("A1")//1
+    channel.send("A2")//2
+    log("Sender A done")
+  }
+  launch {
+    delay(500)
+    channel.send("B1")//3
+    log("Sender B done")
+    //channel.close()
+  }
+  launch {
+    //если канал не закрыт, то мы тут зависнем до тех пор, пока не появится 4ый элемент
+    //Но если закрыт, то упадем с ошибкой
+    //repeat(4) { val message = channel.receive() }
+
+    repeat(3) {
+      val message = channel.receive()
+      log("receiver1: $message")
     }
-    launch {
-        channel.send("B1")
-        log("B done")
-    }
-    launch {
-        repeat(3) {
-            val message = channel.receive()
-            log(message)
-        }
-    }
+  }
+  println("The end of example 9")
 }
 
 fun log(message: Any?) {
-    println("[${Thread.currentThread().name}] $message")
+  println("[${Thread.currentThread().name}] $message")
 }
 
 
