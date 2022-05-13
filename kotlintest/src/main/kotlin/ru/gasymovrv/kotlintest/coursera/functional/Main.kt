@@ -72,6 +72,9 @@ fun main() {
   print("groupBy: ")
   println(list.groupBy { it.age })
 
+  print("groupingBy: ")
+  println(list.groupingBy { it.age })
+
   print("associateBy: ")
   println(list.associateBy { it.age }) //unique keys, duplicates will be replaced
 
@@ -108,7 +111,12 @@ fun main() {
 
   examplesOfWorkWithMap(list)
 
-  list.groupingBy { it.age }.eachCount()
+  print("eachCount: ")
+  println(list.groupingBy { it.age }.eachCount())
+
+  val map = list.associateBy { it.age }
+  print("mapValues: ")
+  println(map.mapValues { Person(it.value.name + it.key, it.key) })
 
   //-------------------------------- Lambda types ----------------------------------------------
   val sum: (Int, Int) -> Int = { x, y -> x + y }
