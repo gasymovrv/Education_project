@@ -72,8 +72,14 @@ fun main() {
   print("groupBy: ")
   println(list.groupBy { it.age })
 
-  print("groupingBy: ")
-  println(list.groupingBy { it.age })
+  print("groupingBy + aggregate: ")
+  println(list.groupingBy { it.age }
+    .aggregate { key, accumulator: StringBuilder?, element, first ->
+      if (first) // first found element with 'key'
+        StringBuilder(element.name)
+      else
+        accumulator!!.append("+").append(element.name)
+    })
 
   print("associateBy: ")
   println(list.associateBy { it.age }) //unique keys, duplicates will be replaced

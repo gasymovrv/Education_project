@@ -13,10 +13,12 @@
     + [src/main/webapp/webpack_node_simple](src/main/webapp/webpack_node_simple)
 + Вспоминаем нюансы по Java
   + [src/main/java/examples](src/main/java/examples)
-+ Примеры кода на Kotlin
-  + [kotlintest/src/main](kotlintest/src)
-  + Порешать задачки можно тут: [Kotlin Koans](https://play.kotlinlang.org/koans/overview)
++ Kotlin
+  + Примеры кода на Kotlin: [kotlintest/src/main](kotlintest/src)
   + Официальная документация: [Kotlin Docs](https://kotlinlang.org/docs/home.html)
+  + Практический курс по корутинам от JetBrains: [Introduction to Coroutines and Channels](https://play.kotlinlang.org/hands-on/Introduction%20to%20Coroutines%20and%20Channels/04_Suspend)
+    + Локально проект можно найти тут <a href = "file:///D:/Education/Kotlin/intro-coroutines">intro-coroutines</a>
+  + Порешать задачки можно тут: [Kotlin Koans](https://play.kotlinlang.org/koans/overview)
 + XSD
   + [src/main/resources/xsd](src/main/resources/xsd)
 + XSL
