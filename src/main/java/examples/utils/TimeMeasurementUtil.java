@@ -31,7 +31,7 @@ public class TimeMeasurementUtil {
     }
 
     /**
-     * Измеряет время выполнения фугкции {@param func} повторяя ее {@param iterations} раз
+     * Измеряет время выполнения функции {@param func} повторяя ее {@param iterations} раз
      * и добавляя описание
      *
      * @param topic      заголовок или тема
@@ -42,11 +42,11 @@ public class TimeMeasurementUtil {
         System.out.println(topic);
         long result = TimeMeasurementUtil.measureTime(() -> {
             for (int i = 1; i <= iterations; i++) {
-                System.out.printf("Iteration #%d: %d\n",
+                System.out.printf("Iteration #%d: %dms\n",
                         i,
                         TimeMeasurementUtil.measureTime(func));
             }
         });
-        System.out.printf("Total time: %d\n", result);
+        System.out.printf("Total time: %dms\n", result);
     }
 }
