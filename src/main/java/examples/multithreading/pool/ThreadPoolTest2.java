@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 public class ThreadPoolTest2 {
@@ -11,13 +12,17 @@ public class ThreadPoolTest2 {
   public static void main(String[] args) throws InterruptedException {
     ExecutorService executorService = Executors.newFixedThreadPool(5);
 
-    var list = new ArrayList<CallableTask>();
+    //var list = new ArrayList<CallableTask>();
+    var futures = new ArrayList<Future<Integer>>();
     for (int i = 0; i < 5; i++) {
-      list.add(new CallableTask(i));
+      //list.add(new CallableTask(i));
+      futures.add(executorService.submit(new CallableTask(i)));
     }
-    var futures = executorService.invokeAll(list);
+    //var futures = executorService.invokeAll(list); // invokeAll блокирующий
     System.out.println("isShutdown() = " + executorService.isShutdown());
     System.out.println("isTerminated() = " + executorService.isTerminated());
+
+    //Блокирует тред до завершения всех тасок, поэтому awaitTermination не нужен
     System.out.println("All tasks completed: " + futures.stream().map((f)-> {
       try {
         return f.get();
@@ -44,7 +49,7 @@ class CallableTask implements Callable<Integer> {
   @Override
   public Integer call() throws Exception {
     try {
-      Thread.sleep(2000);
+      Thread.sleep(5000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
