@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AZN Calculator</title>
+</head>
+
+<body>
+
+<h1 style="text-align: center">Расчет выгоды при покупке AZN</h1>
+<form id="form" style="text-align: center; font-size: large">
+  <div>
+    <label for="usdSum">Исходная сумма в USD</label>
+  </div>
+  <div>
+    <input id="usdSum" type="number" value="1000">
+  </div>
+  <br/>
+
+  <div>
+    <label for="koronaRubToAznRate">Курс AZN/RUB в Korona Pay</label>
+  </div>
+  <div>
+    <input id="koronaRubToAznRate" type="number" value="38.556">
+  </div>
+  <br/>
+
+  <div>
+    <label for="koronaRubToUsdRate">Курс USD/RUB в Korona Pay</label>
+  </div>
+  <div>
+    <input id="koronaRubToUsdRate" type="number" value="64.3012">
+  </div>
+  <br/>
+
+  <div>
+    <label for="bankUsdToAznRate">Курс USD/AZN в банках Азербайджана</label>
+  </div>
+  <div>
+    <input id="bankUsdToAznRate" type="number" value="1.697">
+  </div>
+  <br/>
+
+  <div>
+    <h5 id="rubForUsd" hidden>-</h5>
+    <h5 id="aznResult" hidden>-</h5>
+    <h5 id="rubForAzn" hidden>-</h5>
+    <h5 id="difference" hidden>-</h5>
+  </div>
+
+  <div>
+    <h4 id="summary" hidden style="color: red">ИТОГ:</h4>
+    <h4 id="total1" hidden>-</h4>
+    <h4 id="total2" hidden>-</h4>
+  </div>
+
+  <div>
+    <input type="button" id="run" value="Рассчитать">
+  </div>
+  <div>
+    <input type="reset" id="reset" value="Сбросить">
+  </div>
+</form>
+
+<script>
+  document.getElementById('run').addEventListener('click', calculate);
+  document.getElementById('reset').addEventListener('click', reset);
+  document.querySelectorAll('input[type="number"]').forEach((v) => {
+    v.addEventListener("change", function () {
+      let v = parseFloat(this.value);
+      if (isNaN(v) || v === undefined || v == null || v < 0) {
+        reset();
+        this.value = 0;
+      } else {
+        calculate();
+      }
+    });
+  })
+
+  function calculate() {
+    const usdSum = document.getElementById('usdSum').value;
+    const koronaRubToAznRate = document.getElementById('koronaRubToAznRate').value;
+    const koronaRubToUsdRate = document.getElementById('koronaRubToUsdRate').value;
+    const bankUsdToAznRate = document.getElementById('bankUsdToAznRate').value;
+
+    const rubForUsd = (usdSum * koronaRubToUsdRate).toFixed(2)
+    document.getElementById('rubForUsd')
+        .innerHTML = `Покупка ${usdSum} USD через корону: ${rubForUsd} RUB`
+
+    const aznResult = (usdSum * bankUsdToAznRate).toFixed(2)
+    document.getElementById('aznResult')
+        .innerHTML = `Обмен ${usdSum} USD на AZN в банке: ${aznResult} AZN`
+
+    const rubForAzn = (aznResult * koronaRubToAznRate).toFixed(2)
+    document.getElementById('rubForAzn')
+        .innerHTML = `Покупка ${aznResult} AZN через корону: ${rubForAzn} RUB`
+
+    const difference = (rubForUsd - rubForAzn)
+    document.getElementById('difference')
+        .innerHTML = `${rubForUsd} (Рубли на USD) - ${rubForAzn} (Рубли на AZN) = ${difference.toFixed(
+        2)}`
+
+    if (difference < 0) {
+      document.getElementById('total1')
+          .innerHTML = "Выгоднее покупать USD через корону и затем переводить в AZN"
+      document.getElementById('total2')
+          .innerHTML = `Экономия (руб): ${Math.abs(difference).toFixed(2)}`
+      document.getElementById('total2').hidden = false
+    } else if (difference > 0) {
+      document.getElementById('total1')
+          .innerHTML = "Выгоднее напрямую покупать AZN через корону"
+      document.getElementById('total2')
+          .innerHTML = `Экономия (руб): ${Math.abs(difference).toFixed(2)}`
+      document.getElementById('total2').hidden = false
+    } else {
+      document.getElementById('total1').innerHTML = "Разницы нет"
+      document.getElementById('total2').innerHTML = "-"
+      document.getElementById('total2').hidden = true
+    }
+    document.getElementById('summary').hidden = false
+    document.getElementById('total1').hidden = false
+    document.getElementById('rubForUsd').hidden = false
+    document.getElementById('aznResult').hidden = false
+    document.getElementById('rubForAzn').hidden = false
+    document.getElementById('difference').hidden = false
+  }
+
+  function reset() {
+    document.getElementById('total1').innerHTML = "-"
+    document.getElementById('total2').innerHTML = "-"
+    document.getElementById('rubForUsd').innerHTML = "-"
+    document.getElementById('aznResult').innerHTML = "-"
+    document.getElementById('rubForAzn').innerHTML = "-"
+    document.getElementById('difference').innerHTML = "-"
+
+    document.getElementById('summary').hidden = true
+    document.getElementById('total1').hidden = true
+    document.getElementById('total2').hidden = true
+    document.getElementById('rubForUsd').hidden = true
+    document.getElementById('aznResult').hidden = true
+    document.getElementById('rubForAzn').hidden = true
+    document.getElementById('difference').hidden = true
+  }
+</script>
+
+</body>
+
+</html>
