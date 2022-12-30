@@ -2,8 +2,8 @@
   "name": "client",
   "version": "0.1.0",
   "dependencies": {
-    "babel-loader": "^8.0.4",
-    "webpack": "^4.26.1"
+    "babel-loader": "^8.3.0",
+    "webpack": "^5.75.0"
   },
   "scripts": {
     "dev": "webpack --mode development",
@@ -12,6 +12,6 @@
     "watch": "webpack --watch --mode production"
   },
   "devDependencies": {
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^5.0.1"
   }
 }
