@@ -12,6 +12,6 @@
     "watch": "webpack --watch --mode production"
   },
   "devDependencies": {
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.3.12"
   }
 }
