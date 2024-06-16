@@ -85,12 +85,13 @@
 + [Коды ответов](HTTP.md#Коды-ответов)
 
 ### Security
-+ [Injections](security.md#Injections)
-+ [Broken Authentication and Session Management](security.md#Broken-Authentication-and-Session-Management)
++ [SQL Injections](security.md#SQL-Injections)
 + [XSS (Cross Site Scripting)](security.md#XSS-Cross-Site-Scripting)
++ [CSRF (Cross-Site Request Forgery)](security.md#CSRF-Cross-Site-Request-Forgery)
++ [CORS (Cross-Origin Resource Sharing)](security.md#CORS-Cross-Origin-Resource-Sharing)
++ [Broken Authentication and Session Management](security.md#Broken-Authentication-and-Session-Management)
 + [Insecure Direct Object References](security.md#Insecure-Direct-Object-References)
 + [Security Misconfiguration](security.md#Security-Misconfiguration)
-+ [Cross-Site Request Forgery (CSRF)](security.md#Cross-Site-Request-Forgery-CSRF)
 + [Протокол OAuth 2.0](security.md#Протокол-OAuth-20)
 
 ### High load
