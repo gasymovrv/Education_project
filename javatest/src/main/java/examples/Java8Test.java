@@ -1,16 +1,16 @@
 package examples;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import static examples.utils.NumberedExamplesUtil.printNumberOfExample;
+
 import examples.java8.ClassWithLambdaMethod;
 import examples.java8.MyKeyExtractor;
 import examples.java8.Pojo;
 import examples.java8.PojoCreator;
 import examples.java8.StringGetter;
 import examples.java8.StringInputFunc;
-
-import static examples.utils.NumberedExamplesUtil.printNumberOfExample;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class Java8Test extends Test {
     private static Test thisOne = new Java8Test();

@@ -31,10 +31,12 @@ fun main() {
     val charset = "UTF-8"
     val url: URL = URI.create("http://localhost:8904/v1/attachments/upload").toURL()
     val file = File("test-image.gif")
-    val buffer = ByteArray(1024) // 1 KB buffer
+    val bufferSize = 1024 // 1 KB buffer
+    val buffer = ByteArray(bufferSize)
 
     val con = url.openConnection() as HttpURLConnection
     try {
+        con.setChunkedStreamingMode(bufferSize)
         con.requestMethod = "POST"
         con.doOutput = true
         con.setRequestProperty("Content-Type", "multipart/form-data; boundary=$boundary")

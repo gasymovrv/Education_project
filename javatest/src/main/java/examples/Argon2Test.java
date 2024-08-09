@@ -1,10 +1,10 @@
 package examples;
 
-import de.mkammerer.argon2.Argon2;
-import de.mkammerer.argon2.Argon2Factory;
-
 import static examples.utils.PasswordEncodertUtil.checkPassword;
 import static examples.utils.TimeMeasurementUtil.measureTimeWithIterationsAndDescription;
+
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 
 /**
  * Хеширование паролей с помощью BCrypt и дальнейшая проверка

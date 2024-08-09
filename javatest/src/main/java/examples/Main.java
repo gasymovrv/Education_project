@@ -1,16 +1,16 @@
 package examples;
 
+import static examples.utils.NumberedExamplesUtil.printNumberOfExample;
+
+import examples.collections.ListPerformanceTest;
+import examples.multiparents.MyInterface1;
+import examples.multiparents.MyInterfaceImpl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import examples.collections.ListPerformanceTest;
-import examples.multiparents.MyInterface1;
-import examples.multiparents.MyInterfaceImpl;
-
-import static examples.utils.NumberedExamplesUtil.printNumberOfExample;
 
 public class Main{
     public static void main(String[] args) {

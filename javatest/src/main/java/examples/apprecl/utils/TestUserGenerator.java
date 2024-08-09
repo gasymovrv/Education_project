@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
+import examples.utils.TimeMeasurementUtil;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,7 +15,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import examples.utils.TimeMeasurementUtil;
 
 public class TestUserGenerator {
 
