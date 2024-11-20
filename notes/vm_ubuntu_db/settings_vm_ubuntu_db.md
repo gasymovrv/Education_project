@@ -1,49 +1,82 @@
 # Настройки БД и VM VirtualBox
 
 ### Настройка сети виртуалки
-1. Настраиваем сеть со статическим ip для доступа с машины-хоста.
-    + Создаем host-only adapter (айпишник виртуалки будет доступен только на нашей локальной машине). 
-        + В настройках виртуалки указываем ip 192.168.56.1, dhcp отключаем.  - см. [vm_net_settings.jpg](vm_net_settings.jpg)
-        + В ubuntu настраиваем айпишник 192.168.56.217 (или другой, но больше 192.168.56.1) - см. [ubuntu_interfaces.png](ubuntu_interfaces.png)
-            + Добавляем в файл ```/etc/network/interfaces```:
-                ```
-                # My host-only adapter
-                auto enp0s3
-                iface enp0s3 inet static
-                address 192.168.56.217
-                netmask 255.255.255.0
-                ```
-            + enp0s3 - можно узнать предварительно выполнив команду ```ifconfig```  - см. [ubuntu_ifconfig.jpg](ubuntu_ifconfig.jpg) - так должно выглядеть после сохранения файла ```/etc/network/interfaces```
-    + Примечание. 
-    В убунту названия сетевых портов (enp0s3, enp0s8 …) привязаны к адаптерам виртуалки, т.е. Адаптер1- enp0s3, Адаптер2- enp0s8 и т.д. - см. [ubuntu_ifconfig.jpg](ubuntu_ifconfig.jpg)
-1. Настраиваем сеть с динамическим ip для доступа в интернет из гостевой ОС.
-    + Добавляем адаптер типа NAT в настройках виртуалки
-        + Добавляем его настройку в файл ```/etc/network/interfaces``` (у меня в ubuntu он появился под именем enp0s8) - см. [ubuntu_interfaces.png](ubuntu_interfaces.png):
-            ```
-            # My internet adapter
-            allow-hotplug enp0s8
-            iface enp0s8 inet dhcp
-            ```
-1. Проверяем файл ```/etc/network/interfaces``` - должно быть примерно как на [ubuntu_interfaces.png](ubuntu_interfaces.png):
-<img width="600" alt="ubuntu_interfaces.png" src="ubuntu_interfaces.png">
-1. Применяем изменения 1го адаптера командой ```ifup enp0s3``` и затем 2го ```ifup enp0s8```
++ Настраиваем сеть с динамическим IP для доступа в интернет из гостевой ОС.
+    + Добавляем сетевой адаптер 1 типа NAT в настройках виртуалки
+    + Находим в ubuntu название сетевого порта этого адаптера через `ifconfig` - у меня появился под именем `enp0s3`
+    + Открываем файл командой ```sudo nano /etc/network/interfaces``` и добавляем (см. [ubuntu_interfaces.png](ubuntu_interfaces.png)):
+        ```
+        # My internet adapter
+        allow-hotplug enp0s3
+        iface enp0s3 inet dhcp
+        ```
+    + Применяем изменения адаптера 1 командой ```ifup enp0s3```
+    + Перезапускаем Ubuntu командой ```reboot```
 
-### Настройка буфера обмена
++ Настраиваем сеть со статическим IP для доступа с машины-хоста.
+    + В настройках виртуальных сетей VirtualBox создаем сеть `VirtualBox Host-Only Ethernet Adapter` - см. [vm_net_settings.png](vm_net_settings.png)
+    + В ее свойствах указываем IP 192.168.56.1, dhcp отключаем
+    + Для нашей ВМ добавляем сетевой адаптер 2 типа `Виртуальный адаптер хоста` под именем `VirtualBox Host-Only Ethernet Adapter`
+    + Находим в ubuntu название сетевого порта этого адаптера через `ifconfig` - у меня появился под именем `enp0s8`
+    + В ubuntu настраиваем для него IP 192.168.56.217 (или другой, но больше 192.168.56.1). Открываем файл командой ```sudo nano /etc/network/interfaces``` и добавляем (см. [ubuntu_interfaces.png](ubuntu_interfaces.png)):
+        ```
+        # My host-only adapter
+        auto enp0s8
+        iface enp0s8 inet static
+        address 192.168.56.217
+        netmask 255.255.255.0
+        ```
+    + Применяем изменения адаптера 2 командой ```ifup enp0s8```
+    + Перезапускаем Ubuntu командой ```reboot```
+
++ Настраиваем сеть для одновременной работы адаптеров 1 и 2. Открываем файл командой ```sudo nano /etc/netplan/00-installer-config.yaml``` (название файла может отличаться) и редактируем:
+    ```yaml
+    # This is the network config written by 'subiquity'
+    network:
+      ethernets:
+        enp0s3: #This is your network adapter attached to NAT 
+          dhcp4: yes
+          dhcp4-overrides: {route-metric: 0}
+        enp0s8: #This is your network adapter attached to Host-only
+          dhcp4: no
+          addresses: [192.168.56.217/24] #This is the static IP
+          routes:
+            - to: default
+              via: 192.168.56.1 #This is the IP from VirtualBox Host-Only Ethernet Adapter
+              metric: 100
+      version: 2
+    ```
+    + Вызываем команду `netplan apply` и перезапускаем Ubuntu командой ```reboot```
+
+Примечание 1. В ubuntu названия сетевых портов (`enp0s3`, `enp0s8` …) привязаны к адаптерам виртуалки, т.е. Адаптер1 - `enp0s3`, Адаптер2 - `enp0s8` и т.д. - см. [ubuntu_ifconfig.png](ubuntu_ifconfig.png)
+
++ Проверяем файл ```/etc/network/interfaces``` - должно быть примерно как на [ubuntu_interfaces.png](ubuntu_interfaces.png):
+<div><img width="600" alt="ubuntu_interfaces.png" src="ubuntu_interfaces.png"></div>
+
++ Проверяем командой `ifconfig` - должно выглядеть как на [ubuntu_ifconfig.png](ubuntu_ifconfig.png) после выполнение всех настроек выше:
+<div><img width="600" alt="ubuntu_ifconfig.png" src="ubuntu_ifconfig.png"></div>
+
++ Проверить работу адаптера 1 можно просто выходом в интернет из ubuntu, а адаптера 2 - подключением по SSH из хост-машины (см. [подключение к виртуалке по SSH](#подключение-к-виртуалке-по-ssh)) 
+
+
+### Настройка буфера обмена и общей директории
 1. Включить в настройках виртуальной машины
 2. Чтобы заработало, необходимо подключить диск VBoxGuestAdditions.iso (обычно лежит в папке установки VirtualBox, например E:\Programs\VirtualBox)
 <img width="600px" alt="vbox_guest_additions.png" src="vbox_guest_additions.png"/>
-3. Затем запустить ВМ и выполнить установку с диска командой: `sudo rcvboxadd setup`. [Подробная дока от Oracle](https://www.virtualbox.org/manual/ch04.html#additions-linux)
+3. Затем запустить ВМ и выполнить установку с диска командой: `sudo rcvboxadd setup`. 
+4. Для доступа к общей директории выполнить: `sudo adduser $USER vboxsf`
+
+[Подробная дока от Oracle](https://www.virtualbox.org/manual/ch04.html#additions-linux)
 
 
-### Подключение к БД на виртуалке (с помощью туннеля ssh - не использую этот способ)
-1. Настраиваем сеть виртуалки: добавляем адаптер №2, прописываем ему ip
-1. Этот же ip прописываем в файле настроек ssh-сервера в убунте, которая на виртуалке
-1. В сети виртуалке(адаптер №1) делаем проброс порта 22 (или другого если изменили дефолтный)
-1. Скачиваем putty, добавляем ip который указан в виртуалке и добавляем ssh-туннель для БД
-1. Теперь можно подключаться к БД из кода, как будто она локальная
+### Подключение к виртуалке по SSH
+1. Настраиваем сеть виртуалки: добавляем host-only adapter, прописываем ему ip, например 192.168.56.217 (см. [выше](#настройка-сети-виртуалки))
+1. Устанавливаем SSH сервер в Ubuntu командой: `sudo apt install openssh-server`
+1. Включаем его: `sudo systemctl enable ssh`
+1. Открываем порт для firewall: `sudo ufw allow ssh`
+1. Запускаем: `sudo systemctl start ssh`
+1. Подключаемся из хост-машины: `ssh rgasymov@192.168.56.217`
 
-+ Примечание: можно и не создавать туннель для БД, тогда необходимо его создавать в коде или подключаться напрямую по TCP/IP.
-+ Скриншоты процесса настроек в папке «настройка virtualbox как удаленного сервера»
 
 ### Настройка mysql на Ubuntu для подлкючения с удаленной машины (или с локальной к виртуалке)
 + Изменяем адреса которые будет слушать mysql в файле в секции [mysqlid]:
