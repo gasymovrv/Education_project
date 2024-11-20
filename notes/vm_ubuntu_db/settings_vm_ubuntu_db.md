@@ -28,6 +28,12 @@
 <img width="600" alt="ubuntu_interfaces.png" src="ubuntu_interfaces.png">
 1. Применяем изменения 1го адаптера командой ```ifup enp0s3``` и затем 2го ```ifup enp0s8```
 
+### Настройка буфера обмена
+1. Включить в настройках виртуальной машины
+2. Чтобы заработало, необходимо подключить диск VBoxGuestAdditions.iso (обычно лежит в папке установки VirtualBox, например E:\Programs\VirtualBox)
+<img width="600px" alt="vbox_guest_additions.png" src="vbox_guest_additions.png"/>
+3. Затем запустить ВМ и выполнить установку с диска командой: `sudo rcvboxadd setup`. [Подробная дока от Oracle](https://www.virtualbox.org/manual/ch04.html#additions-linux)
+
 
 ### Подключение к БД на виртуалке (с помощью туннеля ssh - не использую этот способ)
 1. Настраиваем сеть виртуалки: добавляем адаптер №2, прописываем ему ip
