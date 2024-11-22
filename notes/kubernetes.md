@@ -1,3 +1,73 @@
+# Kubernetes
+
+## Основные понятия и абстракции
+
++ **Node** - A node may be a virtual or physical machine, depending on the cluster. Each node is managed by the control plane and contains the services necessary to run Pods.
+Official docs: https://kubernetes.io/docs/concepts/architecture/nodes/
+
++ **Pod** - Pods are the smallest deployable units of computing that you can create and manage in Kubernetes. 
+A Pod is a group of one or more containers, with shared storage and network resources, and a specification for how to run the containers. Has a dynamic IP. 
+Pod's lifecycle is managed by kube-controller-manager through kubelet. 
+Official docs: https://kubernetes.io/docs/concepts/workloads/pods/
+
++ **Service** - is a method for exposing a network application that is running as one or more Pods in your cluster.
+Official docs: https://kubernetes.io/docs/concepts/services-networking/service/
+
++ **Ingress** - An API object that manages external access to the services in a cluster, typically HTTP.
+Ingress may provide load balancing, SSL termination and name-based virtual hosting.
+Official docs: https://kubernetes.io/docs/concepts/services-networking/ingress/
+
++ **Deployment** - A Deployment manages a set of Pods to run an application workload. If pods have state, then you need to use StatefulSet instead.
+Official docs: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+
++ **ReplicaSet** - A ReplicaSet's purpose is to maintain a stable set of replica Pods running at any given time. Usually, you define a Deployment and let that Deployment manage ReplicaSets automatically.
+Official docs: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+
++ **StatefulSet** - StatefulSet is the workload API object used to manage stateful applications.
+Official docs: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+
++ **ConfigMap** - A ConfigMap is an API object used to store non-confidential data in key-value pairs. Pods can consume ConfigMaps as environment variables, command-line arguments, or as configuration files in a volume.
+Official docs: https://kubernetes.io/docs/concepts/configuration/configmap/
+
++ **Secret** - Secrets are similar to ConfigMaps but are specifically intended to hold confidential data. Can store data in encrypted form.
+Official docs: https://kubernetes.io/docs/
+
++ **Volumes**. Official docs: https://kubernetes.io/docs/concepts/storage/volumes/
+  + On-disk files in a container are ephemeral, which presents some problems for non-trivial applications when running in containers. 
+  + One problem occurs when a container crashes or is stopped. Container state is not saved so all of the files that were created or modified during the lifetime of the container are lost. 
+  + During a crash, kubelet restarts the container with a clean state. 
+  + Another problem occurs when multiple containers are running in a Pod and need to share files.
+  + It can be challenging to setup and access a shared filesystem across all of the containers.
+  + The Kubernetes volume abstraction solves both of these problems. 
+  + Kubernetes supports many types of volumes. Ephemeral volume types have a lifetime of a pod, but persistent volumes exist beyond the lifetime of a pod.
+
+Видео-обзор: https://www.youtube.com/watch?v=Krpb44XR0bk&list=PLy7NrYWoggjwPggqtFsI_zMAwvG0SqYCb&index=15&ab_channel=TechWorldwithNana
+
+
+## Архитектура
+<div><img width="1200" alt="components-of-kubernetes.svg" src="resources/kubernetes-architecture.svg"></div>
+
+### Control Plane (master nodes) Components
+Manage the overall state of the cluster:
+
++ kube-apiserver - The core component server that exposes the Kubernetes HTTP API
++ etcd - Consistent and highly-available key value store for all API server data
++ kube-scheduler - Looks for Pods not yet bound to a node, and assigns each Pod to a suitable node.
++ kube-controller-manager - Runs controllers to implement Kubernetes API behavior.
++ cloud-controller-manager (optional) - Integrates with underlying cloud provider(s).
+
+### Node (worker nodes) Components
+Run on every node, maintaining running pods and providing the Kubernetes runtime environment:
+
++ kubelet - Ensures that Pods are running, including their containers.
++ kube-proxy (optional) - Maintains network rules on nodes to implement Services.
++ Container runtime - Software responsible for running containers. Read Container Runtimes to learn more.
+
+Дока kubernetes: https://kubernetes.io/docs/concepts/overview/components/
+
+Видео-обзор: https://www.youtube.com/watch?v=umXEmn3cMWY&list=PLy7NrYWoggjwPggqtFsI_zMAwvG0SqYCb&index=17&ab_channel=TechWorldwithNana
+
+
 # Minikube - kubernetes в локальном окружении
 
 ## Как поднять на linux
