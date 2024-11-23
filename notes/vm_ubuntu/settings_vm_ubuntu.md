@@ -1,73 +1,35 @@
 # Настройки БД и VM VirtualBox
 
 ### Настройка сети виртуалки
-+ Настраиваем сеть с динамическим IP для доступа в интернет из гостевой ОС.
++ Настраиваем сеть на VirtualBox с динамическим IP для доступа в интернет из гостевой ОС.
     + Добавляем сетевой адаптер 1 типа NAT в настройках виртуалки
     + Находим в ubuntu название сетевого порта этого адаптера через `ifconfig` - у меня появился под именем `enp0s3`
-    + Открываем файл командой ```sudo nano /etc/network/interfaces``` и добавляем (см. [ubuntu_interfaces.png](ubuntu_interfaces.png)):
-        ```
-        # My internet adapter
-        allow-hotplug enp0s3
-        iface enp0s3 inet dhcp
-        ```
-    + Применяем изменения адаптера 1 командой ```ifup enp0s3```
-    + Перезапускаем Ubuntu командой ```reboot```
 
-+ Настраиваем сеть со статическим IP для доступа с машины-хоста.
++ Настраиваем сеть на VirtualBox со статическим IP для доступа с машины-хоста.
     + В настройках виртуальных сетей VirtualBox создаем сеть `VirtualBox Host-Only Ethernet Adapter` - см. [vm_net_settings.png](vm_net_settings.png)
     + В ее свойствах указываем IP 192.168.56.1, dhcp отключаем
     + Для нашей ВМ добавляем сетевой адаптер 2 типа `Виртуальный адаптер хоста` под именем `VirtualBox Host-Only Ethernet Adapter`
     + Находим в ubuntu название сетевого порта этого адаптера через `ifconfig` - у меня появился под именем `enp0s8`
-    + В ubuntu настраиваем для него IP 192.168.56.217 (или другой, но больше 192.168.56.1). Открываем файл командой ```sudo nano /etc/network/interfaces``` и добавляем (см. [ubuntu_interfaces.png](ubuntu_interfaces.png)):
-        ```
-        # My host-only adapter
-        auto enp0s8
-        iface enp0s8 inet static
-        address 192.168.56.217
-        netmask 255.255.255.0
-        ```
-    + Применяем изменения адаптера 2 командой ```ifup enp0s8```
-    + Перезапускаем Ubuntu командой ```reboot```
 
-+ Настраиваем сеть для одновременной работы адаптеров 1 и 2. Открываем файл командой ```sudo nano /etc/netplan/00-installer-config.yaml``` (название файла может отличаться) и редактируем:
++ Настраиваем сеть в Ubuntu для одновременной работы адаптеров 1 и 2. Открываем файл командой ```sudo nano /etc/netplan/00-installer-config.yaml``` (название файла может отличаться) и редактируем:
   ```yaml
-  # This is the network config written by 'subiquity'
   network:
     ethernets:
       enp0s3: #This is your network adapter attached to NAT
         dhcp4: yes
-        dhcp4-overrides:
-          use-dns: false
-        nameservers:
-          addresses: #Below I chose to use google as the DNS servers. You can choose other DNS servers if you'd like.
-            - 8.8.8.8
-            - 8.8.4.4
       enp0s8: #This is your network adapter attached to Host-only
         dhcp4: no
-        addresses: [192.168.56.217/24] #This is the static IP
+        addresses:
+        - 192.168.56.217/24 #This is the static IP
         routes:
-          - to: default
-            via: 192.168.56.1 #This is the IP from VirtualBox Host-Only Ethernet Adapter
-            metric: 100
+        - to: default
+          via: 192.168.56.1 #This is the IP from VirtualBox Host-Only Ethernet Ad>
     version: 2
   ```
-  + Вызываем команды `sudo netplan generate` и `sudo netplan apply`
-  + На всякий случай выполнить команды: 
-  ```bash
-  sudo systemctl disable systemd-resolved.service
-  sudo systemctl stop systemd-resolved.service
-  sudo rm /etc/resolv.conf
-  # Add a manually created resolv.conf in /etc/
-  sudo nano /etc/resolv.conf
-  # Add this line to the new file:
-  nameserver 8.8.8.8
-  ```
+  + Вызываем команду `sudo netplan generate && sudo netplan apply`
   + Перезапускаем Ubuntu командой ```reboot```
 
 Примечание 1. В ubuntu названия сетевых портов (`enp0s3`, `enp0s8` …) привязаны к адаптерам виртуалки, т.е. Адаптер1 - `enp0s3`, Адаптер2 - `enp0s8` и т.д. - см. [ubuntu_ifconfig.png](ubuntu_ifconfig.png)
-
-+ Проверяем файл ```/etc/network/interfaces``` - должно быть примерно как на [ubuntu_interfaces.png](ubuntu_interfaces.png):
-<div><img width="600" alt="ubuntu_interfaces.png" src="ubuntu_interfaces.png"></div>
 
 + Проверяем командой `ifconfig` - должно выглядеть как на [ubuntu_ifconfig.png](ubuntu_ifconfig.png) после выполнение всех настроек выше:
 <div><img width="600" alt="ubuntu_ifconfig.png" src="ubuntu_ifconfig.png"></div>
