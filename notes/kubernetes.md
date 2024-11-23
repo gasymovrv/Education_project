@@ -1,5 +1,36 @@
 # Kubernetes
 
+## Базовые команды
+
+```bash
+# get info
+kubectl get nodes
+kubectl get pod
+kubectl get services
+kubectl get deployment
+kubectl get replicaset
+kubectl top # The kubectl top command returns current CPU and memory usage for a cluster’s pods or nodes, or for a particular pod or node if specified.
+
+# create/update/delete deployment
+kubectl create deployment {deployment-name} --image={image-name}:{version}
+# Examples:
+kubectl create deployment mm-back-depl --image=money-manager-backend:1.1.0
+kubectl edit deployment mm-back-depl
+kubectl delete deployment mm-back-depl
+
+# debugging
+kubectl logs {pod-name}
+kubectl exec -it {pod-name} -- bin/bash
+kubectl describe pod {pod-name}
+# Examples:
+kubectl logs mm-back-depl-786d4bd669-kgj84
+kubectl describe pod mm-back-depl-786d4bd669-kgj84
+
+# Create/update/delete deployment with config file
+kubectl apply -f my-deployment.yaml # First time it creates the deployment, and subsequent times it updates the deployment
+kubectl delete -f my-deployment.yaml 
+```
+
 ## Основные понятия и абстракции
 
 + **Node** - A node may be a virtual or physical machine, depending on the cluster. Each node is managed by the control plane and contains the services necessary to run Pods.
