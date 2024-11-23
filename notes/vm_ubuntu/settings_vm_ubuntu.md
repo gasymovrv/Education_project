@@ -30,23 +30,39 @@
     + Перезапускаем Ubuntu командой ```reboot```
 
 + Настраиваем сеть для одновременной работы адаптеров 1 и 2. Открываем файл командой ```sudo nano /etc/netplan/00-installer-config.yaml``` (название файла может отличаться) и редактируем:
-    ```yaml
-    # This is the network config written by 'subiquity'
-    network:
-      ethernets:
-        enp0s3: #This is your network adapter attached to NAT 
-          dhcp4: yes
-          dhcp4-overrides: {route-metric: 0}
-        enp0s8: #This is your network adapter attached to Host-only
-          dhcp4: no
-          addresses: [192.168.56.217/24] #This is the static IP
-          routes:
-            - to: default
-              via: 192.168.56.1 #This is the IP from VirtualBox Host-Only Ethernet Adapter
-              metric: 100
-      version: 2
-    ```
-    + Вызываем команду `netplan apply` и перезапускаем Ubuntu командой ```reboot```
+  ```yaml
+  # This is the network config written by 'subiquity'
+  network:
+    ethernets:
+      enp0s3: #This is your network adapter attached to NAT
+        dhcp4: yes
+        dhcp4-overrides:
+          use-dns: false
+        nameservers:
+          addresses: #Below I chose to use google as the DNS servers. You can choose other DNS servers if you'd like.
+            - 8.8.8.8
+            - 8.8.4.4
+      enp0s8: #This is your network adapter attached to Host-only
+        dhcp4: no
+        addresses: [192.168.56.217/24] #This is the static IP
+        routes:
+          - to: default
+            via: 192.168.56.1 #This is the IP from VirtualBox Host-Only Ethernet Adapter
+            metric: 100
+    version: 2
+  ```
+  + Вызываем команды `sudo netplan generate` и `sudo netplan apply`
+  + На всякий случай выполнить команды: 
+  ```bash
+  sudo systemctl disable systemd-resolved.service
+  sudo systemctl stop systemd-resolved.service
+  sudo rm /etc/resolv.conf
+  # Add a manually created resolv.conf in /etc/
+  sudo nano /etc/resolv.conf
+  # Add this line to the new file:
+  nameserver 8.8.8.8
+  ```
+  + Перезапускаем Ubuntu командой ```reboot```
 
 Примечание 1. В ubuntu названия сетевых портов (`enp0s3`, `enp0s8` …) привязаны к адаптерам виртуалки, т.е. Адаптер1 - `enp0s3`, Адаптер2 - `enp0s8` и т.д. - см. [ubuntu_ifconfig.png](ubuntu_ifconfig.png)
 
@@ -56,7 +72,7 @@
 + Проверяем командой `ifconfig` - должно выглядеть как на [ubuntu_ifconfig.png](ubuntu_ifconfig.png) после выполнение всех настроек выше:
 <div><img width="600" alt="ubuntu_ifconfig.png" src="ubuntu_ifconfig.png"></div>
 
-+ Проверить работу адаптера 1 можно просто выходом в интернет из ubuntu, а адаптера 2 - подключением по SSH из хост-машины (см. [подключение к виртуалке по SSH](#подключение-к-виртуалке-по-ssh)) 
++ Проверить работу адаптера 1 можно командой `ping google.com`, а адаптера 2 - подключением по SSH из хост-машины (см. [подключение к виртуалке по SSH](#подключение-к-виртуалке-по-ssh)) 
 
 
 ### Настройка буфера обмена и общей директории
