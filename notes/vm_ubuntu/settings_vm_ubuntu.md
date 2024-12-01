@@ -35,6 +35,7 @@
 <div><img width="600" alt="ubuntu_ifconfig.png" src="ubuntu_ifconfig.png"></div>
 
 + Проверить работу адаптера 1 можно командой `ping google.com`, а адаптера 2 - подключением по SSH из хост-машины (см. [подключение к виртуалке по SSH](#подключение-к-виртуалке-по-ssh)) 
++ Если на хост-машине включен VPN, в гостевой ОС может отвалиться интернет. Тогда нужно включить днс-резолвер командой: `"C:\Program Files\VirtualBox\VBoxManage" modifyvm "Ubuntu" --natdnshostresolver1 on`
 
 
 ### Настройка буфера обмена и общей директории

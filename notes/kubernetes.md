@@ -4,10 +4,14 @@
 
 ```bash
 # get info
+kubectl get all # Get all resources like pod, service, deployment etc
+kubectl get all -n my-namespace
 kubectl get nodes
 kubectl get pod
+kubectl get pod -o wide # Like get pod, but with additional columns
 kubectl get services
 kubectl get deployment
+kubectl get deploy deploymentname -o yaml # Get the YAML definition of a deployment
 kubectl get replicaset
 kubectl top # The kubectl top command returns current CPU and memory usage for a cluster’s pods or nodes, or for a particular pod or node if specified.
 
@@ -29,6 +33,13 @@ kubectl describe pod mm-back-depl-786d4bd669-kgj84
 # Create/update/delete deployment with config file
 kubectl apply -f my-deployment.yaml # First time it creates the deployment, and subsequent times it updates the deployment
 kubectl delete -f my-deployment.yaml 
+
+# kubectx and kubens utilities for switching between contexts and namespaces
+# https://github.com/ahmetb/kubectx
+kubectx # get clusters that are in kubeconfig
+kubectx minikube # switch to another cluster that's in kubeconfig
+kubens # get namespaces in the cluster
+kubens my-namespace # switch to another namespace
 ```
 
 ## Основные понятия и абстракции
@@ -71,6 +82,12 @@ Official docs: https://kubernetes.io/docs/
   + It can be challenging to setup and access a shared filesystem across all of the containers.
   + The Kubernetes volume abstraction solves both of these problems. 
   + Kubernetes supports many types of volumes. Ephemeral volume types have a lifetime of a pod, but persistent volumes exist beyond the lifetime of a pod.
+
++ **Namespace** - In Kubernetes, namespaces provide a mechanism for isolating groups of resources within a single cluster. 
+Names of resources need to be unique within a namespace, but not across namespaces. 
+Namespaces are intended for use in environments with many users spread across multiple teams, projects and environments. 
+For example, we have these namespaces: project-a-dev, project-a-prod, project-b-dev, project-b-prod.
+Official docs: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
 
 Видео-обзор: https://www.youtube.com/watch?v=Krpb44XR0bk&list=PLy7NrYWoggjwPggqtFsI_zMAwvG0SqYCb&index=15&ab_channel=TechWorldwithNana
 
@@ -167,5 +184,24 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 `minikube start`
 + Проверить состояние minikube:
 `kubectl get po -A`
++ Также можно запустить дашборд: 
+`minikube dashboard`
++ Посмотреть роутинги сервисов: 
+`minikube service --all`
++ Запустить ingress controller nginx: 
+`minikube addons enable ingress`
+
 
 Подробнее в документации https://minikube.sigs.k8s.io/docs/start/?arch=%2Flinux%2Fx86-64%2Fstable%2Fbinary+download
+
+### Установка локальных docker образов в minikube
+As the [documentation](https://minikube.sigs.k8s.io/docs/handbook/pushing/#Linux) describes, you can reuse the Docker daemon from Minikube with `eval $(minikube docker-env)`.
+
+So to use an image without uploading it, you can follow these steps:
+
++ Set the environment variables with `eval $(minikube docker-env)`
++ Build the image with the Docker daemon of Minikube (e.g., `docker build -t my-image .`)
++ Set the image in the pod specification like the build tag (e.g., `my-image`)
++ Set the `imagePullPolicy` to `Never` or `IfNotPresent`, otherwise Kubernetes will try to download the image.
+
+Important note: You have to run `eval $(minikube docker-env)` on each terminal you want to use, since it only sets the environment variables for the current shell session.
