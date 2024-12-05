@@ -72,7 +72,7 @@ Official docs: https://kubernetes.io/docs/concepts/workloads/controllers/statefu
 Official docs: https://kubernetes.io/docs/concepts/configuration/configmap/
 
 + **Secret** - Secrets are similar to ConfigMaps but are specifically intended to hold confidential data. Can store data in encrypted form.
-Official docs: https://kubernetes.io/docs/
+Official docs: https://kubernetes.io/docs/concepts/configuration/secret/
 
 + **Volumes**. Official docs: https://kubernetes.io/docs/concepts/storage/volumes/
   + On-disk files in a container are ephemeral, which presents some problems for non-trivial applications when running in containers. 
