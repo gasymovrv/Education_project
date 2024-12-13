@@ -15,15 +15,18 @@ kubectl get deploy deploymentname -o yaml # Get the YAML definition of a deploym
 kubectl get replicaset
 kubectl top # The kubectl top command returns current CPU and memory usage for a cluster’s pods or nodes, or for a particular pod or node if specified.
 
-# create/update/delete deployment
+# create/update/delete
 kubectl create deployment {deployment-name} --image={image-name}:{version}
 # Examples:
 kubectl create deployment mm-back-depl --image=money-manager-backend:1.1.0
-kubectl edit deployment mm-back-depl
+KUBE_EDITOR="nano" kubectl edit deployment mm-back-depl
 kubectl delete deployment mm-back-depl
+kubectl delete pod {pod-name}
+kubectl delete pod --all # delete all pods
 
 # debugging
 kubectl logs {pod-name}
+kubectl logs {full-deployment-name} # logs from pods of the deployment
 kubectl exec -it {pod-name} -- bin/bash
 kubectl describe pod {pod-name}
 # Examples:
@@ -115,6 +118,41 @@ Run on every node, maintaining running pods and providing the Kubernetes runtime
 
 Видео-обзор: https://www.youtube.com/watch?v=umXEmn3cMWY&list=PLy7NrYWoggjwPggqtFsI_zMAwvG0SqYCb&index=17&ab_channel=TechWorldwithNana
 
+## Установка kubectl
+https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/
+
+### Windows
++ Перейти сюда https://kubernetes.io/releases/download/#binaries
++ Выбрать свою архитектуру процессора (386 - intel, amd64 - amd)
++ Скачать .exe файл последней версии и установить
++ Проверить что kubectl установлен: `kubectl version --client`
+
+Подробнее в документации https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/
+
+
+### Linux Ubuntu
++ Download the latest release with the command:
+```bash
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl
+```
++ Validate the binary (optional):
+  + Download the kubectl checksum file
+    ```bash
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+    ```
+  + Validate the kubectl binary against the checksum file:
+    ```bash
+    echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+    ```
+  + If valid, the output is: `kubectl: OK`
++ Install kubectl:
+```bash
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+```
++ Проверить что kubectl установлен: `kubectl version --client`
+
+Подробнее в документации https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+
 
 # Minikube - kubernetes в локальном окружении
 
@@ -156,29 +194,6 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 
 Дока minikube по драйверам: https://minikube.sigs.k8s.io/docs/drivers/docker/
 
-### Установить kubectl
-+ Download the latest release with the command:
-```bash
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl
-```
-+ Validate the binary (optional):
-  + Download the kubectl checksum file
-    ```bash
-    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
-    ```
-  + Validate the kubectl binary against the checksum file:
-    ```bash
-    echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
-    ```
-  + If valid, the output is: `kubectl: OK`
-+ Install kubectl:
-```bash
-sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-```
-+ Test to ensure the version you installed is up-to-date: `kubectl version --client`
-
-Подробнее в документации https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
-
 ### Запустить minikube
 + Запуск:
 `minikube start`
@@ -205,3 +220,86 @@ So to use an image without uploading it, you can follow these steps:
 + Set the `imagePullPolicy` to `Never` or `IfNotPresent`, otherwise Kubernetes will try to download the image.
 
 Important note: You have to run `eval $(minikube docker-env)` on each terminal you want to use, since it only sets the environment variables for the current shell session.
+
+# Helm
+Менеджер файлов манифестов (deployment, service, ingress и т.д.) для kubernetes. 
+Упрощает автоматизацию установки и обновления манифестов. 
+Позволяет описывать шаблоны манифестов в так называемых чартах, которые можно переиспользовать в разных проектах.
+
+Структура чарта:
+```
+.
+└── my-chart
+    ├── charts // в этом каталоге хранятся зависимости чарта
+    ├── Chart.yaml // метаданные о чарте
+    ├── values.yaml // дефолтные значения конфигурации чарта
+    └── templates // в этом каталоге хранятся шаблоны манифестов
+        ├── deployment.yaml
+        ├── _helpers.tpl
+        ├── NOTES.txt
+        ├── hpa.yaml
+        ├── ingress.yaml
+        ├── service.yaml
+        ├── service-account.yaml
+        └── tests
+            └── interaction-test.yaml
+```
+
+Документация: https://helm.sh/docs
+
+Описание функций доступных в шаблонах: https://helm.sh/docs/chart_template_guide/function_list
+
+## Базовые команды 
+```bash
+# Просмотр списка установленных чартов в текущем неймспейсе:
+helm ls
+# Установка:
+helm install my-app-chart ./my-app-chart
+
+# Обновление или установка:
+helm upgrade --install my-app-chart ./my-app-chart
+
+# Установка с переопределением переменных:
+helm install -f values.yaml my-app-chart ./my-app-chart
+
+# Удаление:
+helm uninstall my-app-chart
+
+# Просмотр установленных в k8s манифестов по указанному чарту:
+helm get manifest my-app-chart
+
+# Генерация манифестов по указанному чарту без установки:
+helm install --debug --dry-run my-app-chart ./my-app-chart
+
+# Обновление:
+helm upgrade my-app-chart ./my-app-chart
+
+# Примеры:
+helm install mm-config ./mm-config-chart
+helm install -f values-postgres.yaml mm-pstgr ./mm-app-chart
+helm install -f values-backend.yaml mm-back ./mm-app-chart
+helm install -f values-frontend.yaml mm-front ./mm-app-chart
+
+helm upgrade mm-config ./mm-config-chart
+helm upgrade -f values-postgres.yaml mm-pstgr ./mm-app-chart
+helm upgrade -f values-backend.yaml mm-back ./mm-app-chart
+helm upgrade -f values-frontend.yaml mm-front ./mm-app-chart
+```
+
+## Установка Helm
+
+Документация: https://helm.sh/docs/intro/install/
+
++ Установка на Windows:
+```bash
+winget install Helm.Helm
+```
+
++ Установка на Linux Ubuntu/Debian:
+```bash
+curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+sudo apt-get install apt-transport-https --yes
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+sudo apt-get update
+sudo apt-get install helm
+```
