@@ -13,6 +13,8 @@ kubectl get services
 kubectl get deployment
 kubectl get deploy deploymentname -o yaml # Get the YAML definition of a deployment
 kubectl get replicaset
+kubectl get pv # Get persistent volumes
+kubectl get pvc # Get persistent volume claims
 kubectl top # The kubectl top command returns current CPU and memory usage for a cluster’s pods or nodes, or for a particular pod or node if specified.
 
 # create/update/delete
@@ -68,7 +70,7 @@ Official docs: https://kubernetes.io/docs/concepts/workloads/controllers/deploym
 + **ReplicaSet** - A ReplicaSet's purpose is to maintain a stable set of replica Pods running at any given time. Usually, you define a Deployment and let that Deployment manage ReplicaSets automatically.
 Official docs: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 
-+ **StatefulSet** - StatefulSet is the workload API object used to manage stateful applications.
++ **StatefulSet** - StatefulSet manages a set of Pods to run stateful applications. Each Pod in a StatefulSet has a persistent identity (in opposite to Deployment).
 Official docs: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 
 + **ConfigMap** - A ConfigMap is an API object used to store non-confidential data in key-value pairs. Pods can consume ConfigMaps as environment variables, command-line arguments, or as configuration files in a volume.
@@ -85,6 +87,12 @@ Official docs: https://kubernetes.io/docs/concepts/configuration/secret/
   + It can be challenging to setup and access a shared filesystem across all of the containers.
   + The Kubernetes volume abstraction solves both of these problems. 
   + Kubernetes supports many types of volumes. Ephemeral volume types have a lifetime of a pod, but persistent volumes exist beyond the lifetime of a pod.
+
++ **Persistent Volumes** - storage resource in the cluster (can't be in namespace, only in whole cluster), it can be either local or remote.
+Official docs: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+
++ **Persistent Volume Claims** - requests a volume from the cluster. It's possible to request a specific volume, or a storage class.
+Official docs: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims
 
 + **Namespace** - In Kubernetes, namespaces provide a mechanism for isolating groups of resources within a single cluster. 
 Names of resources need to be unique within a namespace, but not across namespaces. 
@@ -253,8 +261,12 @@ Important note: You have to run `eval $(minikube docker-env)` on each terminal y
 ```bash
 # Просмотр списка установленных чартов в текущем неймспейсе:
 helm ls
-# Установка:
+
+# Установка из локальной директории:
 helm install my-app-chart ./my-app-chart
+
+# Установка из удаленного репозитория:
+helm install my-postgres oci://registry-1.docker.io/bitnamicharts/postgresql
 
 # Обновление или установка:
 helm upgrade --install my-app-chart ./my-app-chart
@@ -273,6 +285,9 @@ helm install --debug --dry-run my-app-chart ./my-app-chart
 
 # Обновление:
 helm upgrade my-app-chart ./my-app-chart
+
+# Откатить последнюю установку чарта к предыдущей (если вызвать повторно, то последняя установка загрузится еще раз):
+helm rollback my-app-chart
 
 # Примеры:
 helm install mm-config ./mm-config-chart
