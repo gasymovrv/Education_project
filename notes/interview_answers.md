@@ -94,8 +94,9 @@
 + [Security Misconfiguration](security.md#Security-Misconfiguration)
 + [Протокол OAuth 2.0](security.md#Протокол-OAuth-20)
 
-### High load
-+ [Основные подходы](system_design.md#Основные-подходы)
+### System design
++ [Вопросы по требованиям](system_design.md#Вопросы-по-требованиям-для-проектирования-архитектуры)
++ [Основные подходы в High load](system_design.md#Основные-подходы-в-high-load)
 + [Сага](system_design.md#Сага)
 
 ### Разное
