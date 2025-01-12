@@ -95,8 +95,8 @@
 + [Протокол OAuth 2.0](security.md#Протокол-OAuth-20)
 
 ### High load
-+ [Основные подходы](high_load.md#Основные-подходы)
-+ [Сага](high_load.md#Сага)
++ [Основные подходы](system_design.md#Основные-подходы)
++ [Сага](system_design.md#Сага)
 
 ### Разное
 + [Concurrency / parallel / multithreading / asynchrony / reactivity](concurrency.md)
