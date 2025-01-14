@@ -26,7 +26,7 @@ abstract class AbstractCarBuilder {
 		car = new Car();
 	}
 	//buildPart
-	abstract AbstractCarBuilder buildMake();
+	abstract AbstractCarBuilder buildMaker();
 	//buildPart
 	abstract AbstractCarBuilder buildTransmission();
 	//buildPart
@@ -37,14 +37,14 @@ abstract class AbstractCarBuilder {
 
 //ConcreteBuilder 1
 class FordMondeoBuilder extends AbstractCarBuilder {
-	AbstractCarBuilder buildMake() {car.setMake("Ford Mondeo"); return this;}
+	AbstractCarBuilder buildMaker() {car.setMaker("Ford Mondeo"); return this;}
 	AbstractCarBuilder buildTransmission() {car.setTransmission(Transmission.AUTO); return this;}
 	AbstractCarBuilder buildMaxSpeed() {car.setMaxSpeed(260); return this;}
 }
 
 //ConcreteBuilder 2
 class SubaruBuilder extends AbstractCarBuilder {
-	AbstractCarBuilder buildMake() {car.setMake("Subaru"); return this;}
+	AbstractCarBuilder buildMaker() {car.setMaker("Subaru"); return this;}
 	AbstractCarBuilder buildTransmission() {car.setTransmission(Transmission.MANUAL); return this;}
 	AbstractCarBuilder buildMaxSpeed() {car.setMaxSpeed(320); return this;}
 }
@@ -58,7 +58,7 @@ class Director{
 
 	//construct
 	Car buildCar(){
-		builder.buildMake().buildTransmission().buildMaxSpeed();
+		builder.buildMaker().buildTransmission().buildMaxSpeed();
 		return builder.getCar();
 	}
 }

@@ -7,7 +7,7 @@ public class BuilderApp2 {
 
 	public static void main(String[] args) {
  		Car car = new CarBuilder()
-					.buildMake("Mercedes")
+					.buildMaker("Mercedes")
 					.buildTransmission(Transmission.AUTO)
 					.buildMaxSpeed(280)
 					.build();
@@ -22,7 +22,7 @@ class CarBuilder{
 	private Transmission t = Transmission.MANUAL;
 	private int s = 120;
 	//buildPart
-	CarBuilder buildMake(String m){
+	CarBuilder buildMaker(String m){
 		this.m = m;
 		return this;
 	}
@@ -39,7 +39,7 @@ class CarBuilder{
 	//getResult
 	Car build(){
 		Car car = new Car();
-		car.setMake(m);
+		car.setMaker(m);
 		car.setTransmission(t);
 		car.setMaxSpeed(s);
 		return car;
