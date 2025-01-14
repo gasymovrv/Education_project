@@ -179,4 +179,4 @@ public class OrderStockAndPackValidator extends OrderStockValidator {
 + Строитель – `StringBuilder`, `Appendable`  и др.
 + Цепочка обязанностей - `javax.servlet.Filter#doFilter()`
 + Фабричный метод - `java.util.EnumSet#of()`, `java.util.List#of()`
-+ Примеры реализации всех паттернов ООП (GoF): [src/main/java/patterns](../src/main/java/patterns)
++ Примеры реализации всех паттернов ООП (GoF): [/javatest/src/main/java/patterns](../javatest/src/main/java/patterns)

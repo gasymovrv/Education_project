@@ -9,8 +9,8 @@ import java.io.FileOutputStream;
 
 public class PdfTest {
     public static void main(String[] args) throws Exception {
-        PdfReader reader = new PdfReader("src/main/resources/pdf/pdf1.pdf");
-        File outputFile = new File("src/main/resources/pdf/pdf-out.pdf");
+        PdfReader reader = new PdfReader("javatest/src/main/resources/pdf/pdf1.pdf");
+        File outputFile = new File("javatest/src/main/resources/pdf/pdf-out.pdf");
         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(outputFile));
         PdfContentByte content = stamper.getUnderContent(1);//1 for the first page
         BaseFont bf = BaseFont.createFont(BaseFont.TIMES_ITALIC, BaseFont.CP1250, BaseFont.EMBEDDED);

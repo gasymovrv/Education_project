@@ -37,10 +37,10 @@
 + Взвешенные графы
 
 ### Алгоритмы сортировки
-+ [Пузырьковая сортировка](../src/main/java/examples/algorithms/BubbleSortingTest.java)
++ [Пузырьковая сортировка](../javatest/src/main/java/examples/algorithms/BubbleSortingTest.java)
 
 ### Рекурсия
-+ [Рекурсивное вычисление факториала и числа фибоначчи](../src/main/java/examples/algorithms/RecursionTest.java)
++ [Рекурсивное вычисление факториала и числа фибоначчи](../javatest/src/main/java/examples/algorithms/RecursionTest.java)
 
 
 ## Оценка сложности алгоритмов O(f(n))

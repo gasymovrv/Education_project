@@ -12,7 +12,7 @@ public class ExplicitChannelRead {
     public static void main(String... args) {
         int count;
         // Здесь канал открывается по пути, возвращаемому методом Paths.get() в виде объекта типа Path
-        try (SeekableByteChannel fChan = Files.newByteChannel(Paths.get("src/main/java/examples/nio/test.txt"))) {
+        try (SeekableByteChannel fChan = Files.newByteChannel(Paths.get("javatest/src/main/java/examples/nio/test.txt"))) {
             // выделить память под буфер
             ByteBuffer mBuf = ByteBuffer.allocate(128);
             do {

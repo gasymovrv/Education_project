@@ -115,7 +115,7 @@ public class TestUserGenerator {
     }
 
     private static void writeToConfigFiles(byte[] ldapUsers, byte[] samlUsers) throws InterruptedException {
-        Path ldapConfigFile = Paths.get("src/main/java/examples/apprecl/utils/ldap-users.ldif");
+        Path ldapConfigFile = Paths.get("javatest/src/main/java/examples/apprecl/utils/ldap-users.ldif");
         if (!Files.exists(ldapConfigFile)) {
             try {
                 Files.createFile(ldapConfigFile);
@@ -123,7 +123,7 @@ public class TestUserGenerator {
                 e.printStackTrace();
             }
         }
-        Path samlConfigFile = Paths.get("src/main/java/examples/apprecl/utils/authsources.php");
+        Path samlConfigFile = Paths.get("javatest/src/main/java/examples/apprecl/utils/authsources.php");
         if (!Files.exists(samlConfigFile)) {
             try {
                 Files.createFile(samlConfigFile);
