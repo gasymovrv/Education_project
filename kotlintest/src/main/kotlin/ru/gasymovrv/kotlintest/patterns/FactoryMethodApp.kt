@@ -13,7 +13,7 @@ object FactoryMethodApp {
         watch.showTime()
 
         //пример 2
-        maker = WatchMaker.makerByTime
+        maker = WatchMaker.getMakerByTime()
         watch = maker.createWatch()
         watch.showTime()
     }
@@ -56,18 +56,17 @@ interface WatchMaker {
             throw RuntimeException("Не поддерживаемая производственная линия часов: $maker")
         }
 
-        val makerByTime: WatchMaker
-            /**
-             * Выдает фабрику DigitalWatchMaker, если сейчас на часах меньше 12:00,
-             * иначе - RomeWatchMaker
-             * @return Реализации интерфейса WatchMaker
-             */
-            get() {
-                return if (LocalTime.now()
-                        .isBefore(LocalTime.of(12, 0))
-                ) DigitalWatchMaker()
-                else RomeWatchMaker()
-            }
+        /**
+         * Выдает фабрику DigitalWatchMaker, если сейчас на часах меньше 12:00,
+         * иначе - RomeWatchMaker
+         * @return Реализации интерфейса WatchMaker
+         */
+        fun getMakerByTime(): WatchMaker {
+            return if (LocalTime.now().isBefore(LocalTime.of(12, 0)))
+                DigitalWatchMaker()
+            else
+                RomeWatchMaker()
+        }
     }
 }
 
@@ -85,7 +84,9 @@ class RomeWatchMaker : WatchMaker {
     override fun createWatch(): Watch {
         return RomeWatch()
     }
-} // Фаб.метод можно запихнуть и в такой урезанный вариант, но это не красиво и плохо расширяется
+}
+
+// Фаб.метод можно запихнуть и в такой урезанный вариант, но это не красиво и плохо расширяется
 //class WatchMaker {
 //	public Watch createWatch(String maker) {
 //		if (maker.equals("Digital"))
