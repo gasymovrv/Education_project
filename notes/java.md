@@ -248,12 +248,86 @@ By leveraging modern GC algorithms like G1 or ZGC, Java applications can achieve
 ---
 </details>
 
-Как бороться с паузами GC?
-+ Решение зависит от того какая именно фаза тормозит (подробнее [habr](https://habr.com/ru/articles/116578)):
-  + Минорная сборка мусора
-  + Init-mark фаза CMS
-  + Remark фаза CMS
-  + Full GC
+#### Паузы GC
+Подробнее [habr](https://habr.com/ru/articles/116578)
+
+<details>
+<summary><b>Как бороться с паузами GC?</b></summary>
+
+---
+
+Preventing or minimizing **GC pauses** in JVM requires strategies tailored to your application's requirements and workload. Here’s a detailed guide:
+
+1. **Choose the Right Garbage Collector**
+   - **G1 GC (Garbage First GC)**: Designed for low-latency applications by limiting pause times.
+     - Use `-XX:+UseG1GC` to enable it.
+     - Tune pause time goals with `-XX:MaxGCPauseMillis=<time-in-ms>`.
+
+   - **ZGC (Z Garbage Collector)** and **Shenandoah GC**:
+     - Designed for ultra-low-latency applications, with pause times measured in milliseconds or less.
+     - Enable ZGC with `-XX:+UseZGC` or Shenandoah GC with `-XX:+UseShenandoahGC`.
+
+2. **Optimize Heap Size**
+   - Set an **appropriate heap size** to minimize GC overhead:
+     - `-Xms<size>`: Set the initial heap size.
+     - `-Xmx<size>`: Set the maximum heap size.
+   - Avoid too-small heaps that cause frequent GC and too-large heaps that increase GC pause times.
+
+3. **Tuning Young and Old Generation Sizes**
+   - Adjust **Young Generation** and **Old Generation** sizes to match your application's allocation patterns:
+     - Use `-XX:NewRatio` to control the ratio of Young Generation to Old Generation.
+     - Use `-XX:SurvivorRatio` to balance Eden and Survivor spaces.
+
+4. **Reduce Object Allocation Rate**
+   - Excessive object creation leads to frequent GC cycles. Optimize your code to:
+     - **Reuse objects**: Use object pools for frequently instantiated classes.
+     - Use primitive types instead of objects when possible.
+     - Avoid creating temporary or unnecessary objects in loops.
+
+5. **Enable Concurrent GC**
+   - Some collectors, like **CMS GC**, perform GC work concurrently with the application to reduce pause times.
+     - Enable CMS GC: `-XX:+UseConcMarkSweepGC`.
+     - Configure CMS parameters, e.g., `-XX:CMSInitiatingOccupancyFraction=<percentage>` to start GC earlier.
+
+6. **Tuning G1 GC**
+   - Set pause-time goals:
+     - `-XX:MaxGCPauseMillis=<time-in-ms>`.
+   - Adjust concurrent threads for GC:
+     - `-XX:ParallelGCThreads=<number>` (for parallel GC threads).
+   - Increase the region size for fewer GC regions:
+     - `-XX:G1HeapRegionSize=<size>`.
+
+7. **Enable String Deduplication**
+   - Enable with `-XX:+UseStringDeduplication` (works well with G1 GC).
+
+8. **Avoid Full GCs**. Full GCs cause the longest pauses. To avoid them:
+   - Ensure the Old Generation has sufficient space.
+   - Prevent fragmentation by using collectors that compact memory (e.g., G1, ZGC).
+   - Monitor application logs for excessive `System.gc()` calls and remove them unless absolutely necessary.
+
+9. **Monitor and Profile Your Application**. Use tools to analyze GC behavior and adjust tuning:
+   - **VisualVM**, **JConsole**, or **Java Mission Control** for real-time GC metrics.
+   - Look for metrics like:
+     - GC pause durations.
+     - Frequency of Minor and Major GCs.
+     - Heap usage and object allocation patterns.
+
+10. **Use Off-Heap Storage**. Minimize pressure on the heap by storing large or transient data structures off-heap:
+    - Use libraries like **DirectByteBuffer** or external caching tools like **Redis** or **Memcached**.
+
+11. **Code-Level Optimization**
+    - Minimize use of finalizers: They delay object cleanup.
+    - Optimize data structures:
+      - Use lightweight collections (e.g., `ArrayList` instead of `LinkedList` when possible).
+      - Use efficient serialization methods to reduce memory overhead.
+
+12. **Upgrade JVM**. Newer JVM versions often have more efficient garbage collectors:
+    - Upgrade to Java 11 or later to use G1 GC, ZGC, or Shenandoah GC effectively.
+
+By combining these strategies, you can significantly reduce GC pauses and improve application performance. However, achieving the best results often requires **profiling and iterative tuning** based on your specific workload.
+
+---
+</details>
 
 #### Утечки памяти (Memory leaks)
 

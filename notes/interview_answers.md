@@ -13,6 +13,7 @@
 + [Java memory model](java.md#Java-memory-model-JMM)
 + [JVM memory structure](java.md#JVM-memory-structure)
 + [Garbage Collector](java.md#Garbage-Collector)
++ [Паузы GC](java.md#Паузы-GC)
 + [Утечки памяти (Memory leaks)](java.md#утечки-памяти-memory-leaks)
 + [Многопоточность в Java](java.md#Многопоточность)
 + [Методы Object](java.md#Методы-Object)
