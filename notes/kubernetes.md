@@ -39,6 +39,9 @@ kubectl describe pod mm-back-depl-786d4bd669-kgj84
 kubectl apply -f my-deployment.yaml # First time it creates the deployment, and subsequent times it updates the deployment
 kubectl delete -f my-deployment.yaml 
 
+# Port-forwarding from local port to pod port. Then we can use forwarded port through localhost.
+kubectl port-forward {pod-name} {local-port}:{pod-port}
+
 # kubectx and kubens utilities for switching between contexts and namespaces
 # https://github.com/ahmetb/kubectx
 kubectx # get clusters that are in kubeconfig

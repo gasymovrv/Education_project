@@ -160,6 +160,26 @@ Heap dump - снепшот памяти приложения в JVM:
 + Как получить дамп на поде k8s: [baeldung](https://www.baeldung.com/ops/java-heap-dump-from-kubernetes-pod)
 + Подробнее о различных способах получения дампа: [baeldung](https://www.baeldung.com/java-heap-dump-capture)
 
+Профилирование через VisualVM Java приложения в k8s:
++ Включаем для Java приложения JMX добавлением в env переменную JAVA_OPTS в k8s deployment:
+    ```yaml
+    env:
+    - name: JAVA_OPTS
+      value: >
+        -Dcom.sun.management.jmxremote
+        -Dcom.sun.management.jmxremote.port=1099
+        -Dcom.sun.management.jmxremote.rmi.port=1099
+        -Dcom.sun.management.jmxremote.local.only=true
+        -Dcom.sun.management.jmxremote.authenticate=false
+        -Dcom.sun.management.jmxremote.ssl=false
+        -Djava.rmi.server.hostname=127.0.0.1
+    ```
++ Пробрасываем порт 1099 на локальную машину:
+    ```bash
+    kubectl port-forward <pod-name> 1099:1099
+    ```
++ Подключаем JMX connection `localhost:1099` в VisualVM в разделе Local
+
 ### Garbage Collector
 Подробнее: [habr](https://habr.com/ru/post/269621/)
 
