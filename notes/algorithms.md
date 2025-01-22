@@ -1,15 +1,13 @@
 # Алгоритмы
 
-## Категории алгоритмов и примеры
-
-### Работа со структурами данных (поиск/вставка/удаление)
+### Категории алгоритмов
 + Массивы - это структура данных, в которой хранятся элементы одного типа. Его можно представить, как набор пронумерованных ячеек, в каждую из которых можно поместить какие-то данные (один элемент данных в одну ячейку).
     + Хороши для поиска по индексу и вставок/удалений в конце
     + Плохи при вставках/удалениях в начало/середину, т.к. требуется копировать и перемещать часть массива
     + Если массив упорядочен, то для поиска элемента можно использовать двоичный поиск (сложность - O(log(n)), это быстрее линейного у которого O(n)) - брать элемент посередине, и сравнивать его с искомым. Если искомое больше, чем элемент сравнения, то сужаем область поиска до правой части массива, затем опять делим ее пополам и т.д.
 + Связанные списки - элементы содержат ссылки на предыдущий и следующий и образуют цепочки (пример - LinkedList)
     + Хороши для вставок/удалений в начале и конце
-    + Плохи для поиска по инедксу и вставок/удалений в середине, т.к. придется обходить элементы в цикле
+    + Плохи для поиска по индексу и вставок/удалений в середине, т.к. придется обходить элементы в цикле
 + Стек - LIFO (Last In First Out — последним пришёл — первым ушёл)
 + Очередь - FIFO (First In First Out — первым пришёл — первым ушёл)
 + Приоритетная очередь - сортировка на основе компаратора
@@ -36,12 +34,7 @@
 + Графы
 + Взвешенные графы
 
-### Алгоритмы сортировки
-+ [Пузырьковая сортировка](../javatest/src/main/java/examples/algorithms/BubbleSortingTest.java)
-
-### Рекурсия
-+ [Рекурсивное вычисление факториала и числа фибоначчи](../javatest/src/main/java/examples/algorithms/RecursionTest.java)
-
+---
 
 ## Оценка сложности алгоритмов O(f(n))
 
@@ -68,11 +61,11 @@
 
 ### Сложности Java Collections API
 + ArrayList
-    + лучшее O(1) - чтения из любого места (прямой доступ к памяти через массив) и вставка в конец;
+    + лучшее O(1) - чтения из любого места (прямой доступ к памяти через массив) и вставка в конец (однако когда внутренний массив заполнится, то вставка в конец тоже приведет к копированию всего массива - O(n));
     + худшее O(n) - вставка - будет тем хуже чем ближе к началу, т.к. придется копировать больше элементов. Например если вставлять в середину то будет O(n/2)
 	
 + LinkedList
-    + лучшее O(1) - все операции с первым/последним элементом;
+    + лучшее O(1) - все операции с первым/последним элементом, а также вставка в середину если есть доступ к нужной ноде, например в Java через listIterator.add();
     + худшее O(n) - все операции с элементом в середине, т.к. придется делать обход в цикле	
     
 + HashMap/HashSet
@@ -84,6 +77,64 @@
         
 + TreeMap/TreeSet
     + гарантировано не хуже O(log(n)) - все операции, т.к. красно-черное дерево гарантирует такую сложность в худшем случае
+
+#### Краткая таблица сложностей популярных структур данных и алгоритмов
+
+| **Type**            | **Algorithm/Data Structure** | **Time Complexity**                             | **Space Complexity** | **Notes**                                                                      |
+|---------------------|------------------------------|-------------------------------------------------|----------------------|--------------------------------------------------------------------------------|
+| **Sorting**         | Bubble Sort                  | O(n^2) (avg, worst) / O(n) (best)               | O(1)                 | Inefficient, only suitable for small datasets.                                 |
+|                     | Merge Sort                   | O(n log n)                                      | O(n)                 | Stable, requires extra space for merging.                                      |
+|                     | Quick Sort                   | O(n log n) (avg) / O(n^2) (worst)               | O(n)                 | In-place but not stable. Worst case occurs with poor pivot selection.          |
+| **Searching**       | Linear Search                | O(n)                                            | O(1)                 | Simple, works on unsorted data.                                                |
+|                     | Binary Search                | O(log n)                                        | O(1)                 | Only works on sorted data.                                                     |
+| **Data Structures** | Array                        | Access: O(1), Search: O(n), Insert/Delete: O(n) | O(n)                 | Fixed-size or dynamic (e.g., ArrayList).                                       |
+|                     | Linked List                  | Access: O(n), Search: O(n), Insert/Delete: O(1) | O(n)                 | Insert/Delete is O(1) if you have a reference to the node, by index it's O(n). |
+|                     | Stack (Array-based)          | Push/Pop: O(1)                                  | O(n)                 | LIFO structure.                                                                |
+|                     | Queue                        | Enqueue/Dequeue: O(1)                           | O(n)                 | FIFO structure.                                                                |
+|                     | Binary Search Tree (BST)     | Search/Insert/Delete: O(h)                      | O(n)                 | h is tree height. Balanced trees like AVL/Red-Black ensure h = O(log n).       |
+|                     | Hash Table                   | Insert/Search/Delete: O(1) (avg) / O(n) (worst) | O(n)                 | Worst case occurs with poor hash functions.                                    |
+|                     | Heap (Min/Max)               | Insert/Delete: O(log n), Access Min/Max: O(1)   | O(n)                 | Used in priority queues.                                                       |
+
+#### Подробнее о сложностях популярных алгоритмов
+
+**Легенда**
+
+<img width="300px" alt="algorithms_complexity1.png" src="resources/algorithms_complexity1.png"/>
+
+**Поиск**
+
+<img width="1200px" alt="algorithms_complexity2.png" src="resources/algorithms_complexity2.png"/>
+
+**Сортировка**
+
+<img width="1200px" alt="algorithms_complexity3.png" src="resources/algorithms_complexity3.png"/>
+
+**Структуры данных**
+
+<img width="1200px" alt="algorithms_complexity4.png" src="resources/algorithms_complexity4.png"/>
+
+**Кучи**
+
+<img width="1200px" alt="algorithms_complexity5.png" src="resources/algorithms_complexity5.png"/>
+
+**Представление графов**
+
+Пусть дан граф с |V| вершинами и |E| ребрами, тогда
+
+<img width="1200px" alt="algorithms_complexity6.png" src="resources/algorithms_complexity6.png"/>
+
+---
+
+### Алгоритмы сортировки
++ [Пузырьковая сортировка](../javatest/src/main/java/examples/algorithms/BubbleSortingTest.java)
++ [Быстрая сортировка](../javatest/src/main/java/examples/algorithms/QuickSort.java)
+
+---
+
+### Рекурсия
++ [Рекурсивное вычисление факториала и числа фибоначчи](../javatest/src/main/java/examples/algorithms/RecursionTest.java)
+
+---
 
 ## Шифрование
 

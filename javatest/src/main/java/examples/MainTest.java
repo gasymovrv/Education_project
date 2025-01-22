@@ -1,24 +1,23 @@
 package examples;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.LinkedList;
 
 class MainTest {
 
   public static void main(String[] args) throws IOException {
-    try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-      while (true) {
-        final String s = br.readLine();
-        if (s.equals("exit")) {
-          break;
-        }
-        var a = Integer.parseInt(s);
-        var b = Integer.parseInt(br.readLine());
-        System.out.println(Integer.toBinaryString(a));
-        System.out.println(Integer.toBinaryString(b));
-        System.out.println(a & b);
-      }
+    var list = new LinkedList<Integer>();
+
+    for (int i = 0; i < 1000; i++) {
+      list.add(i);
     }
+
+    final var iterator = list.listIterator();
+    while(iterator.nextIndex() < 500) {
+      iterator.next();
+    }
+    iterator.add(1001);
+
+    System.out.println(list);
   }
 }
