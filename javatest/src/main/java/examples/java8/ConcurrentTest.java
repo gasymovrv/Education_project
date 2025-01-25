@@ -48,9 +48,9 @@ public class ConcurrentTest {
      */
     public static void futureTest3() throws ExecutionException, InterruptedException {
         CompletableFuture<String> welcomeText = CompletableFuture.supplyAsync(() -> {
-            doSomeTime(1);
-            return "Rajeev";
-        })
+                    doSomeTime(1);
+                    return "Rajeev";
+                })
                 .thenApply(name -> "Привет, " + name)
                 .thenApply(greeting -> greeting + ". Добро пожаловать в блог CalliCoder");
 

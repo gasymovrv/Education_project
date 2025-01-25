@@ -61,7 +61,7 @@ fun closur(): (v: Int) -> Int { //(v: Int) -> Int -функциональный 
 
 fun lambdaClosur(): (v: Int) -> Int { //(v: Int) -> Int -функциональный тип, т.е. функция которая принимает v:Int и возвращает Int
     var count = 0
-     return {
+    return {
         count += it
         count
     }

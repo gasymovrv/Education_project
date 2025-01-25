@@ -41,7 +41,7 @@ public class MyLinkedList implements MyList {
     }
 
     private Entry getEntry(int index) {
-        if(index < (size >> 1)) {
+        if (index < (size >> 1)) {
             //Если индекс ближе к началу
             Entry x = first;
             for (int i = 0; i < index; i++) {

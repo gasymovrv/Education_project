@@ -1,6 +1,7 @@
 package examples;
+
 /**
-* Возвращаем finally и получаем корневое исключение
+ * Возвращаем finally и получаем корневое исключение
  */
 public class FinallyTest extends Test {
     private static Test thisOne = new FinallyTest();
@@ -10,7 +11,7 @@ public class FinallyTest extends Test {
         System.out.println(getMessage());
     }
 
-    private String getMessage(){
+    private String getMessage() {
         String message = null;
         try {
             try {
@@ -26,10 +27,10 @@ public class FinallyTest extends Test {
                     }
                 }
             }
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             Throwable t = e;
             //берем корневое исключение
-            while (t.getCause() != null){
+            while (t.getCause() != null) {
                 t = t.getCause();
             }
             //и сообщение из него

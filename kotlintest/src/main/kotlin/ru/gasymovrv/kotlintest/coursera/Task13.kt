@@ -8,10 +8,11 @@ class Words {
     private val list = mutableListOf<String>()
 
     fun String.record() {
-      list += this
+        list += this
     }
+
     operator fun String.unaryPlus() {
-      list += this
+        list += this
     }
 
     override fun toString() = list.toString()

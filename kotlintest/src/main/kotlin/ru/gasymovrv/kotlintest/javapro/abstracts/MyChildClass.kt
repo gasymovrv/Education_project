@@ -1,6 +1,6 @@
 package ru.gasymovrv.kotlintest.javapro.abstracts
 
-class MyChildClass(override var str: String): AbstractClass(str) {
+class MyChildClass(override var str: String) : AbstractClass(str) {
     override val abstrMember: String = "My overridden abstrMember"
 
     override fun printMembers() {

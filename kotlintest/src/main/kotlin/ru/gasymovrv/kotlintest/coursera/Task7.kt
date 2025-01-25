@@ -5,19 +5,19 @@ package ru.gasymovrv.kotlintest.coursera
 // Then fix the newly added code in 'main' so that no exception was thrown.
 class A {
 
-  private lateinit var prop: String
+    private lateinit var prop: String
 
-  fun setUp() {
-    prop = "value"
-  }
+    fun setUp() {
+        prop = "value"
+    }
 
-  fun display() {
-    println(prop)
-  }
+    fun display() {
+        println(prop)
+    }
 }
 
 fun main(args: Array<String>) {
-  val a = A()
-  a.setUp()
-  a.display()
+    val a = A()
+    a.setUp()
+    a.display()
 }

@@ -76,19 +76,19 @@ public class RxJavaTest {
         //6
         //merge 2 observables to get operations with intervals in another thread
         var observableOperations =
-            Observable.zip(Observable.just(
-                    new BigDecimal("100"),
-                    new BigDecimal("1000"),
-                    new BigDecimal("-200"),
-                    new BigDecimal("-300")),
-                Observable.interval(1, TimeUnit.SECONDS),
-                (operations, intervals) -> operations);
+                Observable.zip(Observable.just(
+                                new BigDecimal("100"),
+                                new BigDecimal("1000"),
+                                new BigDecimal("-200"),
+                                new BigDecimal("-300")),
+                        Observable.interval(1, TimeUnit.SECONDS),
+                        (operations, intervals) -> operations);
 
         var disposable = observableOperations
-            .doOnDispose(() -> System.out.println("Disposed"))
-            .subscribe(s -> System.out.println("Operation: " + s),
-                e -> System.out.println("Error: " + e.getMessage()),
-                () -> System.out.println("Completed"));
+                .doOnDispose(() -> System.out.println("Disposed"))
+                .subscribe(s -> System.out.println("Operation: " + s),
+                        e -> System.out.println("Error: " + e.getMessage()),
+                        () -> System.out.println("Completed"));
         Thread.sleep(2000);
         disposable.dispose();
 

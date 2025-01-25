@@ -8,7 +8,7 @@ fun main() {
     val result: Optional<Double> = randomValue()
 
     println("result.isPresent() = ${result.isPresent()}")
-    if(result is Some) {
+    if (result is Some) {
         println("result.value = ${result.value}")
     }
 }

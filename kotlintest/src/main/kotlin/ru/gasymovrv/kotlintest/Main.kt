@@ -38,7 +38,7 @@ fun main() {
     val decimals = 0.5..1.0
     for (n in nums) {
         val random = Math.random()
-        if(random in decimals) {
+        if (random in decimals) {
             println(random)
         }
     }

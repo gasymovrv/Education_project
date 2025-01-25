@@ -6,7 +6,7 @@ public class QuickSort {
 
     // Тестирование алгоритма
     public static void main(String[] args) {
-        int[] array = { 10, 7, 8, 9, 1, 5 };
+        int[] array = {10, 7, 8, 9, 1, 5};
         System.out.println("Исходный массив:");
         System.out.println(Arrays.toString(array));
 

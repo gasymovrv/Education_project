@@ -107,7 +107,7 @@ public class MyHashMap<V, K> extends HashMap<V, K> {
         Object[] table = getTable();
         StringBuilder sb = new StringBuilder();
         int counter = 0;
-        for (Object n: table) {
+        for (Object n : table) {
             sb.append(counter++).append("\t").append(nodeToString(n)).append("\n");
         }
         return sb.toString();

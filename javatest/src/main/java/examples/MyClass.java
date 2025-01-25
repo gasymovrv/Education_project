@@ -4,7 +4,7 @@ public class MyClass {
     private Long id;
     private String info;
 
-    public enum OrderType{
+    public enum OrderType {
         PRO,
         PO,
         RO,
@@ -53,7 +53,7 @@ public class MyClass {
                 '}';
     }
 
-    public static void printSomething(String s){
-        System.out.println("printSomething="+s);
+    public static void printSomething(String s) {
+        System.out.println("printSomething=" + s);
     }
 }

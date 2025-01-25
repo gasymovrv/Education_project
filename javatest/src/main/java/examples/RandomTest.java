@@ -1,6 +1,7 @@
 package examples;
 
 import java.util.Random;
+
 /**
  * Методы генерации в определенных диапазонах
  */
@@ -8,7 +9,7 @@ public class RandomTest extends Test {
     private static Test thisOne = new RandomTest();
 
     @Override
-    public void contentGo(){
+    public void contentGo() {
         System.out.println("От 0 до 100 - целые");
         for (int i = 0; i < 20; i++) {
             System.out.println(getRandomIntegerInRange(0, 100));

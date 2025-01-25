@@ -14,5 +14,5 @@ class None<out V> : Optional<V>() {
 
 fun randomValue(): Optional<Double> {
     val random = Math.random()
-    return if(random > 0.5)  Some(random) else  None()
+    return if (random > 0.5) Some(random) else None()
 }

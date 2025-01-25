@@ -2,7 +2,7 @@ package ru.gasymovrv.kotlintest.receipts.utils
 
 import org.apache.commons.codec.binary.Hex
 import org.apache.commons.lang3.StringUtils
-import java.util.Base64
+import java.util.*
 import java.util.stream.Collectors
 
 fun main(args: Array<String>) {
@@ -13,9 +13,10 @@ fun main(args: Array<String>) {
                     decodeAndPrint(args[1])
                 } else printIfIncorrectArgs()
             }
+
             "-edp" -> {
                 if (args.size == 3 && args[1].length <= 5) {
-                    when(args[1]) {
+                    when (args[1]) {
                         "ean8" -> ean8(args[2])
                         "ean13" -> ean13(args[2])
                         "itf14" -> itf14(args[2])
@@ -24,6 +25,7 @@ fun main(args: Array<String>) {
                     }
                 } else printIfIncorrectArgs()
             }
+
             "-help" -> {
                 println("Use one of these ways:")
                 println("-dp <product code as base64 string> - decode and print")
@@ -42,6 +44,7 @@ fun main(args: Array<String>) {
                 println("-edp gs1 \"010000004621215321N4N57RS\"")//табак
                 println("-dp \"AAUAAAKTdbRUTXF0cjVR\"")
             }
+
             else -> printIfIncorrectArgs()
         }
     }
@@ -106,8 +109,8 @@ fun gs1(codeGs1: String) {
     val snHex = if (codeGs1.length > 18) {
         val sn = codeGs1.substring(18)
         sn.chars()
-                .mapToObj { it.toString(16) }
-                .collect(Collectors.joining(""))
+            .mapToObj { it.toString(16) }
+            .collect(Collectors.joining(""))
     } else {
         ""
     }
@@ -128,8 +131,8 @@ fun rf(codeRf: String) {
     printSummary("Изделия из натурального меха (RF)", codeRf)
     println("-".repeat(10) + " ENCODE " + "-".repeat(10))
     val snHex = codeRf.chars()
-            .mapToObj { it.toString(16) }
-            .collect(Collectors.joining(""))
+        .mapToObj { it.toString(16) }
+        .collect(Collectors.joining(""))
     val hex = "5246$snHex"
     printHex(hex)
 
@@ -183,7 +186,7 @@ fun decodeAndPrint(base64: String) {
     println()
 }
 
-fun printSummary(format:String, code: String) {
+fun printSummary(format: String, code: String) {
     println("-".repeat(20) + " $format " + "-".repeat(20))
     println("productCode: $code")
 }
@@ -192,7 +195,7 @@ fun String.withSpaces(interval: Int): String {
     var formatted = ""
     var nextInsert = interval
     this.toCharArray().forEachIndexed { index, c ->
-        formatted += if (index+1 == nextInsert) {
+        formatted += if (index + 1 == nextInsert) {
             nextInsert += interval
             "$c "
         } else "$c"
@@ -203,9 +206,11 @@ fun String.withSpaces(interval: Int): String {
 fun printBytes(input: ByteArray) {
     println("${input.contentToString()} - bytes")
 }
+
 fun printBase64(input: String) {
     println("$input - bytes as base64 string")
 }
+
 fun printHex(input: String) {
     println("${input.withSpaces(2)} - hex string")
 }

@@ -4,7 +4,7 @@ package ru.gasymovrv.kotlintest.coursera
 // so that NPE was thrown during the creation of its subclass B instance.
 open class A1(open val value: String) {
     init {
-      println(value.length)
+        println(value.length)
     }
 }
 

@@ -27,7 +27,7 @@ public class RegexTest extends Test {
     ));
 
     @Override
-    public void contentGo(){
+    public void contentGo() {
         System.out.println("\n---------- Валидация email ----------");
         for (String s : emails) {
             Matcher m1 = EMAIL_REGEX.matcher(s);
@@ -63,8 +63,8 @@ public class RegexTest extends Test {
         Pattern pattern4 = Pattern.compile(regEng);
         Matcher matcher4 = pattern4.matcher(wordsEng);
         printMatcherResult(matcher4, 3);
-        System.out.println("Before: "+wordsEng);
-        System.out.println("After: "+wordsEng.replaceAll(regEng, "$1$2<strong>$3</strong>"));
+        System.out.println("Before: " + wordsEng);
+        System.out.println("After: " + wordsEng.replaceAll(regEng, "$1$2<strong>$3</strong>"));
 
         System.out.println("\n---------- Поиск и замена повторяющихся слов ----------");
         String wordsAllLang = "Этот тест тест для для This test test is is всё всё";
@@ -73,8 +73,8 @@ public class RegexTest extends Test {
         Pattern pattern5 = Pattern.compile(regAllLang, Pattern.CASE_INSENSITIVE);
         Matcher matcher5 = pattern5.matcher(wordsAllLang);
         printMatcherResult(matcher5, 4);
-        System.out.println("Before: "+wordsAllLang);
-        System.out.println("After: "+wordsAllLang.replaceAll(regAllLang, "$1$2$3<strong>$4</strong>"));
+        System.out.println("Before: " + wordsAllLang);
+        System.out.println("After: " + wordsAllLang.replaceAll(regAllLang, "$1$2$3<strong>$4</strong>"));
 
 
         System.out.println("\n---------- Опережающие проверки (Предпросмотр) ----------");
@@ -112,7 +112,8 @@ public class RegexTest extends Test {
                     for (int i = 0; i < groupCount; i++) {
                         System.out.printf("\tgroup%d = \'%s\'\n", i, matcher.group(i));
                     }
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {
+                }
             }
         } catch (PatternSyntaxException pse) {
             System.err.println("Bad regex: " + pse.getMessage());

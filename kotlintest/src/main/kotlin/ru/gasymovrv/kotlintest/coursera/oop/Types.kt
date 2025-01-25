@@ -57,45 +57,45 @@ val arrayPrimitives: IntArray = intArrayOf(1, 3, 4, 6)
   public static final void autoboxing(@NotNull Object any) {...}
 */
 fun autoboxing(any: Any) {
-  println("autoboxing: any = $any, i.class = ${any.javaClass}")
+    println("autoboxing: any = $any, i.class = ${any.javaClass}")
 }
 
 /*
   public static final void noAutoboxing(int i) {...}
 */
 fun noAutoboxing(i: Int) {
-  println("noAutoboxing: i = $i, i.class = ${i.javaClass}")
+    println("noAutoboxing: i = $i, i.class = ${i.javaClass}")
 }
 
 inline fun inlinedFun(lambda: () -> Boolean) {
-  if (lambda()) {
-    println("Success")
-  }
+    if (lambda()) {
+        println("Success")
+    }
 }
 
 fun fail(): Nothing {
-  println("Nothing for throwing exception")
-  throw IllegalArgumentException()
+    println("Nothing for throwing exception")
+    throw IllegalArgumentException()
 }
 
 fun failNullableNothing(b: Boolean): Nothing? {
-  println("Nullable Nothing for throwing exception")
-  return if (!b) {
-    throw IllegalArgumentException()
-  } else {
-    null
-  }
+    println("Nullable Nothing for throwing exception")
+    return if (!b) {
+        throw IllegalArgumentException()
+    } else {
+        null
+    }
 }
 
 fun infiniteLoop(): Nothing {
-  while (true) {
-    println("Nothing for infinite loop")
-  }
+    while (true) {
+        println("Nothing for infinite loop")
+    }
 }
 
 fun unitExample(): Unit {
-  println("unitExample")
-  return Unit //you can omit it
+    println("unitExample")
+    return Unit //you can omit it
 }
 
 //typealias examples (just to change name of something):
@@ -104,31 +104,31 @@ typealias MyHandler = (Int, String, Any) -> Unit
 typealias Predicate<T> = (T) -> Boolean
 
 fun main() {
-  autoboxing(123)
-  noAutoboxing(123)
+    autoboxing(123)
+    noAutoboxing(123)
 
-  /*
-  if (true) {
-    String var2 = "Success";
-    System.out.println(var2);
-  }
-  */
-  inlinedFun { i1 > 0 }
+    /*
+    if (true) {
+      String var2 = "Success";
+      System.out.println(var2);
+    }
+    */
+    inlinedFun { i1 > 0 }
 
-  //Use Nothing for correct types
-  val int: Int = if (true) 42 else fail()
-  //If replace Nothing with Unit we will have to define int2 as Any
-  val int2: Any = if (true) 42 else unitExample()
+    //Use Nothing for correct types
+    val int: Int = if (true) 42 else fail()
+    //If replace Nothing with Unit we will have to define int2 as Any
+    val int2: Any = if (true) 42 else unitExample()
 
-  val unknown = null //Nothing?
+    val unknown = null //Nothing?
 
-  val s1 = JavaClass.getJavaString()
-  val s2: String? = JavaClass.getJavaString()
-  //val s3: String = JavaClass.getJavaString() //NPE
-  val s4 = JavaClass.getNullableJavaString()
-  //println(s1.length) //NPE
-  //println(s2.length) //Compilation error
-  println(s1?.length)
-  println(s2?.length)
-  println(s4?.length)
+    val s1 = JavaClass.getJavaString()
+    val s2: String? = JavaClass.getJavaString()
+    //val s3: String = JavaClass.getJavaString() //NPE
+    val s4 = JavaClass.getNullableJavaString()
+    //println(s1.length) //NPE
+    //println(s2.length) //Compilation error
+    println(s1?.length)
+    println(s2?.length)
+    println(s4?.length)
 }

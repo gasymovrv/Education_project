@@ -9,51 +9,51 @@ import java.util.stream.Collectors;
 
 public class ThreadPoolTest2 {
 
-  public static void main(String[] args) throws InterruptedException {
-    ExecutorService executorService = Executors.newFixedThreadPool(5);
+    public static void main(String[] args) throws InterruptedException {
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
 
-    //var list = new ArrayList<CallableTask>();
-    var futures = new ArrayList<Future<Integer>>();
-    for (int i = 0; i < 5; i++) {
-      //list.add(new CallableTask(i));
-      futures.add(executorService.submit(new CallableTask(i)));
+        //var list = new ArrayList<CallableTask>();
+        var futures = new ArrayList<Future<Integer>>();
+        for (int i = 0; i < 5; i++) {
+            //list.add(new CallableTask(i));
+            futures.add(executorService.submit(new CallableTask(i)));
+        }
+        //var futures = executorService.invokeAll(list); // invokeAll блокирующий
+        System.out.println("isShutdown() = " + executorService.isShutdown());
+        System.out.println("isTerminated() = " + executorService.isTerminated());
+
+        //Блокирует тред до завершения всех тасок, поэтому awaitTermination не нужен
+        System.out.println("All tasks completed: " + futures.stream().map((f) -> {
+            try {
+                return f.get();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }).collect(Collectors.toList()));
+
+        executorService.shutdown();
+        System.out.println("After shutdown:");
+        System.out.println("\tisShutdown() = " + executorService.isShutdown());
+        System.out.println("\tisTerminated() = " + executorService.isTerminated());
     }
-    //var futures = executorService.invokeAll(list); // invokeAll блокирующий
-    System.out.println("isShutdown() = " + executorService.isShutdown());
-    System.out.println("isTerminated() = " + executorService.isTerminated());
-
-    //Блокирует тред до завершения всех тасок, поэтому awaitTermination не нужен
-    System.out.println("All tasks completed: " + futures.stream().map((f)-> {
-      try {
-        return f.get();
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
-    }).collect(Collectors.toList()));
-
-    executorService.shutdown();
-    System.out.println("After shutdown:");
-    System.out.println("\tisShutdown() = " + executorService.isShutdown());
-    System.out.println("\tisTerminated() = " + executorService.isTerminated());
-  }
 }
 
 class CallableTask implements Callable<Integer> {
 
-  private final Integer id;
+    private final Integer id;
 
-  public CallableTask(int id) {
-    this.id = id;
-  }
-
-  @Override
-  public Integer call() throws Exception {
-    try {
-      Thread.sleep(5000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
+    public CallableTask(int id) {
+        this.id = id;
     }
-    System.out.println("-------- Task " + id + " was completed -------");
-    return id;
-  }
+
+    @Override
+    public Integer call() throws Exception {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("-------- Task " + id + " was completed -------");
+        return id;
+    }
 }

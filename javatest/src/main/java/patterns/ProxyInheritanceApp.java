@@ -2,56 +2,57 @@ package patterns;
 
 public class ProxyInheritanceApp {
 
-	public static void main(String[] args) {
-		//с пмощью прокси реализуем ленивую загрузку изображения
-		RealImage image = new ProxyImage("D:/images/my.jpg");
-		System.out.println("создан но не загружен");
-		//объект RealImage создается только когда вызывается метод display()
-		image.display();
-	}
+    public static void main(String[] args) {
+        //с пмощью прокси реализуем ленивую загрузку изображения
+        RealImage image = new ProxyImage("D:/images/my.jpg");
+        System.out.println("создан но не загружен");
+        //объект RealImage создается только когда вызывается метод display()
+        image.display();
+    }
 
 
 //-------------------------------Subjects----------------------------------
 
 
-	//ConcreteSubject
-	static class RealImage {
+    //ConcreteSubject
+    static class RealImage {
 
-		String file;
-		public RealImage(String file) {
-			this.file = file;
-			load();
-		}
+        String file;
 
-		void load(){
-			System.out.println("Загрузка " + file);
-		}
+        public RealImage(String file) {
+            this.file = file;
+            load();
+        }
 
-		public void display() {
-			System.out.println("Просмотр " + file);
-		}
-	}
+        void load() {
+            System.out.println("Загрузка " + file);
+        }
 
-	//-------------------------------Proxy----------------------------------
-	static class ProxyImage extends RealImage{
-		boolean canLoad = false;
+        public void display() {
+            System.out.println("Просмотр " + file);
+        }
+    }
 
-		public ProxyImage(String file) {
-			super(file);
-		}
+    //-------------------------------Proxy----------------------------------
+    static class ProxyImage extends RealImage {
+        boolean canLoad = false;
 
-		@Override
-		public void display() {
-			canLoad = true;
-			load();
-			super.display();
-		}
+        public ProxyImage(String file) {
+            super(file);
+        }
 
-		@Override
-		public void load(){
-			if (canLoad) {
-				super.load();
-			}
-		}
-	}
+        @Override
+        public void display() {
+            canLoad = true;
+            load();
+            super.display();
+        }
+
+        @Override
+        public void load() {
+            if (canLoad) {
+                super.load();
+            }
+        }
+    }
 }

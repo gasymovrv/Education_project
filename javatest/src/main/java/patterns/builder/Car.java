@@ -5,9 +5,17 @@ public class Car {
     private Transmission transmission;
     private int maxSpeed;
 
-    public void setMaker(String maker) {this.maker = maker;}
-    public void setTransmission(Transmission transmission) {this.transmission = transmission;}
-    public void setMaxSpeed(int maxSpeed) {this.maxSpeed = maxSpeed;}
+    public void setMaker(String maker) {
+        this.maker = maker;
+    }
+
+    public void setTransmission(Transmission transmission) {
+        this.transmission = transmission;
+    }
+
+    public void setMaxSpeed(int maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
 
     @Override
     public String toString() {

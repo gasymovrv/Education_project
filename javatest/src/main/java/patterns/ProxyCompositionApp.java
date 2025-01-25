@@ -2,57 +2,59 @@ package patterns;
 
 public class ProxyCompositionApp {
 
-	public static void main(String[] args) {
-		//с пмощью прокси реализуем ленивую загрузку изображения
-		Image image = new ProxyImage("D:/images/my.jpg");
-		System.out.println("создан но не загружен");
-		//объект RealImage создается только когда вызывается метод display()
-		image.display();
-	}
+    public static void main(String[] args) {
+        //с пмощью прокси реализуем ленивую загрузку изображения
+        Image image = new ProxyImage("D:/images/my.jpg");
+        System.out.println("создан но не загружен");
+        //объект RealImage создается только когда вызывается метод display()
+        image.display();
+    }
 
 
 //-------------------------------Subjects----------------------------------
 
-	//Subject
-	interface Image{
-		//request
-		void display();
-	}
+    //Subject
+    interface Image {
+        //request
+        void display();
+    }
 
-	//ConcreteSubject
-	static class RealImage implements Image{
+    //ConcreteSubject
+    static class RealImage implements Image {
 
-		String file;
-		public RealImage(String file) {
-			this.file = file;
-			load();
-		}
+        String file;
 
-		void load(){
-			System.out.println("Загрузка " + file);
-		}
+        public RealImage(String file) {
+            this.file = file;
+            load();
+        }
 
-		@Override
-		public void display() {
-			System.out.println("Просмотр " + file);
-		}
-	}
+        void load() {
+            System.out.println("Загрузка " + file);
+        }
 
-	//-------------------------------Proxy----------------------------------
-	static class ProxyImage implements Image{
+        @Override
+        public void display() {
+            System.out.println("Просмотр " + file);
+        }
+    }
 
-		String file;
-		RealImage image;
-		public ProxyImage(String file) {
-			this.file = file;
-		}
+    //-------------------------------Proxy----------------------------------
+    static class ProxyImage implements Image {
 
-		@Override
-		public void display() {
-			if(image == null){
-				image = new RealImage(file);
-			}
-			image.display();
-		}
-	}
+        String file;
+        RealImage image;
+
+        public ProxyImage(String file) {
+            this.file = file;
+        }
+
+        @Override
+        public void display() {
+            if (image == null) {
+                image = new RealImage(file);
+            }
+            image.display();
+        }
+    }
 }

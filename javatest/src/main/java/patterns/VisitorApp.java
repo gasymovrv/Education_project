@@ -1,14 +1,15 @@
 package patterns;
+
 public class VisitorApp {
-	public static void main(String[] args) {
-      Element car = new CarElement();
-      System.out.println("HooliganVisitor:");
-      car.accept(new HooliganVisitor());
-      
-      System.out.println();
-      System.out.println("MechanicVisitor:");
-      car.accept(new MechanicVisitor());
-	}
+    public static void main(String[] args) {
+        Element car = new CarElement();
+        System.out.println("HooliganVisitor:");
+        car.accept(new HooliganVisitor());
+
+        System.out.println();
+        System.out.println("MechanicVisitor:");
+        car.accept(new MechanicVisitor());
+    }
 }
 
 //-----------------------------------------------Elements------------------------------------------------
@@ -19,9 +20,9 @@ interface Element {
 
 //ConcreteElement 1 - Кузов
 class BodyElement implements Element {
-	public void accept(Visitor visitor) {
-	    visitor.visit(this);
-	}
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
 }
 
 //ConcreteElement 2 - Двигатель
@@ -33,14 +34,19 @@ class EngineElement implements Element {
 
 //ConcreteElement 3 - Колесо
 class WheelElement implements Element {
-	private String name;
-	
-	public WheelElement(String name) {this.name = name;}
-	public String getName() {return this.name;}
-	
-	public void accept(Visitor visitor) {
-	    visitor.visit(this);
-	}
+    private String name;
+
+    public WheelElement(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
 }
 
 //ConcreteElement 4 - Автомобиль (реализован по шаблону Компоновщик)
@@ -69,14 +75,17 @@ class CarElement implements Element {
 //Посетитель (Visitor)
 interface Visitor {
     void visit(EngineElement engine);
+
     void visit(BodyElement body);
+
     void visit(CarElement car);
+
     void visit(WheelElement wheel);
 }
 
 //ConcreteVisitor 1
 class HooliganVisitor implements Visitor {
-    public void visit(WheelElement wheel) {      
+    public void visit(WheelElement wheel) {
         System.out.println("Пнул " + wheel.getName() + " колесо");
     }
 
@@ -87,8 +96,8 @@ class HooliganVisitor implements Visitor {
     public void visit(BodyElement body) {
         System.out.println("Постучал по корпусу");
     }
- 
-    public void visit(CarElement car) {      
+
+    public void visit(CarElement car) {
         System.out.println("Покурил внутри машины");
     }
 }
