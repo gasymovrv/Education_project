@@ -17,14 +17,17 @@ import java.util.HashMap;
  * <p>
  * <p>
  * Example 1:
- * Input: nums = [2,7,11,15], target = 9 Output: [0,1] Explanation: Because nums[0] + nums[1] == 9,
- * we return [0, 1].
+ * Input: nums = [2,7,11,15], target = 9
+ * Output: [0,1]
+ * Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
  * <p>
  * Example 2:
- * Input: nums = [3,2,4], target = 6 Output: [1,2]
+ * Input: nums = [3,2,4], target = 6
+ * Output: [1,2]
  * <p>
  * Example 3:
- * Input: nums = [3,3], target = 6 Output: [0,1]
+ * Input: nums = [3,3], target = 6
+ * Output: [0,1]
  * <p>
  * Constraints:
  * <p>
@@ -43,6 +46,7 @@ public class TwoSum {
 
     public static int[] twoSum(int[] nums, int target) {
         var map = new HashMap<Integer, Integer>();
+        // Сохраняем разницу между элементом и целевой суммой в мапу как ключ и индекс этого элемента как значение
         for (int i = 0; i < nums.length; i++) {
             int complement = target - nums[i];
             map.put(complement, i);
@@ -50,6 +54,9 @@ public class TwoSum {
 
         for (int i = 0; i < nums.length; i++) {
             final Integer complementIndex = map.get(nums[i]);
+            // Если нашли недостающую разницу (по ключу в мапе - nums[i]) до целевой суммы
+            // и при этом индекс этого элемента (значение в мапе - complementIndex) не равен текущему индексу,
+            // то мы нашли, то что искали
             if (complementIndex != null && complementIndex != i) {
                 return new int[]{i, complementIndex};
             }
