@@ -2,7 +2,7 @@ package examples.algorithms;
 
 import java.util.Arrays;
 
-public class BubbleSortingTest {
+public class BubbleSort {
     public static void main(String[] args) {
         String[] strings = new String[]{"b", "g", "a", "c", "f", "d", "abc", "adf"};
         sort(strings);

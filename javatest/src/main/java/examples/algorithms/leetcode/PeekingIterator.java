@@ -1,5 +1,6 @@
 package examples.algorithms.leetcode;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 /**
@@ -44,31 +45,63 @@ import java.util.Iterator;
  * <p>
  * Follow up: How would you extend your design to be generic and work with all types, not just integer?
  */
-// Java Iterator interface reference:
-// https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html
+class PeekingIteratorTest {
+    public static void main(String[] args) {
+        PeekingIterator iterator = new PeekingIterator(Arrays.stream(new int[]{1, 2, 3, 4}).iterator());
+        System.out.println(iterator.hasNext());
+        System.out.println(iterator.peek());
+        System.out.println(iterator.peek());
+        System.out.println(iterator.next());
+        System.out.println(iterator.next());
+        System.out.println(iterator.peek());
+        System.out.println(iterator.peek());
+        System.out.println(iterator.next());
+        System.out.println(iterator.hasNext());
+        System.out.println(iterator.peek());
+        System.out.println(iterator.hasNext());
+        System.out.println(iterator.next());
+        System.out.println(iterator.hasNext());
+    }
+}
+
 class PeekingIterator implements Iterator<Integer> {
+    private final Iterator<Integer> iterator;
+    private Integer cachedNext = null;
+
     public PeekingIterator(Iterator<Integer> iterator) {
         // initialize any member here.
-
+        this.iterator = iterator;
     }
 
     // Returns the next element in the iteration without advancing the iterator.
     public Integer peek() {
-
-        return 0;
+        if (cachedNext != null) {
+            return cachedNext;
+        }
+        if (iterator.hasNext()) {
+            cachedNext = iterator.next();
+            return cachedNext;
+        }
+        return null;
     }
 
     // hasNext() and next() should behave the same as in the Iterator interface.
     // Override them if needed.
     @Override
     public Integer next() {
-
-        return 0;
+        if (cachedNext == null) {
+            return iterator.next();
+        } else {
+            Integer next = cachedNext;
+            cachedNext = null;
+            return next;
+        }
     }
 
     @Override
     public boolean hasNext() {
-
-        return false;
+        if (cachedNext != null) {
+            return true;
+        } else return iterator.hasNext();
     }
 }

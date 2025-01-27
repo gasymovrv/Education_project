@@ -1,5 +1,8 @@
 package examples.algorithms.leetcode;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -34,7 +37,47 @@ import java.util.List;
  */
 public class GroupAnagrams {
 
-    public List<List<String>> groupAnagrams(String[] strs) {
-return null;
+    /**
+     * Для группировки анаграмм мы можем использовать хэш-таблицу,
+     * где ключом будет отсортированное содержимое строки (которое одинаково для всех анаграмм),
+     * а значением — список строк, принадлежащих одной группе анаграмм.
+     */
+    public static List<List<String>> groupAnagrams(String[] strs) {
+        var map = new HashMap<String, List<String>>();
+        for (var str : strs) {
+            // Можно использовать сортировку
+            // Это чуть медленнее чем вариант ниже, т.к. сортировка нам даст O(n log n), но при этом чуть лучше по памяти.
+            var sortedStr = str.toCharArray();
+            Arrays.sort(sortedStr);
+
+            // Вместо сортировки можно использовать упорядоченный массив чаров с английскими символами
+            // Тут будет O(n), но при этом добавит использование памяти, т.к. создаем новые подмассивы
+            //char[] sortedStr = new char[26];
+            //for (int i = 0; i < str.length(); i++) {
+            //    sortedStr[str.charAt(i) - 'a'] += 1;
+            //}
+
+            var key = String.valueOf(sortedStr);
+            var anagrams = map.get(key);
+
+            if (anagrams == null) {
+                var list = new ArrayList<String>();
+                list.add(str);
+                map.put(key, list);
+            } else {
+                anagrams.add(str);
+            }
+        }
+
+        return new ArrayList<>(map.values());
+    }
+
+    public static void main(String[] args) {
+        // Пример использования
+        String[] strList = {"eat", "tea", "tan", "ate", "nat", "bat"};
+        List<List<String>> result = groupAnagrams(strList);
+
+        // Вывод результата
+        System.out.println(result);
     }
 }
