@@ -31,6 +31,8 @@ kubectl logs {pod-name}
 kubectl logs {full-deployment-name} # logs from pods of the deployment
 kubectl exec -it {pod-name} -- bin/bash
 kubectl describe pod {pod-name}
+kubectl describe deployment {deployment-name} # Get the YAML definition of a deployment AND EVENTS of this deployment
+kubectl get events # Get events (it's a k8s log of operations on resources) from the cluster
 # Examples:
 kubectl logs mm-back-depl-786d4bd669-kgj84
 kubectl describe pod mm-back-depl-786d4bd669-kgj84
