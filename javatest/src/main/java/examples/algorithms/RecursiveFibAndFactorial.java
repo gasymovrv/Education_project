@@ -1,6 +1,6 @@
 package examples.algorithms;
 
-public class RecursionTest {
+public class RecursiveFibAndFactorial {
     public static void main(String[] args) {
         System.out.println(factorial(5));
         System.out.println(fib(7));

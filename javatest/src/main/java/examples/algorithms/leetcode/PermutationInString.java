@@ -39,7 +39,8 @@ public class PermutationInString {
 
     /**
      * Моя реализация с использованием HashMap.
-     * Очень похожа на FindAllAnagramsInString
+     *
+     * Очень похожа на {@link FindAllAnagramsInString}
      * Для оптимизации можно заменить HashMap на int[26] с английскими символами.
      * Заполнять его стандартным подходом: s1Count[s.charAt(i) - 'a']++
      */

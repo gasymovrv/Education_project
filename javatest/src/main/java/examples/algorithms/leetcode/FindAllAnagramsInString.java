@@ -86,7 +86,7 @@ public class FindAllAnagramsInString {
     }
 
     /**
-     * HashMaps - slower solution. Similar to PermutationInString
+     * HashMaps - slower solution. Similar to {@link PermutationInString}
      */
     public List<Integer> findAnagrams2(String s, String p) {
         List<Integer> result = new ArrayList<>();
