@@ -1,6 +1,8 @@
 package examples.algorithms.leetcode;
 
 /**
+ * https://leetcode.com/problems/guess-number-higher-or-lower
+ * <p>
  * We are playing the Guess Game. The game is as follows:
  * <p>
  * I pick a number from 1 to n. You have to guess which number I picked.

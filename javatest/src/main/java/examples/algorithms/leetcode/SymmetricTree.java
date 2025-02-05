@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
+ * https://leetcode.com/problems/symmetric-tree
+ * <p>
  * Дан корень бинарного дерева. Проверить является ли оно зеркальным самому себе (симметричным относительно центра)
  */
 public class SymmetricTree {

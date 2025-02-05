@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 
 /**
+ * https://leetcode.com/problems/top-k-frequent-elements
+ * <p>
  * Дан массив чисел, найти k самых часто встречающихся чисел в виде массива. Результирующий массив может быть в любом порядке
  */
 public class TopKFrequentElements {
