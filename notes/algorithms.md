@@ -311,8 +311,10 @@ public class Graph<T> {
 ---
 
 ### Алгоритмы сортировки
-+ [Пузырьковая сортировка](../_java_/src/main/java/examples/algorithms/BubbleSortingTest.java)
++ [Пузырьковая сортировка](../_java_/src/main/java/examples/algorithms/BubbleSort.java)
 + [Быстрая сортировка](../_java_/src/main/java/examples/algorithms/QuickSort.java)
++ [Сортировка слиянием](../_java_/src/main/java/examples/algorithms/MergeSort.java)
++ [Сортировка вставками](../_java_/src/main/java/examples/algorithms/InsertionSort.java)
 
 ---
 
