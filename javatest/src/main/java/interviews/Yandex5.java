@@ -1,39 +1,44 @@
 package interviews;
 
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Даны 2 массива целых чисел одинаковой длины.
- * Нужно считать на каждом i-ом элементе сколько элементов из второго массива уже встречалось ранее
- * и в результате вывести массив с элементами - количеством встреченных ранее чисел на каждом индексе
+ * Проходясь одновременно по обоим массивам начиная с i == 0 нужно подсчитать,
+ * сколько чисел из этих массивов (nums1[i], nums2[i]) уже встретились на индексах < i.
+ * В результате вывести массив с элементами - количеством встреченных ранее чисел на каждом индексе
  */
 public class Yandex5 {
 
     public static int[] solution(int[] nums1, int[] nums2) {
         int n = nums1.length;
-        var set1 = new HashSet<Integer>();
-        var set2 = new HashSet<Integer>();
+        Map<Integer, Integer> unpaired = new HashMap<>();
+        int[] res = new int[n];
         int counter = 0;
 
-        int[] res = new int[n];
-
         for (int i = 0; i < n; i++) {
-            if (set2.contains(nums1[i])) {
-                set2.remove(nums1[i]);
+            // Обработка nums1[i]
+            int num1 = nums1[i];
+            if (unpaired.getOrDefault(num1, 0) > 0) {
+                unpaired.put(num1, unpaired.get(num1) - 1);
                 counter++;
             } else {
-                set1.add(nums1[i]);
+                unpaired.put(num1, unpaired.getOrDefault(num1, 0) + 1);
             }
 
-            if (set1.contains(nums2[i])) {
-                set1.remove(nums2[i]);
+            // Обработка nums2[i]
+            int num2 = nums2[i];
+            if (unpaired.getOrDefault(num2, 0) > 0) {
+                unpaired.put(num2, unpaired.get(num2) - 1);
                 counter++;
             } else {
-                set2.add(nums2[i]);
+                unpaired.put(num2, unpaired.getOrDefault(num2, 0) + 1);
             }
 
             res[i] = counter;
         }
+
         return res;
     }
 
@@ -45,7 +50,7 @@ public class Yandex5 {
         for (int count : result) {
             System.out.print(count + " ");
         }
-        // Ожидаемый вывод: 0, 1, 2, 3
+        // Ожидаемый вывод: 0, 1, 2, 4
 
         System.out.println();
 
