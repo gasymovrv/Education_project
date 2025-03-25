@@ -180,5 +180,5 @@ public class OrderStockAndPackValidator extends OrderStockValidator {
 + Цепочка обязанностей - `javax.servlet.Filter#doFilter()`
 + Фабричный метод - `java.util.EnumSet#of()`, `java.util.List#of()`
 + Примеры реализации всех паттернов ООП (GoF) 
-  + Java [/javatest/src/main/java/patterns](../javatest/src/main/java/patterns)
-  + Kotlin [/kotlintest/src/main/kotlin/patterns](../kotlintest/src/main/kotlin/ru/gasymovrv/kotlintest/patterns)
+  + Java [/_java_/src/main/java/patterns](../_java_/src/main/java/patterns)
+  + Kotlin [/\_kotlin_/src/main/kotlin/patterns](../\_kotlin_/src/main/kotlin/ru/gasymovrv/\_kotlin_/patterns)

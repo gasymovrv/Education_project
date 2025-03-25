@@ -78,7 +78,7 @@ git merge origin/master //делаем merge из удаленной
 git remote add react_tests_remote https://github.com/gasymovrv/react-tests.git //подключаем 2ой удаленный репозиторий 
 git fetch react_tests_remote //вытягиваем из него все коммиты
 git branch react_tests_branch react_tests_remote/master //создаем для него ветку
-git read-tree --prefix=javatest/src/main/webapp/webpack_node_react_tests/ -u react_tests_branch //клонируем ветку в папку webpack_node_react_tests ветки master основного проекта
+git read-tree --prefix=_java_/src/main/webapp/webpack_node_react_tests/ -u react_tests_branch //клонируем ветку в папку webpack_node_react_tests ветки master основного проекта
 git commit -a -m 'init webpack_node_react_tests' //или коммитим через идею
 ```
 + Перенос изменений из react_tests_branch в master:

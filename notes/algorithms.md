@@ -311,13 +311,13 @@ public class Graph<T> {
 ---
 
 ### Алгоритмы сортировки
-+ [Пузырьковая сортировка](../javatest/src/main/java/examples/algorithms/BubbleSortingTest.java)
-+ [Быстрая сортировка](../javatest/src/main/java/examples/algorithms/QuickSort.java)
++ [Пузырьковая сортировка](../_java_/src/main/java/examples/algorithms/BubbleSortingTest.java)
++ [Быстрая сортировка](../_java_/src/main/java/examples/algorithms/QuickSort.java)
 
 ---
 
 ### Рекурсия
-+ [Рекурсивное вычисление факториала и числа фибоначчи](../javatest/src/main/java/examples/algorithms/RecursionTest.java)
++ [Рекурсивное вычисление факториала и числа фибоначчи](../_java_/src/main/java/examples/algorithms/RecursionTest.java)
 
 ---
 

@@ -360,7 +360,7 @@ By combining these strategies, you can significantly reduce GC pauses and improv
 
 ---
 + Утечки памяти из-за статических полей
-    + В Java время жизни статических полей обычно совпадает со временем работы приложения. [Пример](../javatest/src/main/java/examples/MemoryStaticTest.java)
+    + В Java время жизни статических полей обычно совпадает со временем работы приложения. [Пример](../_java_/src/main/java/examples/MemoryStaticTest.java)
     + Как это предотвратить?
         + Минимизировать использование статических переменных в приложении.
         + При использовании синглтонов использовать реализацию с ленивой загрузкой объекта, вместо немедленной.
@@ -395,7 +395,7 @@ By combining these strategies, you can significantly reduce GC pauses and improv
 
 ## Многопоточность
 + volatile - указывает что JVM не должно кэшировать переменную (в кэше процессора) и ее всегда необходимо читать из памяти. Может помочь если один поток (и только один!) пишет в переменную, а другой (или несколько) затем читает. Без нее один поток может прочитать значение, сохранить себе в кэш и когда другой поток изменит ее, то первый не увидит изменения
-+ Состояние гонки (Race condition) - Предположим, что потоки A и B выполняют метод getInstance в одно и то же время. A видит, что поле instance равно null, и создает новый ExpensiveObject. Поток B также проверяет, равно ли поле instance тому же значению null. Наличие в поле значения null в этот момент зависит от временной координации, включая капризы планирования и количество времени, нужного для создания экземпляра объекта ExpensiveObject и установки значения в поле instance. Если поле instance равно null, когда B его проверяет, два элемента кода, вызывающих метод getInstance, могут получить два разных результата, даже если метод getInstance предположительно должен всегда возвращать один и тот же экземпляр. [Пример](../javatest/src/main/java/examples/multithreading/racecondition/LazyInitRace.java)
++ Состояние гонки (Race condition) - Предположим, что потоки A и B выполняют метод getInstance в одно и то же время. A видит, что поле instance равно null, и создает новый ExpensiveObject. Поток B также проверяет, равно ли поле instance тому же значению null. Наличие в поле значения null в этот момент зависит от временной координации, включая капризы планирования и количество времени, нужного для создания экземпляра объекта ExpensiveObject и установки значения в поле instance. Если поле instance равно null, когда B его проверяет, два элемента кода, вызывающих метод getInstance, могут получить два разных результата, даже если метод getInstance предположительно должен всегда возвращать один и тот же экземпляр. [Пример](../_java_/src/main/java/examples/multithreading/racecondition/LazyInitRace.java)
     ```java
     @NotThreadSafe
     public class LazyInitRace {
@@ -558,7 +558,7 @@ CompletableFuture processData2 = data.thenApplyAsync(this::processData2);
 + Класс java.lang.Error - технически такие исключения можно выбрасывать и перехватывать. 
     + Выбрасывать можно в редких случая когда нужно быстро вырубить приложение
     + Перехватывать лучше не стоит, т.к. нет гарантии что следующая строчка сможет выполниться
-+ Wildcards PECS (Producer Extends Consumer Super) - [пример](../javatest/src/main/java/examples/generics/WildcardsTest.java)
++ Wildcards PECS (Producer Extends Consumer Super) - [пример](../_java_/src/main/java/examples/generics/WildcardsTest.java)
 
 ---
 

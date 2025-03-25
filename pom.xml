@@ -57,7 +57,6 @@
         </dependency>
     </dependencies>
 
-
     <build>
         <plugins>
             <plugin>
@@ -72,9 +71,9 @@
         </plugins>
     </build>
     <modules>
-        <module>hibertest</module>
-        <module>kotlintest</module>
+        <module>_java_</module>
+        <module>_kotlin_</module>
+        <module>hibernate</module>
         <module>serialization</module>
-        <module>javatest</module>
     </modules>
 </project>

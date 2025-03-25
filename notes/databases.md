@@ -46,7 +46,7 @@
 + union
 + Группировка по месяцам из дат (для postgres функция EXTRACT)
 + Решения задач с http://sql-ex.ru
-    + [javatest/src/main/resources/db](../javatest/src/main/resources/db)
+    + [_java_/src/main/resources/db](../_java_/src/main/resources/db)
 
 ### Нормализация и денормализация
 + Нормализация - устранение аномалий и избыточности данных (приведение таблиц к нормальным формам)
