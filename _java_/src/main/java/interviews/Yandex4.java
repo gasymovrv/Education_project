@@ -55,7 +55,7 @@ public class Yandex4 {
         int[] nums = {1, 2, 3, 2, 1, 5, 6, 7, 8, 2, 1};
         int[] result = findLongestMonotonicSegment(nums);
         System.out.println("Самый длинный отрезок: [" + result[0] + ", " + result[1] + "]");
-        // Ожидаемый вывод: [4, 8] (отрезок: 5, 6, 7, 8)
+        // Ожидаемый вывод: [4, 8] (отрезок: 1, 5, 6, 7, 8)
 
         nums = new int[]{1, 2, 3, 1, 1, 1};
         result = findLongestMonotonicSegment(nums);
