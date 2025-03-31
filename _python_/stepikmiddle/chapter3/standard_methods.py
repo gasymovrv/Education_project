@@ -131,3 +131,13 @@ print(reversed(lst))  # <list_reverseiterator object at 0x000001D1361D1630>
 for i in reversed(lst):
     print(i)
 print(lst.reverse())
+
+print("\nzip")
+
+list1, list2 = [1, 2, 3], ["a", "b", "c"]
+zipped = zip(list1, list2)
+print(list(zipped))  # Output: [(1, 'a'), (2, 'b'), (3, 'c')]
+
+s, t = "egg", "add"
+for char_s, char_t in zip(s, t):
+    print(char_s, char_t, end=", ")  # Output: e a, g d, g d,

@@ -46,8 +46,8 @@ all_inclusions = re.findall(pattern, string)
 print(all_inclusions)
 
 print("\nsub")
-fixed_typos = re.sub(pattern, "abc", string)
-print(fixed_typos)
+cleaned = re.sub(r"[^a-zA-Z0-9\s]", "", string)
+print(cleaned)
 
 print("\nescape meta characters")
 pattern = r" english\?"

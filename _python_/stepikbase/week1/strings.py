@@ -19,6 +19,15 @@ print(c)
 print(len(d))
 print(a * 2)
 
+print("\n======== Character methods ord() and chr() ========")
+print(ord("A"))  # 65
+print(ord("Ы"))  # 1067
+print(ord("✔"))  # 10004
+
+print(chr(65))  # A
+print(chr(1067))  # Ы
+print(chr(10004))  # ✔
+
 print("\n======== String methods isdigit(), isnumeric(), isdecimal() ========")
 print("123".isdigit())  # True
 print("²³".isdigit())  # True (superscript digits)
