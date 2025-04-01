@@ -130,7 +130,11 @@ print(reversed(lst))  # <list_reverseiterator object at 0x000001D1361D1630>
 
 for i in reversed(lst):
     print(i)
+
+print(list(reversed(lst)))
+
 print(lst.reverse())
+print(lst)
 
 print("\nzip")
 
