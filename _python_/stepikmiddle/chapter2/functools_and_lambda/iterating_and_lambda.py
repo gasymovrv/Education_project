@@ -1,4 +1,5 @@
-from functools import cmp_to_key
+import random
+from functools import cmp_to_key, lru_cache
 
 # x = input("Provide 2 numbers:\n").split()
 # print(x)  # ["1", "2"]
@@ -48,3 +49,32 @@ persons = [
 ]
 persons.sort(key=cmp_to_key(person_comparator))
 print(persons)
+
+
+@lru_cache(maxsize=10)
+def cached_random(n: int):
+    print(n)
+    return random.random()
+
+
+print("\nCached random first invocation")
+print(cached_random(1))
+print(cached_random(2))
+
+print("\nCached random second invocation")
+print(cached_random(1))  # same result as first invocation and nested print is not executed
+print(cached_random(2))  # same result as first invocation and nested print is not executed
+
+
+# Without lru_cache, computing fib(50) recursively would take hours. With it, it takes milliseconds.
+# It automatically caches the results of function calls based on their arguments,
+# so repeated calls with the same inputs don't recompute the result—they just return the cached result.
+@lru_cache(maxsize=None)
+def fib(n):
+    if n <= 1:
+        return n
+    return fib(n - 1) + fib(n - 2)
+
+
+print("\nCached fibonacci")
+print(fib(50))
