@@ -15,3 +15,19 @@ print("after discard:", s)
 s.clear()
 print("cleared s:", s)
 print("basket:", basket)
+
+s1 = {1, 2, 3}
+s2 = {2, 3, 4}
+print("s1 | s2:", s1 | s2)  # объединение
+print("s1 & s2:", s1 & s2)  # пересечение
+print("s1 - s2:", s1 - s2)  # разность
+
+s1 = {1, 2, 3}
+s2 = {2, 3, 4}
+print("s1 ^ s2:", s1 ^ s2)  # симметрическая разность - объединение без пересечения
+
+s1 = {2, 3}
+s2 = {2, 3, 4}
+print("s1 < s2:", s1 < s2)  # If s1 is a proper subset of s2 - True
+print("s1 > s2:", s1 > s2)  # False
+print("s1 == s2:", s1 == s2)  # False
