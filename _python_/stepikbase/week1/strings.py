@@ -112,6 +112,11 @@ print(insert_every_n_chars(s, 3))
 print(insert_every_n_chars(s, 3, "#"))
 
 
+print("================== reverse string ================")
+
+print(''.join(reversed("abcdefg")))
+
+
 def reverse_str(s: str, k: int) -> str:
     result = list(s)
 
