@@ -1,5 +1,7 @@
 # Сборник обучающих материалов
-
++ Теория
+  + [Оглавление](notes/MAIN.md)
+  + [Директория с заметками](notes)
 + Примеры реализации всех паттернов ООП (GoF)
     + [\_java_/src/main/java/patterns](_java_/src/main/java/patterns)
 + Решения задач с http://sql-ex.ru
@@ -23,7 +25,3 @@
   + [\_java_/src/main/resources/xsd](_java_/src/main/resources/xsd)
 + XSL
     + [\_java_/src/main/resources/xsl](_java_/src/main/resources/xsl)
-+ Различные заметки
-  + [notes](notes)
-  + Ответы на популярные вопросы на интервью Java разработчика
-    + [notes/interview_answers.md](notes/interview_answers.md)
