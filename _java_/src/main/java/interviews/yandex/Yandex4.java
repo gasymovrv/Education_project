@@ -1,4 +1,4 @@
-package interviews;
+package interviews.yandex;
 
 /**
  * Дан массив целых чисел nums. Нужно найти самый большой строго монотонный отрезок

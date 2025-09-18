@@ -1,4 +1,4 @@
-package interviews;
+package interviews.yandex;
 
 import java.util.Arrays;
 import java.util.HashMap;
