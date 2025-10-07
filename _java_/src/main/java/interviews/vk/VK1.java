@@ -1,4 +1,4 @@
-package interviews;
+package interviews.vk;
 
 import java.util.Arrays;
 
