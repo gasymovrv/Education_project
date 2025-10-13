@@ -14,6 +14,40 @@
   + Если HA (high availability - выше 99%, например 99,9% - 1,44 минуты простоя в день), нужно уточнить какие именно части системы требуют HA
 + Остальные вопросы по функциональным требованиям
 
+### Расчет размера данных на примере PostgreSQL
+Numeric Types:
+  + smallint: 2 bytes
+  + integer (int): 4 bytes
+  + bigint: 8 bytes
+  + real: 4 bytes (single-precision floating-point)
+  + double precision: 8 bytes (double-precision floating-point)
+  + numeric (decimal): Variable. The actual storage requirement is 2 bytes for each group of 4 decimal digits, plus 3-8 bytes overhead. 
+
+Character Types:
+  + char(n): n chars (fixed-length, padded with spaces)
+  + varchar(n): Variable, up to n chars plus overhead (variable-length, no padding)
+  + text: Variable, plus overhead (variable-length, no explicit length limit)
+
+Each letter takes 1-4 bytes, depending on the encoding (Latin - 1b, Russian - 2b, some Chinese characters or emojis - 4b)
+
+Date/Time Types:
+  + date: 4 bytes
+  + time [without time zone]: 8 bytes
+  + timestamp [without time zone]: 8 bytes
+  + time with time zone: 8 bytes
+  + timestamp with time zone: 8 bytes
+
+Boolean Type:
+  + boolean: 1 byte
+
+Binary Data Types:
+  + bytea: Variable, plus overhead
+
+JSON Types:
+  + json: Variable, plus overhead
+  + jsonb: Variable, plus overhead (stored in a decomposed binary format, potentially larger than json for the same data but faster to query)
+
+
 ### Основные подходы в High load
 + Масштабирование (модульные монолиты, микросервисы) - вертикальное и горизонтальное. Горизонтальное также улучшает availability, т.к. резервирует ноды на случай падений
   + Вертикальное - за счет увеличения ресурсов
@@ -22,7 +56,7 @@
   + Шардирование БД. Можно применить при большом объеме данных. Это разбиение данных на шарды и распределение их между нодами, обычно с помощью хэш-функций по какому-то полю. Например, node = hash(column)%nodes, или с помощью consistent hashing. Однако запросы должны иметь фильтр по этому полю, иначе будет сканирование всех шардов и тогда это бессмысленно.
   + Партицирование таблицы по какому-то полю, например по дате. Это еще один подход при больших объемах таблиц (Postgres поддерживает из коробки). Т.е. таблица будет разбита на части по периодам дат. Запросы также должны иметь фильтр по этой дате, иначе будет сканирование всех партиций и тогда это бессмысленно.
 + Кэширование на разных уровнях (in-memory кэши, Redis, Memcached и др.)
-+ CDN в качестве кэша для статических ресурсов (images, CSS, JavaScript files, videos). Это компании имеющие сервера, которые располагаются в разных географических регионах. 
++ CDN в качестве кэша для статических ресурсов (images, CSS, JavaScript files), video и других публичных, но не конфиденциальных данных. Это компании имеющие сервера, которые располагаются в разных географических регионах. 
 + Георезерв - датацентры размещенные в разных географических регионах. Это позволит уменьшить сетевые latency у местных жителей, а также помогает обеспечить HA (>= 99,9%).
 + Обычно для операционных задач выбираются БД типа OLTP (Postgres, MongoDB и др.), но они не очень хороши для тяжелых запросов чтения - тут нужны OLAP (Greenplum, ClickHouse и др.)
 + У каждого микросервиса должна быть своя БД

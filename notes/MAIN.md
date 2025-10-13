@@ -41,10 +41,10 @@
 
 ### Базы данных
 + [Работа с БД через Spring Data](spring_hibernate.md#Spring-Data)
-+ [Транзакции и ACID](databases.md#Транзакции-и-ACID)
-+ [Теорема CAP](databases.md#Теорема-CAP)
-+ [SQL СУБД](databases.md#SQL-СУБД)
-+ [NoSQL СУБД](databases.md#NoSQL-СУБД)
++ [Транзакции и ACID](databases/databases.md#Транзакции-и-ACID)
++ [Теорема CAP](databases/databases.md#Теорема-CAP)
++ [SQL СУБД](databases/databases.md#SQL-СУБД)
++ [NoSQL СУБД](databases/databases.md#NoSQL-СУБД)
 + [Система управления миграциями БД](liquibase.md)
 
 ### HTTP
