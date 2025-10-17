@@ -70,9 +70,13 @@
 + [Протокол OAuth 2.0](security.md#Протокол-OAuth-20)
 
 ### System design
-+ [Вопросы по требованиям](system_design.md#Вопросы-по-требованиям-для-проектирования-архитектуры)
-+ [Основные подходы в High load](system_design.md#Основные-подходы-в-high-load)
-+ [Сага](system_design.md#Сага)
++ [Формализация функциональных требований](system_design/system_design.md#Формализация-функциональных-требований)
++ [Формализация нефункциональных требований](system_design/system_design.md#Формализация-нефункциональных-требований)
++ [Нотация моделирования C4](system_design/system_design.md#Нотация-моделирования-C4)
++ [Основные подходы в High load](system_design/system_design.md#Основные-подходы-в-high-load)
++ [Сага](system_design/system_design.md#Сага)
++ [Расчет размера данных на примере PostgreSQL](system_design/system_design.md#Расчет-размера-данных-на-примере-PostgreSQL)
++ [Расчет мощностей на примерах](system_design/system_design.md#Расчет-мощностей-на-примерах)
 
 ### Разное
 + [Concurrency / parallel / multithreading / asynchrony / reactivity](concurrency.md)
