@@ -80,7 +80,7 @@ The **`PriorityQueue`** in Java is implemented as a **binary heap**, which is a 
 
 Структуры состоящие из узлов (вершин), которые соединяются между собой ребрами. Верхний узел - корень. Позволяют хранить элементы, которые можно сравнивать по какому-либо ключу, чтобы правильно распределить их по узлам
 
-<img alt="tree.png" src="resources/tree.png"/>
+<img alt="tree.png" src="../resources/tree.png"/>
 
 + Несбалансированные деревья - то есть большинство узлов сосредоточено с одной или с другой стороны корня
     + В несбалансированном дереве теряется возможность быстрого поиска (а также вставки или удаления).
@@ -97,12 +97,12 @@ The **`PriorityQueue`** in Java is implemented as a **binary heap**, which is a 
         4. Все пути от корня к узлу или пустому потомку должны содержать одинаковое количество черных узлов.
     + Сложность всех операций не хуже O(log(n))
 + Деревья 2-3-4 - многопутевые деревья, у которых каждый узел может иметь до четырех потомков и трех элементов данных.
-    + <img alt="tree234.png" src="resources/tree234.png"/>
+    + <img alt="tree234.png" src="../resources/tree234.png"/>
 
 #### Хеш-таблицы
 Суть в хранении данных в виде пар ключ-значение, где ключ - уникален. Позволяет быстро находить нужное значение по ключу, за O(1).
 
-В Java есть готовая реализация в стандартной библиотеке - HashMap ([см. java.md](java.md#java-collections-api))
+В Java есть готовая реализация в стандартной библиотеке - HashMap ([см. java.md](../java.md#java-collections-api))
 
 #### Графы
 В Java нет готовой реализации. 
@@ -221,7 +221,7 @@ public class Graph<T> {
 + O(n) - при увеличении размера задачи в 2 раза, затраты времени возрастут тоже в два раза
 + O(n<sup>2</sup>) - при увеличении размера задачи в 2 раза, затраты времени возрастут примерно в четыре раза
 + O(n\*log(n)) - при увеличении задачи в два раза, затраты времени возрастут в два раза, плюс некоторая прибавка, относительный вклад которой уменьшается с ростом n. При малых n может вносить очень большой вклад. O(n*log(n)) начинает расти как квадрат при малых n, но потом рост замедляется почти до линейного
-+ <img width="600px" alt="Big-O_chart.png" src="resources/Big-O_chart.png"/>
++ <img width="600px" alt="Big-O_chart.png" src="../resources/Big-O_chart.png"/>
 
 ### Примеры временной сложности O(f(n))
 + O(n) — линейная сложность
@@ -284,37 +284,37 @@ public class Graph<T> {
 
 **Легенда**
 
-<img width="300px" alt="algorithms_complexity1.png" src="resources/algorithms_complexity1.png"/>
+<img width="300px" alt="algorithms_complexity1.png" src="../resources/algorithms_complexity1.png"/>
 
 **Поиск**
 
-<img width="1200px" alt="algorithms_complexity2.png" src="resources/algorithms_complexity2.png"/>
+<img width="1200px" alt="algorithms_complexity2.png" src="../resources/algorithms_complexity2.png"/>
 
 **Сортировка**
 
-<img width="1200px" alt="algorithms_complexity3.png" src="resources/algorithms_complexity3.png"/>
+<img width="1200px" alt="algorithms_complexity3.png" src="../resources/algorithms_complexity3.png"/>
 
 **Структуры данных**
 
-<img width="1200px" alt="algorithms_complexity4.png" src="resources/algorithms_complexity4.png"/>
+<img width="1200px" alt="algorithms_complexity4.png" src="../resources/algorithms_complexity4.png"/>
 
 **Кучи**
 
-<img width="1200px" alt="algorithms_complexity5.png" src="resources/algorithms_complexity5.png"/>
+<img width="1200px" alt="algorithms_complexity5.png" src="../resources/algorithms_complexity5.png"/>
 
 **Представление графов**
 
 Пусть дан граф с |V| вершинами и |E| ребрами, тогда
 
-<img width="1200px" alt="algorithms_complexity6.png" src="resources/algorithms_complexity6.png"/>
+<img width="1200px" alt="algorithms_complexity6.png" src="../resources/algorithms_complexity6.png"/>
 
 ---
 
 ### Алгоритмы сортировки
-+ [Пузырьковая сортировка](../_java_/src/main/java/examples/algorithms/BubbleSort.java)
-+ [Быстрая сортировка](../_java_/src/main/java/examples/algorithms/QuickSort.java)
-+ [Сортировка слиянием](../_java_/src/main/java/examples/algorithms/MergeSort.java)
-+ [Сортировка вставками](../_java_/src/main/java/examples/algorithms/InsertionSort.java)
++ [Пузырьковая сортировка](../../_java_/src/main/java/examples/algorithms/BubbleSort.java)
++ [Быстрая сортировка](../../_java_/src/main/java/examples/algorithms/QuickSort.java)
++ [Сортировка слиянием](../../_java_/src/main/java/examples/algorithms/MergeSort.java)
++ [Сортировка вставками](../../_java_/src/main/java/examples/algorithms/InsertionSort.java)
 
 ---
 
@@ -334,6 +334,8 @@ public class Graph<T> {
 + Для его взлома, даже самым мощным современным компьютерам потребуются миллиарды лет.
 + Симметричное шифрование проще и быстрее, чем асимметричное
 
+[О его использовании в TLS](../HTTP.md#TLS-HTTPS)
+
 ### Ассиметричное
 
 + Используется пара ключей. 
@@ -342,3 +344,9 @@ public class Graph<T> {
 + Второй ключ — находится в приватном хранилище и неизвестен никому, кроме его владельца. Его называют приватным/закрытым ключом.
 + Если вам известен открытый ключ сервера, то вы можете зашифровать им своё сообщение, и никто, кроме сервера, не сможет его прочитать.
 + Также сервер может зашифровать сообщение приватным ключом и отправить его клиенту. Тогда клиент сможет расшифровать сообщение и верифицировать что сообщение именно от "правильного" сервера.
+
+[О его использовании в TLS](../HTTP.md#TLS-HTTPS)
+
+### Алгоритм Диффи-Хеллмана
+
+См. его разбор на примере end-to-end шифрования сообщений в секретных чатах в Telegram - [Алгоритм Диффи-Хеллмана для end-to-end шифрования в Telegram](encryption_in_telegram.md#Алгоритм-Диффи-Хеллмана)

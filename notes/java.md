@@ -586,7 +586,7 @@ CompletableFuture processData2 = data.thenApplyAsync(this::processData2);
 ### Java Collections API
 + Иерархия коллекций:
     + <img alt="CollectionsHierarchy.png" src="resources/CollectionsHierarchy.png"/>
-+ Производительность коллекций см. [algorithms.md - Сложности Java collections API](algorithms.md#сложности-java-collections-api)
++ Производительность коллекций см. [algorithms.md - Сложности Java collections API](algorithms/algorithms.md#сложности-java-collections-api)
 + Пояснения о работе HashMap   
 	+ HashMap представляет из себя массив связных списков (корзин), дефолтный length которого = 16.
 	+ Индекс вставки рассчитывается как ((length-1) & hash) - так всегда получается число в дипазаоне изначального length.
